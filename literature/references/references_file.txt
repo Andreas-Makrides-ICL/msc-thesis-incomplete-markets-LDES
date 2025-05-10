@@ -1,0 +1,707 @@
+@techreport{LDESCouncil20242024Council,
+    title = {{2024 Annual Report Long Duration Energy Storage Council}},
+    year = {2024},
+    author = {{LDES Council}},
+    url = {https://www.ldescouncil.com/assets/pdf/2024LDESAnnualReport.pdf},
+    institution = {LDES Council}
+}
+
+
+@article{Nikolaos2023ASystems,
+    title = {{A Review of Pumped Hydro Storage Systems}},
+    year = {2023},
+    journal = {Energies},
+    author = {Nikolaos, Papadakis C. and Marios, Fafalakis and Dimitris, Katsaprakakis},
+    number = {11},
+    month = {6},
+    volume = {16},
+    publisher = {MDPI},
+    doi = {10.3390/en16114516},
+    issn = {19961073},
+    keywords = {RES, RES penetration, energy storage, hydro energy, mechanical storage, policy and incentives, pumped storage}
+}
+
+@article{Heuberger2017ANetworks,
+    title = {{A systems approach to quantifying the value of power generation and energy storage technologies in future electricity networks}},
+    year = {2017},
+    journal = {Computers and Chemical Engineering},
+    author = {Heuberger, Clara F. and Staffell, Iain and Shah, Nilay and Dowell, Niall Mac},
+    month = {12},
+    pages = {247--256},
+    volume = {107},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.compchemeng.2017.05.012},
+    issn = {00981354},
+    keywords = {Carbon capture and storage, Energy storage, Future electricity system, Intermittent renewables, Power system modeling, Technology value, Unit commitment}
+}
+
+
+@article{Barbour2022AdiabaticSystems,
+    title = {{Adiabatic Compressed Air Energy Storage Systems}},
+    year = {2022},
+    journal = {Encyclopedia of Energy Storage: Volume 1-4},
+    author = {Barbour, Edward R. and Pottie, Daniel L.F.},
+    month = {1},
+    pages = {188--203},
+    volume = {1-4},
+    publisher = {Elsevier},
+    isbn = {9780128197233},
+    doi = {10.1016/B978-0-12-819723-3.00061-5},
+    keywords = {ACAES, Adiabatic compressed air energy storage, CAES, Energy storage, Mechanical engineering, Thermo-mechanical storage}
+}
+
+
+@techreport{ConferenceofthePartiesUNFCCC2016Adoption1/CP.21,
+    title = {{Adoption of the Paris Agreement. Decision 1/CP.21}},
+    year = {2016},
+    author = {{Conference of the Parties (UNFCCC)}},
+    month = {11},
+    url = {https://unfccc.int/resource/docs/2015/cop21/eng/10a01.pdf#page=2},
+    institution = {United Nations Framework Convention on Climate Change},
+    address = {Paris},
+    language = {English}
+}
+
+@article{Hoschle2018AnMarkets,
+    title = {{An ADMM-Based Method for Computing Risk-Averse Equilibrium in Capacity Markets}},
+    year = {2018},
+    journal = {IEEE Transactions on Power Systems},
+    author = {Hoschle, Hanspeter and Le Cadre, Hlne and Smeers, Yves and Papavasiliou, Anthony and Belmans, Ronnie},
+    number = {5},
+    month = {9},
+    pages = {4819--4830},
+    volume = {33},
+    doi = {10.1109/TPWRS.2018.2807738},
+    issn = {0885-8950}
+}
+
+@techreport{Strbac2016AnBritain,
+    title = {{An analysis of electricity system flexibility for Great Britain}},
+    year = {2016},
+    author = {Strbac, Goran and Aunedi, Marko and Pudjianto, Danny and Raviskankar, Manu},
+    month = {11},
+    url = {https://assets.publishing.service.gov.uk/media/5a80e501ed915d74e33fd031/An_analysis_of_electricity_flexibility_for_Great_Britain.pdf},
+    institution = {Imperial College London}
+}
+
+@article{Giulietti2018AnalyzingStorage,
+    title = {{Analyzing the Potential Economic Value of Energy Storage}},
+    year = {2018},
+    journal = {Special Issue 1: ENERGY AND ENVIRONMENTAL CHALLENGES IN A GLOBALIZED WORLD},
+    author = {Giulietti, Monica and Grossi, Luigi and Trujillo Baute, Elisa and Waterson, Michael},
+    pages = {101--122},
+    volume = {39},
+    doi = {10.2307/26606265},
+    keywords = {Arbitrage, electricity markets, energy storage, market clearing, price forecasting}
+}
+
+@article{Mays2019AsymmetricMarkets,
+    title = {{Asymmetric risk and fuel neutrality in electricity capacity markets}},
+    year = {2019},
+    journal = {Nature Energy},
+    author = {Mays, Jacob and Morton, David P. and O’Neill, Richard P.},
+    number = {11},
+    month = {11},
+    pages = {948--956},
+    volume = {4},
+    publisher = {Nature Publishing Group},
+    doi = {10.1038/s41560-019-0476-1},
+    issn = {20587546}
+}
+
+@article{Fortuny-Amat1981AProblem,
+    title = {{A Representation and Economic Interpretation of a Two-Level Programming Problem}},
+    year = {1981},
+    journal = {Journal of the Operational Research Society},
+    author = {Fortuny-Amat, José and McCarl, Bruce},
+    number = {9},
+    month = {9},
+    pages = {783--792},
+    volume = {32},
+    doi = {10.1057/jors.1981.156},
+    issn = {0160-5682}
+}
+
+
+@techreport{DepartmentforBusiness2022BenefitsStorage,
+    title = {{Benefits of Long Duration Electricity Storage}},
+    year = {2022},
+    author = {{Department for Business} and {Energy {\&} Industrial Strategy (BEIS)}},
+    url = {https://assets.publishing.service.gov.uk/media/62e9794de90e07142da017ec/benefits-long-duration-electricity-storage.pdf},
+    institution = {Department for Business, Energy {\&} Industrial Strategy}
+}
+
+@article{Shu2023BeyondObligations,
+    title = {{Beyond capacity: Contractual form in electricity reliability obligations}},
+    year = {2023},
+    journal = {Energy Economics},
+    author = {Shu, Han and Mays, Jacob},
+    month = {10},
+    pages = {106943},
+    volume = {126},
+    doi = {10.1016/j.eneco.2023.106943},
+    issn = {01409883}
+}
+
+@techreport{Bassi2015BridgingUnion,
+    title = {{Bridging the gap: improving the economic and policy framework for carbon capture and storage in the European Union}},
+    year = {2015},
+    author = {Bassi, Samuela and Boyd, Rodney and Buckle, Simon and Fennell, Paul and Dowell, Niall Mac and Makuch, Zen and Staffell, Iain},
+    url = {https://www.cccep.ac.uk/wp-content/uploads/2015/10/GRI_LSE_CCS_web.pdf},
+    institution = {Centre for Climate Change Economics and Policy, Grantham Research Institute on Climate Change and the Environment, Imperial College London},
+    address = {London}
+}
+
+@article{Staum2007ChapterMarkets,
+    title = {{Chapter 12 Incomplete Markets}},
+    year = {2007},
+    journal = {Handbooks in Operations Research and Management Science},
+    author = {Staum, Jeremy},
+    number = {C},
+    month = {1},
+    pages = {511--563},
+    volume = {15},
+    publisher = {Elsevier},
+    doi = {10.1016/S0927-0507(07)15012-X},
+    issn = {0927-0507}
+}
+
+
+@article{Kaminski2022ComparativeExpansion,
+    title = {{Comparative analysis of risk-aversion and strategic investment behavior in generation expansion}},
+    year = {2022},
+    journal = {Electric Power Systems Research},
+    author = {Kaminski, Steffen and Dolanyi, Mihaly and Bruninx, Kenneth and Delarue, Erik},
+    month = {9},
+    pages = {108082},
+    volume = {210},
+    doi = {10.1016/j.epsr.2022.108082},
+    issn = {03787796}
+}
+
+@book{Gabriel2013ComplementarityMarkets,
+    title = {{Complementarity Modeling in Energy Markets}},
+    year = {2013},
+    author = {Gabriel, Steven A. and Conejo, Antonio J. and Fuller, J. David and Hobbs, Benjamin F. and Ruiz, Carlos},
+    volume = {180},
+    publisher = {Springer New York},
+    address = {New York, NY},
+    isbn = {978-1-4419-6122-8},
+    doi = {10.1007/978-1-4419-6123-5}
+}
+
+@article{Dimanchev2024ConsequencesEmissions,
+    title = {{Consequences of the missing risk market problem for power system emissions}},
+    year = {2024},
+    journal = {Energy Economics},
+    author = {Dimanchev, Emil and Gabriel, Steven A. and Reichenberg, Lina and Korp{\aa}s, Magnus},
+    month = {8},
+    volume = {136},
+    publisher = {Elsevier B.V.},
+    doi = {10.1016/j.eneco.2024.107639},
+    issn = {01409883},
+    keywords = {Climate policy, Decarbonization, Equilibrium generation expansion, Incomplete markets, Macro-energy systems, Risk aversion}
+}
+
+
+@techreport{InternationalEnergyAgencyIEA2023COP28Gap,
+    title = {{COP28 Tripling Renewable Capacity Pledge: Tracking countries’ ambitions and identifying policies to bridge the gap}},
+    year = {2023},
+    author = {{International Energy Agency (IEA)}},
+    url = {https://iea.blob.core.windows.net/assets/ecb74736-41aa-4a55-aacc-d76bdfd7c70e/COP28TriplingRenewableCapacityPledge.pdf}
+}
+
+
+@techreport{FelicityJones2016CrackingThem,
+    title = {{Cracking the Code: A Guide to Energy Storage Revenue Streams and How to Derisk Them}},
+    year = {2016},
+    author = {Felicity Jones, Zoe Barnes, Joe Phillips},
+    url = {https://pure.strath.ac.uk/ws/portalfiles/portal/84824573/Jones_etal_SR2016_Cracking_code_guide_energy_storage_revenue_streams_how_derisk_them.pdf}
+}
+
+@article{Boyd2010DistributedMultipliers,
+    title = {{Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers}},
+    year = {2010},
+    journal = {Foundations and Trends{\textregistered} in Machine Learning},
+    author = {Boyd, Stephen},
+    number = {1},
+    pages = {1--122},
+    volume = {3},
+    doi = {10.1561/2200000016},
+    issn = {1935-8237}
+}
+
+@article{Munoz2017DoesStudy,
+    title = {{Does risk aversion affect transmission and generation planning? A Western North America case study}},
+    year = {2017},
+    journal = {Energy Economics},
+    author = {Munoz, Francisco D. and van der Weijde, Adriaan Hendrik and Hobbs, Benjamin F. and Watson, Jean-Paul},
+    month = {5},
+    pages = {213--225},
+    volume = {64},
+    doi = {10.1016/j.eneco.2017.03.025},
+    issn = {01409883}
+}
+
+
+@article{Mallapragada2023ElectricitySystems,
+    title = {{Electricity pricing challenges in future renewables\mbox{-}dominant power systems}},
+    year = {2023},
+    journal = {Energy Economics},
+    author = {Mallapragada, Dharik S. and Junge, Cristian and Wang, Cathy and Pfeifenberger, Hannes and Joskow, Paul L. and Schmalensee, Richard},
+    month = {10},
+    pages = {106981},
+    volume = {126},
+    doi = {10.1016/j.eneco.2023.106981},
+    issn = {01409883}
+}
+
+
+
+@article{Levin2023EnergyModelling,
+    title = {{Energy storage solutions to decarbonize electricity through enhanced capacity expansion modelling}},
+    year = {2023},
+    journal = {Nature Energy},
+    author = {Levin, Todd and Bistline, John and Sioshansi, Ramteen and Cole, Wesley J. and Kwon, Jonghwan and Burger, Scott P. and Crabtree, George W. and Jenkins, Jesse D. and O’Neil, Rebecca and Korp{\aa}s, Magnus and Wogrin, Sonja and Hobbs, Benjamin F. and Rosner, Robert and Srinivasan, Venkat and Botterud, Audun},
+    number = {11},
+    month = {9},
+    pages = {1199--1208},
+    volume = {8},
+    doi = {10.1038/s41560-023-01340-6},
+    issn = {2058-7546}
+}
+
+@article{Arrow1954ExistenceEconomy,
+    title = {{Existence of an Equilibrium for a Competitive Economy}},
+    year = {1954},
+    journal = {Econometrica},
+    author = {Arrow, Kenneth J. and Debreu, Gerard},
+    number = {3},
+    month = {7},
+    pages = {265},
+    volume = {22},
+    doi = {10.2307/1907353},
+    issn = {00129682}
+}
+
+@article{Mays2023FinancialPenetration,
+    title = {{Financial Risk and Resource Adequacy in Markets With High Renewable Penetration}},
+    year = {2023},
+    journal = {IEEE Transactions on Energy Markets, Policy and Regulation},
+    author = {Mays, Jacob and Jenkins, Jesse D.},
+    number = {4},
+    month = {10},
+    pages = {523--535},
+    volume = {1},
+    publisher = {Institute of Electrical and Electronics Engineers (IEEE)},
+    doi = {10.1109/tempr.2023.3322531}
+}
+
+@article{Ehrenmann2011GenerationAnalysis,
+    title = {{Generation Capacity Expansion in a Risky Environment: A Stochastic Equilibrium Analysis}},
+    year = {2011},
+    journal = {Operations Research},
+    author = {Ehrenmann, Andreas and Smeers, Yves},
+    number = {6},
+    pages = {1332--1346},
+    volume = {59},
+    url = {http://dx.d0i.0rg/l}
+}
+
+@techreport{Bowen2019Grid-ScaleQuestions,
+    title = {{Grid-Scale Battery Storage: Frequently Asked Questions}},
+    year = {2019},
+    author = {Bowen, Thomas and Chernyakhovskiy, Ilya and Denholm, Paul},
+    url = {https://www.nrel.gov/docs/fy19osti/74426.pdf},
+    institution = {National Renewable Energy Laboratory (NREL)}
+}
+
+@techreport{InternationalEnergyAgencyIEA2011HarnessingChallenge,
+    title = {{Harnessing variable renewables : a guide to the balancing challenge}},
+    year = {2011},
+    author = {{International Energy Agency (IEA)}},
+    pages = {228},
+    publisher = {OECD/IEA},
+    url = {https://iea.blob.core.windows.net/assets/2e0cb0c2-d392-4923-b092-ac633531db2b/Harnessing_Variable_Renewables2011.pdf},
+    address = {Paris},
+    isbn = {9789264111387}
+}
+
+@article{Kaminski2021ImpactCompanies,
+    title = {{Impact of capacity mechanisms and demand elasticity on generation adequacy with risk-averse generation companies}},
+    year = {2021},
+    journal = {Electric Power Systems Research},
+    author = {Kaminski, Steffen and H{\"{o}}schle, Hanspeter and Delarue, Erik},
+    month = {10},
+    pages = {107369},
+    volume = {199},
+    doi = {10.1016/j.epsr.2021.107369},
+    issn = {03787796}
+}
+
+@article{Tirole1999IncompleteStand,
+    title = {{Incomplete Contracts: Where Do We Stand?}},
+    year = {1999},
+    journal = {Econometrica},
+    author = {Tirole, Jean},
+    number = {4},
+    pages = {741--781},
+    volume = {67},
+    url = {https://www.jstor.org/stable/2999457}
+}
+
+@book{Magill1991IncompleteMarkets,
+    title = {{Incomplete markets}},
+    year = {1991},
+    booktitle = {Handbook of Mathematical Economics},
+    author = {Magill, Michael and Shafer, Wayne},
+    number = {C},
+    month = {1},
+    pages = {1523--1614},
+    volume = {4},
+    publisher = {Elsevier},
+    doi = {10.1016/S1573-4382(05)80005-0},
+    issn = {1573-4382}
+}
+
+@article{deMaeredAertrycke2017InvestmentContracts,
+    title = {{Investment with incomplete markets for risk: The need for long-term contracts}},
+    year = {2017},
+    journal = {Energy Policy},
+    author = {de Maere d'Aertrycke, Gauthier and Ehrenmann, Andreas and Smeers, Yves},
+    pages = {571--583},
+    volume = {105},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.enpol.2017.01.029},
+    issn = {03014215},
+    keywords = {Capacity markets, Incomplete markets, Investment in electricity markets, Long term contracts, Risk functions}
+}
+
+@techreport{AuroraEnergyResearch2022LongGB,
+    title = {{Long Duration Electricity Storage in GB}},
+    year = {2022},
+    author = {{Aurora Energy Research}},
+    url = {https://auroraer.com/wp-content/uploads/2022/02/Aurora-Report-Long-Duration-Electricity-Storage-in-GB.pdf},
+    institution = {Aurora Energy Research}
+}
+
+@article{McNamara2022Long-durationOpportunities,
+    title = {{Long-duration energy storage in a decarbonized future: Policy gaps, needs, and opportunities}},
+    year = {2022},
+    journal = {MRS Energy and Sustainability},
+    author = {McNamara, J. William and DeAngelis, Valerio and Byrne, Raymond H. and Benson, Andrew and Chalamala, Babu R. and Masiello, Ralph},
+    number = {2},
+    month = {9},
+    pages = {142--170},
+    volume = {9},
+    publisher = {Springer Nature},
+    doi = {10.1557/s43581-022-00037-9},
+    issn = {23292237},
+    keywords = {economics, energy generation, environmental impact, government policy and funding, renewable, storage}
+}
+
+@techreport{EPRI2024Long-DurationSelection,
+    title = {{Long-Duration Energy Storage Use Cases: A Primer on Defining Applications to Aid in Technology Selection}},
+    year = {2024},
+    author = {{EPRI} and {LDES Council} and {Edison Electric Institute (EEI)} and {United States Department of Energy (DOE)}},
+    url = {https://www.ldescouncil.com/assets/pdf/3002030919_LongDurationEnergyStorageUseCases_APrimeronDefiningApplicationstoAidinTechnologySelection.pdf},
+    institution = {EPRI},
+    isbn = {3002025178}
+}
+
+@article{Newbery2016MissingInterconnectors,
+    title = {{Missing money and missing markets: Reliability, capacity auctions and interconnectors}},
+    year = {2016},
+    journal = {Energy Policy},
+    author = {Newbery, David},
+    pages = {401--410},
+    volume = {94},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.enpol.2015.10.028},
+    issn = {03014215},
+    keywords = {Capacity auctions, Interconnectors, Missing markets, Procurement}
+}
+
+@book{Schmidt2023MonetizingStorage,
+    title = {{Monetizing Energy Storage}},
+    year = {2023},
+    author = {Schmidt, Oliver and Staffell, Iain},
+    month = {9},
+    publisher = {Oxford University Press},
+    isbn = {019288817X},
+    doi = {10.1093/oso/9780192888174.001.0001}
+}
+
+
+
+@techreport{LDESCouncil2021Net-zeroGrid,
+    title = {{Net-zero power Long duration energy storage for a renewable grid}},
+    year = {2021},
+    author = {{LDES Council} and {McKinsey {\&} Company}},
+    url = {https://www.mckinsey.com/~/media/mckinsey/business%20functions/sustainability/our%20insights/net%20zero%20power%20long%20duration%20energy%20storage%20for%20a%20renewable%20grid/net-zero-power-long-duration-energy-storage-for-a-renewable-grid.pdf},
+    institution = {LDES Council}
+}
+
+
+@article{Gerard2017OnEquilibrium,
+    title = {{On risk averse competitive equilibrium}},
+    year = {2017},
+    author = {G{\'{e}}rard, Henri and Lecl{\`{e}}re, Vincent and Philpott, Andy},
+    journal = {Operations Research Letters},
+    volume = {46},
+    number = {1},
+    pages = {19-26},
+    year = {2018},
+    issn = {0167-6377},
+    doi = {https://doi.org/10.1016/j.orl.2017.10.011},
+    url = {https://www.sciencedirect.com/science/article/pii/S0167637717303383},
+    keywords = {Stochastic equilibrium, Stochastic programming, Risk averse equilibrium, Electricity markets},
+    abstract = {We discuss risked competitive partial equilibrium in a setting in which agents are endowed with coherent risk measures. In contrast to social planning models, we show by example that risked equilibria are not unique, even when agents’ objective functions are strictly concave. We also show that standard computational methods find only a subset of the equilibria, even with multiple starting points.}
+}
+
+@article{Abada2017OnApproach,
+    title = {{On the multiplicity of solutions in generation capacity investment models with incomplete markets: a risk-averse stochastic equilibrium approach}},
+    year = {2017},
+    journal = {Mathematical Programming},
+    author = {Abada, Ibrahim and de Maere d’Aertrycke, Gauthier and Smeers, Yves},
+    number = {1},
+    month = {9},
+    pages = {5--69},
+    volume = {165},
+    doi = {10.1007/s10107-017-1185-9},
+    issn = {0025-5610}
+}
+
+
+@article{TyrrellRockafellar1998OptimizationValue-at-risk,
+    title = {{Optimization of conditional value-at-risk}},
+    year = {1998},
+    journal = {Journal of Risk},
+    author = {Tyrrell Rockafellar, R and Uryasev, Stanislav},
+    number = {3},
+    month = {9},
+    pages = {21--41},
+    volume = {2},
+    url = {http://www.gloriamundi.org/.}
+}
+
+@article{Brown2024PriceBidding,
+    title = {{Price formation without fuel costs: the interaction of demand elasticity with storage bidding}},
+    year = {2024},
+    author = {Brown, Tom and Neumann, Fabian and Riepin, Iegor},
+    month = {7},
+    note = {Revised February 2025},
+    eprint = {2407.21409},
+    eprinttype = {arxiv},
+    url = {https://arxiv.org/abs/2407.21409}
+}
+
+@article{Aaslid2021PricingStorage,
+    title = {{Pricing electricity in constrained networks dominated by stochastic renewable generation and electric energy storage}},
+    year = {2021},
+    journal = {Electric Power Systems Research},
+    author = {Aaslid, Per and Korp{\aa}s, Magnus and Belsnes, Michael M. and Fosso, Olav B.},
+    month = {8},
+    volume = {197},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.epsr.2021.107169},
+    issn = {03787796},
+    keywords = {Electric energy storage, Electricity price, Infinite horizon, Multi-period optimal power flow, Splines, Stochastic dynamic programming, Variable renewable energy}
+}
+
+@article{Mays2022PrivateMarkets,
+    title = {{Private risk and social resilience in liberalized electricity markets}},
+    year = {2022},
+    journal = {Joule},
+    author = {Mays, Jacob and Craig, Michael T. and Kiesling, Lynne and Macey, Joshua C. and Shaffer, Blake and Shu, Han},
+    number = {2},
+    month = {2},
+    pages = {369--380},
+    volume = {6},
+    publisher = {Cell Press},
+    doi = {10.1016/j.joule.2022.01.004},
+    issn = {25424351},
+    keywords = {electricity market design, incomplete contracting, resilience, resource adequacy, risk trading}
+}
+
+@article{Radner1970ProblemsUNCERTAINTYt,
+    ISSN = {00028282},
+    URL = {http://www.jstor.org/stable/1815845},
+    author = {Roy Radner},
+    journal = {The American Economic Review},
+    number = {2},
+    pages = {454--460},
+    publisher = {American Economic Association},
+    title = {Problems in the Theory of Markets under Uncertainty},
+    urldate = {2025-04-07},
+    volume = {60},
+    year = {1970}
+}
+
+@article{Pineda2018RenewableApproach,
+    title = {{Renewable generation expansion under different support schemes: A stochastic equilibrium approach}},
+    year = {2018},
+    journal = {European Journal of Operational Research},
+    author = {Pineda, Salvador and Boomsma, Trine K. and Wogrin, Sonja},
+    number = {3},
+    month = {5},
+    pages = {1086--1099},
+    volume = {266},
+    doi = {10.1016/j.ejor.2017.10.027},
+    issn = {03772217}
+}
+
+@article{Pfenninger2015RenewablesSecurity,
+    title = {{Renewables, nuclear, or fossil fuels? Scenarios for Great Britain's power system considering costs, emissions and energy security}},
+    year = {2015},
+    journal = {Applied Energy},
+    author = {Pfenninger, Stefan and Keirstead, James},
+    month = {8},
+    pages = {83--93},
+    volume = {152},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.apenergy.2015.04.102},
+    issn = {03062619},
+    keywords = {Energy policy, Energy systems modeling, Renewable energy, Scenarios}
+}
+
+@article{Dowling2020RoleSystems,
+    title = {{Role of Long-Duration Energy Storage in Variable Renewable Electricity Systems}},
+    year = {2020},
+    journal = {Joule},
+    author = {Dowling, Jacqueline A. and Rinaldi, Katherine Z. and Ruggles, Tyler H. and Davis, Steven J. and Yuan, Mengyao and Tong, Fan and Lewis, Nathan S. and Caldeira, Ken},
+    number = {9},
+    month = {9},
+    pages = {1907--1928},
+    volume = {4},
+    publisher = {Cell Press},
+    doi = {10.1016/j.joule.2020.07.007},
+    issn = {25424351},
+    keywords = {batteries, electricity cost, long-duration energy storage, long-term energy storage, macro-energy model, renewable energy, solar energy, storage technologies, wind energy, zero-carbon electricity}
+}
+
+
+@article{Sepulveda2021TheSystems,
+    title = {{The design space for long-duration energy storage in decarbonized power systems}},
+    year = {2021},
+    journal = {Nature Energy},
+    author = {Sepulveda, Nestor A. and Jenkins, Jesse D. and Edington, Aurora and Mallapragada, Dharik S. and Lester, Richard K.},
+    number = {5},
+    month = {5},
+    pages = {506--516},
+    volume = {6},
+    publisher = {Nature Research},
+    doi = {10.1038/s41560-021-00796-8},
+    issn = {20587546}
+}
+
+@article{Ball2009TheChallenges,
+    title = {{The future of hydrogen - opportunities and challenges}},
+    year = {2009},
+    journal = {International Journal of Hydrogen Energy},
+    author = {Ball, Michael and Wietschel, Martin},
+    number = {2},
+    pages = {615--627},
+    volume = {34},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.ijhydene.2008.11.014},
+    issn = {03603199},
+    keywords = {Alternative fuels, Fuel cells, Global hydrogen scenarios, Hydrogen, Hydrogen energy system, Hydrogen infrastructure analysis, Peak oil}
+}
+
+@article{Diaz2019TheStudies,
+    title = {{The importance of time resolution, operational flexibility and risk aversion in quantifying the value of energy storage in long-term energy planning studies}},
+    year = {2019},
+    journal = {Renewable and Sustainable Energy Reviews},
+    author = {Diaz, Gabriel and Inzunza, Andrés and Moreno, Rodrigo},
+    month = {9},
+    pages = {797--812},
+    volume = {112},
+    doi = {10.1016/j.rser.2019.06.002},
+    issn = {13640321}
+}
+
+@article{Dirkse1995TheProblems,
+    title = {{The path solver: a nommonotone stabilization scheme for mixed complementarity problems}},
+    year = {1995},
+    journal = {Optimization Methods and Software},
+    author = {Dirkse, Steven P. and Ferris, Michael C.},
+    number = {2},
+    month = {1},
+    pages = {123--156},
+    volume = {5},
+    doi = {10.1080/10556789508805606},
+    issn = {1055-6788}
+}
+
+@article{Cole2023TheSystem,
+    title = {{The peaking potential of long-duration energy storage in the United States power system}},
+    year = {2023},
+    journal = {Journal of Energy Storage},
+    author = {Cole, Wesley and Denholm, Paul and Carag, Vincent and Frazier, Will},
+    month = {6},
+    volume = {62},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.est.2023.106932},
+    issn = {2352152X},
+    keywords = {Capacity expansion, Energy storage, Firm capacity, Peaking plant, Planning reserves}
+}
+
+@article{Neumann2023TheEurope,
+    title = {{The potential role of a hydrogen network in Europe}},
+    year = {2023},
+    journal = {Joule},
+    author = {Neumann, Fabian and Zeyen, Elisabeth and Victoria, Marta and Brown, Tom},
+    number = {8},
+    month = {8},
+    pages = {1793--1817},
+    volume = {7},
+    publisher = {Cell Press},
+    doi = {10.1016/j.joule.2023.06.016},
+    issn = {25424351},
+    arxivId = {2207.05816},
+    keywords = {Europe, PyPSA, carbon-neutrality, energy system modeling, energy systems, hydrogen network, pipeline retrofitting, renewable energy, sector-coupling, transmission}
+}
+
+@book{InternationalEnergyAgencyIEA2014TheSystems,
+    title = {{The Power of Transformation : Wind, Sun and the Economics of Flexible Power Systems}},
+    year = {2014},
+    author = {{International Energy Agency (IEA)}},
+    pages = {200},
+    publisher = {International Energy Agency (IEA)},
+    url = {https://www.oecd.org/content/dam/oecd/en/publications/reports/2014/02/the-power-of-transformation_g1g3ad17/9789264208032-en.pdf},
+    address = {Paris},
+    isbn = {9789264208032}
+}
+
+
+@article{deSisternes2016TheSector,
+    title = {{The value of energy storage in decarbonizing the electricity sector}},
+    year = {2016},
+    journal = {Applied Energy},
+    author = {de Sisternes, Fernando J. and Jenkins, Jesse D. and Botterud, Audun},
+    month = {8},
+    pages = {368--379},
+    volume = {175},
+    publisher = {Elsevier Ltd},
+    doi = {10.1016/j.apenergy.2016.05.014},
+    issn = {03062619},
+    keywords = {Capacity planning, Climate change, Decarbonization, Energy storage, Renewable energy integration}
+}
+
+@techreport{BloombergNewEnergyFinance2018UK-FlexibilitySystems,
+    title = {{UK-Flexibility Solutions for High-Renewable Energy Systems}},
+    year = {2018},
+    author = {Bloomberg New Energy Finance, Eaton, and Statkraft},
+    url = {https://data.bloomberglp.com/professional/sites/24/2018/11/UK-Flexibility-Solutions-for-High-Renewable-Energy-Systems-2018-BNEF-Eaton-Statkraft.pdf}
+}
+
+
+@techreport{Strbac2015ValueTechnologies,
+    title = {{Value of Flexibility in a Decarbonised Grid and System Externalities of Low-Carbon Generation Technologies}},
+    year = {2015},
+    author = {Strbac, Goran and Aunedi, Marko and Pudjianto, Danny and Teng, Fei and Djapic, Predrag and Druce, Richard and Carmel, Alon and Borkowski, Konrad},
+    url = {https://www.theccc.org.uk/wp-content/uploads/2015/10/CCC_Externalities_report_Imperial_Final_21Oct20151.pdf},
+    institution = {Imperial College London and NERA Economic Consulting},
+    address = {London}
+}
