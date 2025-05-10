@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# Julia
+.julia/
+Manifest.toml
+Project.toml
+
+# General
+.env
+*.log
+*.DS_Store
+
+# IDEs
+.vscode/
+
+# Output
+/results/
