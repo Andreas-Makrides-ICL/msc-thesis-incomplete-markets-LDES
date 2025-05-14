@@ -90,3 +90,88 @@ function print_table_header(model)
     # Print bottom separator
     println(repeat("-", total_width))
 end
+
+unction print_central_summary(model, solve_time)
+    # Column widths
+    iter_width = 6
+    conv_width = CONV_WIDTH
+    data_width = COL_WIDTH
+    time_width = TIME_COL_WIDTH
+
+    m = model.model
+    d = model.data
+    base = model.results["base"]["base_results"]
+
+    capacities = base["capacities"]
+    obj = objective_value(m)
+
+    println()
+    println("------------------------------------------------------------------------------------------------------------------")
+    println(rpad("Iter", iter_width),
+        rpad("Primal Conv.", conv_width),
+        rpad("Dual Conv.", conv_width),
+        rpad("PV", data_width),
+        rpad("Wind", data_width),
+        rpad("Gas", data_width),
+        rpad("Battery Pwr.", data_width),
+        rpad("Battery En.", data_width),
+        rpad("Time", time_width),
+        rpad("Total Time", time_width))
+    println("------------------------------------------------------------------------------------------------------------------")
+
+
+    print(rpad("CENT", iter_width))
+    print(rpad(" - ", conv_width))
+    print(rpad(" - ", conv_width))
+
+    # Generator capacities
+    for g in d["sets"]["G"]
+        val = g ∈ axes(capacities[:x_g], 1) ? capacities[:x_g][g] : 0.0
+        print(rpad(@sprintf("%.2f", val), data_width))
+    end
+
+    # Storage power and energy
+    for s in d["sets"]["S"]
+        val_P = s ∈ axes(capacities[:x_P], 1) ? capacities[:x_P][s] : 0.0
+        val_E = s ∈ axes(capacities[:x_E], 1) ? capacities[:x_E][s] : 0.0
+        print(rpad(@sprintf("%.2f", val_P), data_width))
+        print(rpad(@sprintf("%.2f", val_E), data_width))
+    end
+
+    print(rpad(@sprintf("%.2fs", solve_time), time_width))
+    print(rpad(@sprintf("%.2fs", solve_time), time_width))  # repeated to mimic Total Time
+    println()
+
+    total_cap = sum(values(capacities[:x_g])) + sum(values(capacities[:x_P])) + sum(values(capacities[:x_E]))
+    println("\nTotal Installed Capacity: ", round(total_cap, digits=2), " MW")
+
+end
+
+function print_objective_breakdown(m::OptimizationModel)
+    # Extract sets and parameters
+    O = m.data["sets"]["O"]
+    P = m.data["data"]["additional_params"]["P"]
+    δ = m.data["data"]["additional_params"]["δ"]
+    Ψ = m.data["data"]["additional_params"]["Ψ"]
+    jm = m.model
+
+    # Compute expected welfare minus cost
+    expected_term = sum(P[o] * (value(jm[:demand_value][o]) - value(jm[:total_costs][o])) for o in O)
+
+    # Compute CVaR term: ζ - (1 / Ψ) * ∑ P[o] * u[o]
+    ζ = value(jm[:ζ_total])
+    u = [value(jm[:u_total][o]) for o in O]
+    cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[o] for o in O)
+
+    # Final blended objective
+    objective = δ * expected_term + (1 - δ) * cvar_term
+
+    # Print nicely
+    println("\n===== Risk-Averse Objective Breakdown =====")
+    println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=2))
+    println("CVaR Term ((1 - δ) * CVaR):       ", round((1 - δ) * cvar_term, digits=2))
+    println("  ↳ ζ_total:                       ", round(ζ, digits=2))
+    println("  ↳ u_total[o]:                    ", [round(u[o], digits=4) for o in eachindex(O)])
+    println("Full Objective Value:             ", round(objective, digits=2))
+    println("===========================================")
+end
