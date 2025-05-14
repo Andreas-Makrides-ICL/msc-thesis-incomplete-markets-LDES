@@ -91,7 +91,7 @@ function print_table_header(model)
     println(repeat("-", total_width))
 end
 
-unction print_central_summary(model, solve_time)
+function print_central_summary(model, solve_time)
     # Column widths
     iter_width = 6
     conv_width = CONV_WIDTH
