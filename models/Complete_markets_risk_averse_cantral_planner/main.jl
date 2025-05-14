@@ -3,11 +3,11 @@ using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, P
 include("src/_init_.jl");
 
 """
-    run_ADMM(data, setup)
+    run_central_planner(data, setup)
 
-Runs the ADMM optimization workflow on the provided data and setup.
+Runs the central planner optimization workflow on the provided data and setup.
 """
-function run_ADMM(data, setup)
+function run_central_planner(data, setup)
     # ============================
     # Create Base Optimization Model
     # ============================
@@ -27,9 +27,25 @@ function run_ADMM(data, setup)
     define_balances!(m)
     add_residual!(m)
 
+    #Start time of the model\
+    start_time = time()
+
     # Solve the base model
     @objective(m.model, Max, m.model[:objective_expr])
+
+    #print CVaR and ζ_total to ensure correct operation
+    println("CVaR variable ζ_total exists? ", haskey(m.model, :ζ_total))
+    println("CVaR constraint exists? ", haskey(m.model, :cvar_tail_total))
+
     solution_pars = solve_and_check_optimality!(m.model)
+
+    #Prints the the values of ζ_total and u_total
+    println("ζ_total = ", value(m.model[:ζ_total]))
+    println("u_total = ", [round(value(m.model[:u_total][o]), digits=4) for o in m.data["sets"]["O"]])
+
+    #Captures the run duration of the model
+    solve_time = time() - start_time
+
     # Extract and store results
     base_results = extract_base_results(m)
     op_results = extract_op!(m)
@@ -39,103 +55,68 @@ function run_ADMM(data, setup)
     )
 
     # ============================
-    # Initialize prices
-    # ============================
-    data["data"]["additional_params"]["λ"] = base_results["price"]
-
-    # Recreate model with updated prices and remove balances
-    create_base_model!(m, update_prices = true)
-
-    # ============================
-    # Prepare model for ADMM and run iteration 0
-    # ============================
-    
-    # Switch to individual objective and resolve
-    define_balances!(m, remove = true)
-    m.setup["objective"] = "individual"
-    define_objective!(m)
-    @objective(m.model, Max, m.model[:objective_expr])
-    solution_pars = solve_and_check_optimality!(m.model)
-
-    # ============================
-    #  Initialize ADMM iteration and run
-    # ============================
-    # Set up ADMM iteration parameters
-    total_start_time = time()
-    tolerance = sqrt((length(m.data["sets"]["S"]) + length(m.data["sets"]["G"]) + 1) *
-                     length(m.data["sets"]["T"]) * length(m.data["sets"]["O"])) * m.setup["tolerance"]
-
-    # Main ADMM loop
-    for iter in 1:m.setup["max_iterations"]
-        # Print table header every 10 iterations or at the first iteration
-        if iter % 10 == 0 || iter == 1
-            print_table_header(m)
-        end
-        # Extract results and compute convergence metrics
-        # Save the results of the current iteration for analysis
-        extract_iteration_results!(m, iter)
-        
-        # Calculate the primal convergence metrics for the current iteration
-        calculate_primal_convergence(m, iter)
-        
-        # If not the first iteration, calculate the dual convergence metrics
-        if iter > 1
-            calculate_dual_convergence(m, iter)
-        end
-
-        # Compute the penalty term based on the current iteration results
-        define_and_compute_penalty!(m, iter)
-        
-        # Update the price values based on the penalty and iteration results
-        update_price_values!(m, iter)
-
-        # Rebuild the optimization model with updated prices and objective
-        create_base_model!(m, update_prices = true)
-        
-        # Define the new objective function for the updated model
-        define_objective!(m)
-        
-        # Add the penalty term to the objective expression
-        add_to_expression!(m.model[:objective_expr], -m.model[:total_penalty_term])
-        
-        # Set the updated objective function in the model
-        @objective(m.model, Max, m.model[:objective_expr])
-        
-        # Solve the updated model and check for optimality
-        solution_pars = solve_and_check_optimality!(m.model)
-        
-        # Store the solution status for the current iteration
-        m.results[iter][:solution_status] = solution_pars
-
-        # Print a summary of the current iteration, including timing information
-        total_time = time() - total_start_time
-        print_iteration(m, iter, total_time)
-
-        # Check convergence
-        if iter > 1
-            converged = check_convergence(m, iter, tolerance)
-            if converged
-                println("Convergence criteria met at iteration $iter")
-                m.results["final"] = m.results[iter]
-                break
-            end
-        end
-    end
+    # Print summary of the central planner code
+    print_central_summary(m, solve_time)
+    print_objective_breakdown(m)
 
     return m
 end
 
-# Example usage: load data and run ADMM
+# Extract capacity safely
+function safeget(cap_dict, sym, key)
+    sym ∈ keys(cap_dict) && key ∈ axes(cap_dict[sym], 1) ? cap_dict[sym][key] : 0.0
+end
+
+# Example usage: load data and run central planner
 setup = copy(default_setup)
 
-# ADMM parameter 
+# Central planner parameter 
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
+setup["objective"] = "central"
 
+"""
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
 data = load_data(setup, user_sets = Dict("O" => [1,2,3], "T" => 1:150));
-m = run_ADMM(data, setup);
+m = run_central_planner(data, setup);
+"""
+
+results = []
+for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
+    for psi in [0.1] #[0.5, 0.2, 0.1]
+        setup["δ"] = delta
+        setup["Ψ"] = psi
+
+        data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
+        m = run_central_planner(data, setup);
+
+        res = m.results["base"]["base_results"]
+        cap = res["capacities"]
+        obj = objective_value(m.model)
+        ζ = value(m.model[:ζ_total])
+        u = [value(m.model[:u_total][o]) for o in m.data["sets"]["O"]]
+
+        push!(results, (
+            δ = delta,
+            Ψ = psi,
+            objective = obj,
+            ζ_total = ζ,
+            max_u = maximum(u),
+            PV = safeget(cap, :x_g, "PV"),
+            Wind = safeget(cap, :x_g, "Wind"),
+            Gas = safeget(cap, :x_g, "Gas"),
+            Battery_P = safeget(cap, :x_P, "Battery"),
+            Battery_E = safeget(cap, :x_E, "Battery"),
+        ))
+
+    end
+end
+
+df = DataFrame(results)
+#display(df)
+#change the name of the file accordingly
+CSV.write("risk_aversion_results_O10T720.csv", df)
 
