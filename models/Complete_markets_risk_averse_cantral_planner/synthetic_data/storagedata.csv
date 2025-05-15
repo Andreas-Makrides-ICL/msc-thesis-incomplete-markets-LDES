@@ -1,0 +1,3 @@
+S,Include,C_inv_P,C_inv_E,WACC,Lifetime,dis_eff,ch_eff,apply_init_soc,init_soc
+Battery,1,306000,223000,0.09,15,0.92,0.92,1,0.5
+LDES,1,120000,50000,0.11,40,0.75,0.75,1,0.5
