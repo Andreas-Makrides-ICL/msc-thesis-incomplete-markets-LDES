@@ -90,7 +90,7 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
         setup["δ"] = delta
         setup["Ψ"] = psi
 
-        data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
+        data = load_data(setup, user_sets = Dict("O" => 1:4, "T" => 1:720));
         m = run_central_planner(data, setup);
 
         res = m.results["base"]["base_results"]
@@ -118,5 +118,5 @@ end
 df = DataFrame(results)
 #display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O10T720_synthetic_data.csv", df)
+CSV.write("risk_aversion_results_O4T720_synthetic_data.csv", df)
 
