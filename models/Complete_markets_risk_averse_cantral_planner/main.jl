@@ -110,6 +110,8 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
             Gas = safeget(cap, :x_g, "Gas"),
             Battery_P = safeget(cap, :x_P, "Battery"),
             Battery_E = safeget(cap, :x_E, "Battery"),
+            LDES_P = safeget(cap, :x_P, "LDES"),
+            LDES_E = safeget(cap, :x_E, "LDES"),
         ))
 
     end
