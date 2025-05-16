@@ -78,11 +78,11 @@ setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 setup["objective"] = "central"
 
-"""
+
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
+data = load_data(setup, user_sets = Dict("O" => 1, "T" => 1));
 m = run_central_planner(data, setup);
 
 """
@@ -133,4 +133,8 @@ df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
 #CSV.write("risk_aversion_results_O4T720_synthetic_data.csv", df)
+"""
+#Print the model for inspection
+print_model_structure_symbolic(m.model)
+
 

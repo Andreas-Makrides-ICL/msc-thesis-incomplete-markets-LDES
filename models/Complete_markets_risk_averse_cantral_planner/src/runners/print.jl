@@ -175,3 +175,35 @@ function print_objective_breakdown(m::OptimizationModel)
     println("Full Objective Value:             ", round(objective, digits=2))
     println("===========================================")
 end
+
+using JuMP
+
+# print the structure of the model (objective + constraints) in central planner risk averse case
+function print_model_structure_symbolic(m::JuMP.Model)
+    println("========== MODEL STRUCTURE ==========")
+
+    # --- Objective ---
+    println("\n--- Objective Function ---")
+    println("Sense: ", JuMP.objective_sense(m))
+    println("Expression Type: ", typeof(JuMP.objective_function(m)))
+    println("Symbolic Expression:")
+    println(JuMP.objective_function(m))
+
+    # --- Constraints ---
+    println("\n--- Constraints ---")
+
+    for (func_type, set_type) in JuMP.list_of_constraint_types(m)
+        cons = JuMP.all_constraints(m, func_type, set_type)
+        if !isempty(cons)
+            name = JuMP.name(cons[1])
+            println("\n• Constraint Type: ", set_type)
+            println("  Symbolic Name: ", isempty(name) ? "(unnamed)" : split(name, "::")[1])
+            println("  Sample Expression:")
+            println("    ", JuMP.constraint_object(cons[1]).func, " ∈ ", JuMP.constraint_object(cons[1]).set)
+        end
+    end
+
+    println("\n=====================================")
+end
+
+
