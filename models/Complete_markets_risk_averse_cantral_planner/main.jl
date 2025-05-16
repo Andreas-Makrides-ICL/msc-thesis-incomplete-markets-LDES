@@ -100,6 +100,14 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
         obj = objective_value(m.model)
         ζ = value(m.model[:ζ_total])
         u = [value(m.model[:u_total][o]) for o in m.data["sets"]["O"]]
+        
+        # Extract CVaR tail duals and risk weights
+        duals, risk_weights = extract_risk_adjusted_weights(m)
+
+        # Sort tail scenarios by descending weight
+        sorted_tail = sort(collect(duals), by = x -> -x[2])
+        # Format as (scenario, raw dual) for display
+        tail_scenarios = [(o, round(d, digits=8)) for (o, d) in sorted_tail if d > 1e-8]
 
         push!(results, (
             δ = delta,
@@ -107,13 +115,15 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
             objective = obj,
             ζ_total = ζ,
             max_u = maximum(u),
+            max_dual = !isempty(duals) ? maximum(values(duals)) : 0.0,
+            tail_scenarios = tail_scenarios,
             PV = safeget(cap, :x_g, "PV"),
             Wind = safeget(cap, :x_g, "Wind"),
             Gas = safeget(cap, :x_g, "Gas"),
             Battery_P = safeget(cap, :x_P, "Battery"),
             Battery_E = safeget(cap, :x_E, "Battery"),
             LDES_P = safeget(cap, :x_P, "LDES"),
-            LDES_E = safeget(cap, :x_E, "LDES"),
+            LDES_E = safeget(cap, :x_E, "LDES")
         ))
 
     end

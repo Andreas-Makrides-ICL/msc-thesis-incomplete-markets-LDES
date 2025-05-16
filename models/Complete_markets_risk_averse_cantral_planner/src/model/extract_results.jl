@@ -152,3 +152,55 @@ function extract_iteration_results!(model, name)
 
     model.results[name] = iteration_results  # Store the results in the model's results dictionary
 end
+
+"""
+    extract_risk_adjusted_weights(model)
+
+Extracts the duals of the CVaR tail constraints (`cvar_tail_total[o]`) in a central planner model.
+
+Returns a dictionary of:
+- raw dual values for each scenario
+- normalized "risk-adjusted probabilities" (duals / sum)
+
+Also prints:
+- Active tail scenarios (with non-zero duals)
+- Risk-adjusted probability distribution
+
+# Arguments
+- `model`: the OptimizationModel (after solve)
+
+# Returns
+- Tuple: (Dict{Int, Float64}, Dict{Int, Float64})
+"""
+function extract_risk_adjusted_weights(model)
+    m = model.model
+    O = model.data["sets"]["O"]
+
+    # Get raw dual values of CVaR tail constraints
+    dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
+
+    # Total dual weight for normalization
+    total_dual = sum(dual_vals[o] for o in O)
+
+    # Compute normalized risk weights
+    risk_weights = total_dual > 0 ? Dict(o => dual_vals[o] / total_dual for o in O) : Dict(o => 0.0 for o in O)
+
+    # Print summary
+    println("\n===== CVaR Tail Dual Analysis =====")
+    println("Raw dual values (only non-zero shown):")
+    for (o, d) in dual_vals
+        if d > 1e-8
+            println("  Scenario $o → dual = $(round(d, digits=10))")
+        end
+    end
+
+    println("\nNormalized risk-adjusted probabilities:")
+    for (o, p) in risk_weights
+        if p > 1e-4
+            println("  Scenario $o → risk_weight = $(round(p, digits=4))")
+        end
+    end
+    println("====================================\n")
+
+    return dual_vals, risk_weights
+end
