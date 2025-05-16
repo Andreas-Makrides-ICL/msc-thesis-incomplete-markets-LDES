@@ -206,4 +206,36 @@ function print_model_structure_symbolic(m::JuMP.Model)
     println("\n=====================================")
 end
 
+#extract and print the individual agent risk measures (generator, storage, consumer)
+function print_individual_risks(model::OptimizationModel)
+    m = model.model
+    G = model.data["sets"]["G"]
+    S = model.data["sets"]["S"]
+
+    # Extract individual risk-adjusted profit/welfare values
+    risk_g = Dict(g => value(m[:ρ_g][g]) for g in G if haskey(m, :ρ_g))
+    risk_s = Dict(s => value(m[:ρ_s][s]) for s in S if haskey(m, :ρ_s))
+    risk_d = haskey(m, :ρ_d) ? value(m[:ρ_d]) : missing
+
+    println("\n===== Individual Risk Measures (ρ) =====")
+    println("Generators:")
+    for (g, ρ) in sort(collect(risk_g), by = x -> x[1])
+        println("  $g → $(round(ρ, digits=2))")
+    end
+    println("Storage:")
+    for (s, ρ) in sort(collect(risk_s), by = x -> x[1])
+        println("  $s → $(round(ρ, digits=2))")
+    end
+    println("Consumer:")
+    println("  ρ_d → $(risk_d isa Missing ? "n/a" : round(risk_d, digits=2))")
+    println("========================================\n")
+
+    return Dict(
+        "generators" => risk_g,
+        "storage" => risk_s,
+        "consumer" => risk_d
+    )
+end
+
+
 

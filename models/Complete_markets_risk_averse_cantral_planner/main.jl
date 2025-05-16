@@ -59,7 +59,7 @@ function run_central_planner(data, setup)
     print_central_summary(m, solve_time)
 
     print_objective_breakdown(m)
-
+    print_individual_risks(m)
 
     return m
 end
@@ -78,14 +78,15 @@ setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 setup["objective"] = "central"
 
-
+"""
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1, "T" => 1));
+data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
 m = run_central_planner(data, setup);
 
 """
+
 results = []
 for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
@@ -133,8 +134,8 @@ df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
 #CSV.write("risk_aversion_results_O4T720_synthetic_data.csv", df)
-"""
+
 #Print the model for inspection
-print_model_structure_symbolic(m.model)
+#print_model_structure_symbolic(m.model)
 
 
