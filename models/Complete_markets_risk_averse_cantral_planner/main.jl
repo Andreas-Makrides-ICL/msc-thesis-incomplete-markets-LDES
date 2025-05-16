@@ -14,7 +14,7 @@ function run_central_planner(data, setup)
     # Initialize the optimization model
     m = OptimizationModel(data, setup = setup)
     # Set solver attribute to suppress output
-    set_attribute(m.model, "CPX_PARAM_SCRIND", false) #here controls the print of the output of the solver, true prints solver progress
+    set_attribute(m.model, "CPX_PARAM_SCRIND", true) #here controls the print of the output of the solver, true prints solver progress
     # Define variables and create the base model
     define_variables!(m)
     create_base_model!(m)
@@ -23,7 +23,7 @@ function run_central_planner(data, setup)
     # Solve Base Optimization Model
     # ============================
     # Define the objective (expected value) and add constraints
-    define_objective!(m, expected_value = false)
+    define_objective!(m, expected_value = true)
     define_balances!(m)
     add_residual!(m)
 
@@ -32,17 +32,17 @@ function run_central_planner(data, setup)
 
     # Solve the base model
     @objective(m.model, Max, m.model[:objective_expr])
-
+"""
     #print CVaR and ζ_total to ensure correct operation
     println("CVaR variable ζ_total exists? ", haskey(m.model, :ζ_total))
     println("CVaR constraint exists? ", haskey(m.model, :cvar_tail_total))
-
+"""
     solution_pars = solve_and_check_optimality!(m.model)
-
+"""
     #Prints the the values of ζ_total and u_total
     println("ζ_total = ", value(m.model[:ζ_total]))
     println("u_total = ", [round(value(m.model[:u_total][o]), digits=4) for o in m.data["sets"]["O"]])
-
+"""
     #Captures the run duration of the model
     solve_time = time() - start_time
 
@@ -57,7 +57,9 @@ function run_central_planner(data, setup)
     # ============================
     # Print summary of the central planner code
     print_central_summary(m, solve_time)
+"""
     print_objective_breakdown(m)
+"""
 
     return m
 end
@@ -76,17 +78,17 @@ setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 setup["objective"] = "central"
 
-"""
+
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => [1,2,3], "T" => 1:150));
+data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
 m = run_central_planner(data, setup);
-"""
 
+"""
 results = []
 for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
-    for psi in [0.1] #[0.5, 0.2, 0.1]
+    for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
 
@@ -121,4 +123,4 @@ df = DataFrame(results)
 #display(df)
 #change the name of the file accordingly
 CSV.write("risk_aversion_results_O4T720_synthetic_data.csv", df)
-
+"""
