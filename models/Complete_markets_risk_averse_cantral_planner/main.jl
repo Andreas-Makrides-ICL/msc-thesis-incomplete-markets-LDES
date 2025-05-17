@@ -133,7 +133,7 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-#CSV.write("risk_aversion_results_O4T720_synthetic_data.csv", df)
+CSV.write("risk_aversion_results_O10T720.csv", df)
 
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
