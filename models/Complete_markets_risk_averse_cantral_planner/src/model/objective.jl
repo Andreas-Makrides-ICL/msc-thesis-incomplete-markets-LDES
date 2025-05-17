@@ -86,13 +86,13 @@ function define_objective!(model; expected_value::Bool=false)
 
             # Define CVaR Tail Constraint for the Total System
             @constraint(m, cvar_tail_total[o in O], 
-                 ζ_total - (m[:demand_value][o] - total_costs[o])/1000 <= u_total[o]
+                 ζ_total - (m[:demand_value][o] - total_costs[o]) <= u_total[o]
             )
 
             # Define Objective Function Expression: Demand value minus total costs, adjusted for risk aversion
             @expression(m, objective_expr, 
                 δ * sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O) + 
-                (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o]*1000 for o in O))
+                (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O))
             )            
 
             #@variable(m,obj_value)  # Register the objective expression
