@@ -44,7 +44,7 @@ function configure_gurobi(optimizer::Any = Gurobi.Optimizer; solver_options::Uni
         "PreDual" => -1,         # Automatic dualization
         "TimeLimit" => Inf,      # No time limit by default
         "MIPGap" => 1e-3,       # MIP gap tolerance
-        "BarConvTol" => 1e-8,   # Barrier convergence tolerance
+        "BarConvTol" => 1e-10,   # Barrier convergence tolerance
         "OutputFlag" => 1,       # Enable solver output
         "LPWarmStart" => 0,      # Disable warm start by default
         "BarHomogeneous" => -1   # Automatic homogeneous barrier
@@ -58,3 +58,4 @@ function configure_gurobi(optimizer::Any = Gurobi.Optimizer; solver_options::Uni
     println("   Gurobi optimizer configured with attributes: ", keys(attributes))
     return optimizer_instance
 end
+

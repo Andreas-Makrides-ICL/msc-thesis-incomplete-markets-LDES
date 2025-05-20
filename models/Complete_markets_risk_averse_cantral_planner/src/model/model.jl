@@ -42,7 +42,6 @@ mutable struct OptimizationModel
         # Configure solver settings using Gurobi-specific function
         optimizer = configure_gurobi()
         m = Model(CPLEX.Optimizer)
-
         # Return a new OptimizationModel instance
         return new(m, data, setup, Dict(), optimizer)
     end
