@@ -244,10 +244,11 @@ function inspect_cvar_constraint_tightness(model)
 
     println("===== CVaR Constraint Tightness per Scenario =====")
     for o in O
+        welfare = value(m[:demand_value][o]) - value(m[:total_costs][o])
         lhs = value(m[:ζ_total]) - (value(m[:demand_value][o]) - value(m[:total_costs][o]))
         rhs = value(m[:u_total][o])
         gap = lhs - rhs
-        println("Scenario $o: LHS = $(round(lhs, digits=4)), RHS = $(round(rhs, digits=4)), Gap = $(round(gap, digits=4))")
+        println("Scenario $o: welfare = $(round(welfare, digits=4)), LHS = $(round(lhs, digits=4)), RHS = $(round(rhs, digits=4)), Gap = $(round(gap, digits=4))")
     end
     println("==================================================\n")
 end
