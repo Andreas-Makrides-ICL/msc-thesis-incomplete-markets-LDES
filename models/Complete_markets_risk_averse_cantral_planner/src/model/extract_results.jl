@@ -187,11 +187,10 @@ function extract_risk_adjusted_weights(model)
 
     # Print summary
     println("\n===== CVaR Tail Dual Analysis =====")
-    println("Raw dual values (only non-zero shown):")
-    for (o, d) in dual_vals
-        if d > 1e-8
-            println("  Scenario $o → dual = $(round(d, digits=10))")
-        end
+    println("Raw dual values (all shown):")
+    for o in O
+        d = dual_vals[o]
+        @printf("  Scenario %d → dual = %.12e\n", o, d)
     end
 
     println("\nNormalized risk-adjusted probabilities:")
