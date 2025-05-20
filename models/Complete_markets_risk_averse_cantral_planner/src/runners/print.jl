@@ -237,5 +237,21 @@ function print_individual_risks(model::OptimizationModel)
     )
 end
 
+function inspect_cvar_constraint_tightness(model)
+    m = model.model
+    data = model.data
+    O = data["sets"]["O"]
+
+    println("===== CVaR Constraint Tightness per Scenario =====")
+    for o in O
+        lhs = value(m[:ζ_total]) - (value(m[:demand_value][o]) - value(m[:total_costs][o]))
+        rhs = value(m[:u_total][o])
+        gap = lhs - rhs
+        println("Scenario $o: LHS = $(round(lhs, digits=4)), RHS = $(round(rhs, digits=4)), Gap = $(round(gap, digits=4))")
+    end
+    println("==================================================\n")
+end
+
+
 
 

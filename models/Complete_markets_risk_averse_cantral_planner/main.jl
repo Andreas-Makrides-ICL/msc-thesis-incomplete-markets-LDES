@@ -110,6 +110,9 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
         # Format as (scenario, raw dual) for display
         tail_scenarios = [(o, round(d, digits=8)) for (o, d) in sorted_tail if d > 1e-8]
 
+        #rhs and lhs on cvar tail constraint
+        inspect_cvar_constraint_tightness(m)
+
         push!(results, (
             δ = delta,
             Ψ = psi,
