@@ -88,7 +88,7 @@ m = run_central_planner(data, setup);
 """
 
 results = []
-for delta in [1.0, 0.8, 0.5, 0.2, 0.0]
+for delta in [0.5] #[1.0, 0.8, 0.5, 0.2, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
