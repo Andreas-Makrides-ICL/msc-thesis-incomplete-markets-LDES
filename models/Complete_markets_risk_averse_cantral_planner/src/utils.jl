@@ -252,22 +252,41 @@ Solve a JuMP model and check if it is solved to optimality. If not, throw an err
 # Throws
 - `ErrorException`: If the model is not solved to optimality.
 """
-function solve_and_check_optimality!(m)
-    optimize!(m)  # Solve the model
+function solve_and_check_optimality!(m, verbose::Bool = true)
+    # this is for gurobi
+    # Ensure solver output is not suppressed 
+    #MOI.set(m, MOI.RawParameter("OutputFlag"), 1)
 
-    # Check if the model is solved to optimality
-    if termination_status(m) != MOI.OPTIMAL
-        throw(ErrorException("Model is not solved to optimality. Termination status: $(termination_status(m))"))
+    # Solve
+    optimize!(m)
+
+    # Extract results
+    term_status = termination_status(m)
+    primal_stat = primal_status(m)
+    dual_stat = dual_status(m)
+    obj_val = objective_value(m)
+    time_taken = solve_time(m)
+
+    if verbose
+        println("=== Solver Summary ===")
+        println("Termination Status : ", term_status)
+        println("Primal Status      : ", primal_stat)
+        println("Dual Status        : ", dual_stat)
+        println("Objective Value    : ", obj_val)
+        println("Solve Time (s)     : ", time_taken)
+        println("=======================")
     end
 
-    # Gather key solver results
-    results = Dict(
-        :termination_status => termination_status(m),
-        :objective_value => objective_value(m),
-        :solve_time => solve_time(m),
-        :primal_status => primal_status(m),
-        :dual_status => dual_status(m)
-    )
+    if term_status != MOI.OPTIMAL
+        throw(ErrorException("Model not solved to optimality: $term_status"))
+    end
 
-    return results
+    return Dict(
+        :termination_status => term_status,
+        :primal_status => primal_stat,
+        :dual_status => dual_stat,
+        :objective_value => obj_val,
+        :solve_time => time_taken
+    )
 end
+
