@@ -175,7 +175,7 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         # === Fixed Duration Constraints for BESS Variants ===
         @constraint(m, storage_duration_4h, m[:x_E]["BESS_4h"] == 4 * m[:x_P]["BESS_4h"])
         @constraint(m, storage_duration_8h, m[:x_E]["BESS_8h"] == 8 * m[:x_P]["BESS_8h"])
-        @constraint(m, LDES, m[:x_E]["LDES"] >= 10 * m[:x_P]["LDES"])
+        @constraint(m, LDES, m[:x_E]["LDES (PHS)"] >= 10 * m[:x_P]["LDES (PHS)"])
 
 
     end 
