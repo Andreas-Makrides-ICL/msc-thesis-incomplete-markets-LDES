@@ -20,7 +20,7 @@ function run_central_planner(data, setup)
     create_base_model!(m)
 
     # ============================
-    # Solve Base Optimization Model
+    # Solve Optimization Model
     # ============================
     # Define the objective (expected value) and add constraints
     define_objective!(m, expected_value = false)
