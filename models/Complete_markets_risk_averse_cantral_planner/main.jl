@@ -124,8 +124,14 @@ for delta in [0.5] #[1.0, 0.8, 0.5, 0.2, 0.0]
             PV = safeget(cap, :x_g, "PV"),
             Wind = safeget(cap, :x_g, "Wind"),
             Gas = safeget(cap, :x_g, "Gas"),
-            Battery_P = safeget(cap, :x_P, "Battery"),
-            Battery_E = safeget(cap, :x_E, "Battery"),
+            BESS_2h_P = safeget(cap, :x_P, "BESS_2h"),
+            BESS_2h_E = safeget(cap, :x_E, "BESS_2h"),
+            BESS_4h_P = safeget(cap, :x_P, "BESS_4h"),
+            BESS_4h_E = safeget(cap, :x_E, "BESS_4h"),
+            BESS_6h_P = safeget(cap, :x_P, "BESS_6h"),
+            BESS_6h_E = safeget(cap, :x_E, "BESS_6h"),
+            BESS_8h_P = safeget(cap, :x_P, "BESS_8h"),
+            BESS_8h_E = safeget(cap, :x_E, "BESS_8h"),
             LDES_P = safeget(cap, :x_P, "LDES"),
             LDES_E = safeget(cap, :x_E, "LDES")
         ))

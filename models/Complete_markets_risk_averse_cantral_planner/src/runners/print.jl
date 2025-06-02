@@ -113,12 +113,19 @@ function print_central_summary(model, solve_time)
         rpad("PV", data_width),
         rpad("Wind", data_width),
         rpad("Gas", data_width),
-        rpad("Battery Pwr.", data_width),
-        rpad("Battery En.", data_width),
+        rpad("BESS_2h Pwr.", data_width),
+        rpad("BESS_2h En.", data_width),
+        rpad("BESS_4h Pwr.", data_width),
+        rpad("BESS_4h En.", data_width),
+        rpad("BESS_6h Pwr.", data_width),
+        rpad("BESS_6h En.", data_width),
+        rpad("BESS_8h Pwr.", data_width),
+        rpad("BESS_8h En.", data_width),
+        rpad("LDES Pwr.", data_width),
+        rpad("LDES En.", data_width),
         rpad("Time", time_width),
         rpad("Total Time", time_width))
     println("------------------------------------------------------------------------------------------------------------------")
-
 
     print(rpad("CENT", iter_width))
     print(rpad(" - ", conv_width))
