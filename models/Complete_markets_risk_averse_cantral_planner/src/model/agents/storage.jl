@@ -172,6 +172,12 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
             m[:e][s, T[end], o] >= stor_data[s, "init_soc"] * m[:x_E][s]
         )
 
+        # === Fixed Duration Constraints for BESS Variants ===
+        @constraint(m, storage_duration_2h, m[:x_E]["BESS_2h"] == 2 * m[:x_P]["BESS_2h"])
+        @constraint(m, storage_duration_4h, m[:x_E]["BESS_4h"] == 4 * m[:x_P]["BESS_4h"])
+        @constraint(m, storage_duration_6h, m[:x_E]["BESS_6h"] == 6 * m[:x_P]["BESS_6h"])
+        @constraint(m, storage_duration_8h, m[:x_E]["BESS_8h"] == 8 * m[:x_P]["BESS_8h"])
+
 
     end 
 
