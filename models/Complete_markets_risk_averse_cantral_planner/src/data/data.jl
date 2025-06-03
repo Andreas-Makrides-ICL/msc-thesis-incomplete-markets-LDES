@@ -119,6 +119,11 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         "R" => union(unique(dataframes["generation_data"].G), unique(dataframes["storage_data"].S))
     )
 
+    # Ensure all generator/storage names are String (not String31, Symbol, etc.)
+    sets["G"] = String.(sets["G"])
+    sets["S"] = String.(sets["S"])
+    sets["R"] = String.(sets["R"])
+
     # Apply user-defined set filters from user_sets if provided
     user_sets_defined = !isempty(user_sets)
     if user_sets_defined

@@ -122,15 +122,17 @@ for delta in [1.0, 0.8, 0.5, 0.2, 0.0] #[0.5]
             max_dual = !isempty(duals) ? maximum(values(duals)) : 0.0,
             tail_scenarios = tail_scenarios,
             PV = safeget(cap, :x_g, "PV"),
-            Wind = safeget(cap, :x_g, "Wind"),
+            Wind_Distributed = safeget(cap, :x_g, "Wind_Distributed"),
+            Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
+            Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Gas = safeget(cap, :x_g, "Gas"),
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_4h_P = safeget(cap, :x_P, "BESS_4h"),
             BESS_4h_E = safeget(cap, :x_E, "BESS_4h"),
             BESS_8h_P = safeget(cap, :x_P, "BESS_8h"),
             BESS_8h_E = safeget(cap, :x_E, "BESS_8h"),
-            LDES_P = safeget(cap, :x_P, "LDES"),
-            LDES_E = safeget(cap, :x_E, "LDES")
+            LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
+            LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS")
         ))
 
     end
@@ -140,7 +142,6 @@ df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
 CSV.write("risk_aversion_results_O10T720_new_techs.csv", df)
-
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 
