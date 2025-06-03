@@ -149,8 +149,10 @@ function print_central_summary(model, solve_time)
     print(rpad(@sprintf("%.2fs", solve_time), time_width))  # repeated to mimic Total Time
     println()
 
-    total_cap = sum(values(capacities[:x_g])) + sum(values(capacities[:x_P])) + sum(values(capacities[:x_E]))
+    total_cap = sum(values(capacities[:x_g])) + sum(values(capacities[:x_P]))
+    total_energy = sum(values(capacities[:x_E]))
     println("\nTotal Installed Capacity: ", round(total_cap, digits=2), " MW")
+    println("\nTotal Installed Energy: ", round(total_energy, digits=2), " MWh")
 
 end
 
