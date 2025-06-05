@@ -238,12 +238,12 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     flexible_demand = data["data"]["additional_params"]["flexible_demand"]
 
     # === Extract solved λ from dual of balance constraint
-    λ = Dict((t, o) => shadow_price(m[:demand_balance][t, o]) for t in T, o in O)
+    λ = Dict((t, o) => dual(m[:demand_balance][t, o]) for t in T, o in O)
 
     # === Generators
     risk_g = Dict{String, Float64}()
     for g in G
-        π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * λ[(t, o)] for t in T) for o in O)
+        π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * abs(λ[(t, o)]) for t in T) for o in O)
         expected = sum(P[o] * (π[o] - value(m[:gen_total_costs][g, o])) for o in O)
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
         risk_g[g] = δ * expected + (1 - δ) * cvar
@@ -253,7 +253,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     risk_s = Dict{String, Float64}()
     for s in S
         π = Dict(o =>
-            sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * λ[(t, o)] for t in T)
+            sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * abs(λ[(t, o)]) for t in T)
             for o in O)
         expected = sum(P[o] * (π[o] - value(m[:stor_total_costs][s, o])) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
@@ -264,7 +264,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     π = Dict{Int, Float64}()
     val = Dict{Int, Float64}()
     for o in O
-        π[o] = sum(W[t, o] * λ[(t, o)] * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
+        π[o] = sum(W[t, o] * abs(λ[(t, o)]) * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
         val[o] = sum(W[t, o] * B * (
             value(m[:d_fix][t, o]) + value(m[:d_flex][t, o]) -
             value(m[:d_flex][t, o])^2 / (2 * flexible_demand)) for t in T)
