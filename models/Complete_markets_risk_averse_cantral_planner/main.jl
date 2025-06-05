@@ -59,7 +59,7 @@ function run_central_planner(data, setup)
     print_central_summary(m, solve_time)
 
     print_objective_breakdown(m)
-    print_individual_risks(m)
+    recalculate_and_print_individual_risks(m)
 
     return m
 end
@@ -67,6 +67,10 @@ end
 # Extract capacity safely
 function safeget(cap_dict, sym, key)
     sym ∈ keys(cap_dict) && key ∈ axes(cap_dict[sym], 1) ? cap_dict[sym][key] : 0.0
+end
+
+function safe_div(num, denom)
+    return denom ≈ 0.0 ? 0.0 : num / denom
 end
 
 # Example usage: load data and run central planner
@@ -128,13 +132,13 @@ for delta in [1.0] #[, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_4h_P = safeget(cap, :x_P, "BESS_4h"),
             BESS_4h_E = safeget(cap, :x_E, "BESS_4h"),
-            Duration_4h = (safeget(cap, :x_E, "BESS_4h")/safeget(cap, :x_P, "BESS_4h")),
+            Duration_4h = safe_div(safeget(cap, :x_E, "BESS_4h"), safeget(cap, :x_P, "BESS_4h")),
             BESS_8h_P = safeget(cap, :x_P, "BESS_8h"),
             BESS_8h_E = safeget(cap, :x_E, "BESS_8h"),
-            Duration_8h = (safeget(cap, :x_E, "BESS_8h")/safeget(cap, :x_P, "BESS_8h")),
+            Duration_8h = safe_div(safeget(cap, :x_E, "BESS_8h"), safeget(cap, :x_P, "BESS_8h")),
             LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
             LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
-            Duration_PHS = (safeget(cap, :x_E, "LDES_PHS")/safeget(cap, :x_P, "LDES_PHS"))
+            Duration_PHS = safe_div(safeget(cap, :x_E, "LDES_PHS"), safeget(cap, :x_P, "LDES_PHS"))
         ))
 
     end

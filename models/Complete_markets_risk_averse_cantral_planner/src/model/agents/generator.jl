@@ -119,7 +119,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     if remove_first
         return
     end
-
+"""
     # Define new CVaR tail constraint for generators
     if !has_cvar_tail_g
         if price_available
@@ -134,14 +134,14 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             )
         end
     end
-
+"""
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end
 
     # --- Nuclear Ramp Rate Constraints ---
     # Define ramp rate as a fraction of installed capacity (e.g., 10% per hour)
-    ramp_rate = 0.1  # 10% of capacity per hour
+    ramp_rate = 1  # 100% of capacity per hour
 
     for g in G
         if g == "Nuclear"

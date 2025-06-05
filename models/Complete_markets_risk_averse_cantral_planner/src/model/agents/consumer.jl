@@ -135,7 +135,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
         δ * sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O) + 
         (1 - δ) * (m[:ζ_d] - (1 / Ψ) * sum(P[o] * m[:u_d][o] for o in O))
     )
-
+"""
     # Define CVaR Tail Constraint for Consumers
     if !has_cvar_tail_d
         if demand_type == "QP" && price_available
@@ -148,7 +148,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
             )
         end
     end
-
+"""
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end

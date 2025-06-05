@@ -221,47 +221,75 @@ function print_model_structure_symbolic(m::JuMP.Model)
 end
 
 #extract and print the individual agent risk measures (generator, storage, consumer)
-function print_individual_risks(model::OptimizationModel)
+function recalculate_and_print_individual_risks(model::OptimizationModel)
     m = model.model
-    G = model.data["sets"]["G"]
-    S = model.data["sets"]["S"]
-    O = model.data["sets"]["O"]
+    data = model.data
 
-    # Extract individual risk-adjusted profit/welfare values
-    risk_g = Dict(g => value(m[:ρ_g][g]) for g in G if haskey(m, :ρ_g))
-    risk_s = Dict(s => value(m[:ρ_s][s]) for s in S if haskey(m, :ρ_s))
-    risk_d = haskey(m, :ρ_d) ? value(m[:ρ_d]) : missing
+    G = data["sets"]["G"]
+    S = data["sets"]["S"]
+    T = data["sets"]["T"]
+    O = data["sets"]["O"]
 
-    println("\n===== Individual Risk Measures (ρ) =====")
+    W = data["data"]["time_weights"]
+    P = data["data"]["additional_params"]["P"]
+    δ = data["data"]["additional_params"]["δ"]
+    Ψ = data["data"]["additional_params"]["Ψ"]
+    B = data["data"]["additional_params"]["B"]
+    flexible_demand = data["data"]["additional_params"]["flexible_demand"]
+
+    # === Extract solved λ from dual of balance constraint
+    λ = Dict((t, o) => shadow_price(m[:balance][t, o]) for t in T, o in O)
+
+    # === Generators
+    risk_g = Dict{String, Float64}()
+    for g in G
+        π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * λ[(t, o)] for t in T) for o in O)
+        expected = sum(P[o] * (π[o] - value(m[:gen_total_costs][g, o])) for o in O)
+        cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
+        risk_g[g] = δ * expected + (1 - δ) * cvar
+    end
+
+    # === Storage
+    risk_s = Dict{String, Float64}()
+    for s in S
+        π = Dict(o =>
+            sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * λ[(t, o)] for t in T)
+            for o in O)
+        expected = sum(P[o] * (π[o] - value(m[:stor_total_costs][s, o])) for o in O)
+        cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
+        risk_s[s] = δ * expected + (1 - δ) * cvar
+    end
+
+    # === Consumer
+    π = Dict{Int, Float64}()
+    val = Dict{Int, Float64}()
+    for o in O
+        π[o] = sum(W[t, o] * λ[(t, o)] * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
+        val[o] = sum(W[t, o] * B * (
+            value(m[:d_fix][t, o]) + value(m[:d_flex][t, o]) -
+            value(m[:d_flex][t, o])^2 / (2 * flexible_demand)) for t in T)
+    end
+    expected = sum(P[o] * (val[o] - π[o]) for o in O)
+    cvar = value(m[:ζ_d]) - (1 / Ψ) * sum(P[o] * value(m[:u_d][o]) for o in O)
+    risk_d = δ * expected + (1 - δ) * cvar
+
+    # === Print
+    println("\n===== Recalculated Individual Risk Measures with Dual Prices =====")
     println("Generators:")
     for (g, ρ) in sort(collect(risk_g), by = x -> x[1])
-        println("  $g → $(round(ρ, digits=2))")
+        println("  $g → ", round(ρ, digits=2))
     end
     println("Storage:")
     for (s, ρ) in sort(collect(risk_s), by = x -> x[1])
-        println("  $s → $(round(ρ, digits=2))")
+        println("  $s → ", round(ρ, digits=2))
     end
     println("Consumer:")
-    println("  ρ_d → $(risk_d isa Missing ? "n/a" : round(risk_d, digits=2))")
-    println("========================================\n")
+    println("  ρ_d → ", round(risk_d, digits=2))
+    println("==============================================================\n")
 
-    println("\n===== Max u_g and u_s per generator/storage (should be ≈ 0) =====")
-    for g in G
-        max_u_g = maximum(abs(value(m[:u_g][g, o])) for o in O)
-        println("Generator $g → max u_g = ", round(max_u_g, digits=6))
-    end
-
-    for s in S
-        max_u_s = maximum(abs(value(m[:u_s][s, o])) for o in O)
-        println("Storage $s → max u_s = ", round(max_u_s, digits=6))
-    end
-
-    return Dict(
-        "generators" => risk_g,
-        "storage" => risk_s,
-        "consumer" => risk_d
-    )
+    return Dict("generators" => risk_g, "storage" => risk_s, "consumer" => risk_d)
 end
+
 
 function inspect_cvar_constraint_tightness(model)
     m = model.model
