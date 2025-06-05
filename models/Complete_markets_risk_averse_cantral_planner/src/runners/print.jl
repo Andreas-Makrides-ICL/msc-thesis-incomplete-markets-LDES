@@ -238,7 +238,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     flexible_demand = data["data"]["additional_params"]["flexible_demand"]
 
     # === Extract solved λ from dual of balance constraint
-    λ = Dict((t, o) => shadow_price(m[:balance][t, o]) for t in T, o in O)
+    λ = Dict((t, o) => shadow_price(m[:demand_balance][t, o]) for t in T, o in O)
 
     # === Generators
     risk_g = Dict{String, Float64}()
