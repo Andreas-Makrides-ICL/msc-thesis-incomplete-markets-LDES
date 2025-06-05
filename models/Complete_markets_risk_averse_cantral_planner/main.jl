@@ -81,6 +81,7 @@ setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 setup["objective"] = "central"
+setup["use_hierarchical_clustering"] = true
 
 """
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
