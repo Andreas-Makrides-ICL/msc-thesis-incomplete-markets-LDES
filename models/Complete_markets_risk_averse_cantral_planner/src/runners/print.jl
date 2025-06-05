@@ -111,17 +111,18 @@ function print_central_summary(model, solve_time)
         rpad("Primal Conv.", conv_width),
         rpad("Dual Conv.", conv_width),
         rpad("PV", data_width),
-        rpad("Wind_Distributed", data_width),
-        rpad("Wind_Offshore", data_width),
-        rpad("Wind_Onshore", data_width),
+        rpad("Wind", data_width),
         rpad("Gas", data_width),
         rpad("Nuclear", data_width),
         rpad("BESS_4h Pwr.", data_width),
         rpad("BESS_4h En.", data_width),
+        rpad("Dur_4h", data_width),
         rpad("BESS_8h Pwr.", data_width),
         rpad("BESS_8h En.", data_width),
+        rpad("Dur_8h", data_width),
         rpad("LDES_PHS Pwr.", data_width),
         rpad("LDES_PHS En.", data_width),
+        rpad("Dur_PHS", data_width),
         rpad("Time", time_width),
         rpad("Total Time", time_width))
     println("------------------------------------------------------------------------------------------------------------------")
@@ -141,8 +142,10 @@ function print_central_summary(model, solve_time)
     for s in d["sets"]["S"]
         val_P = s ∈ axes(capacities[:x_P], 1) ? capacities[:x_P][s] : 0.0
         val_E = s ∈ axes(capacities[:x_E], 1) ? capacities[:x_E][s] : 0.0
+        Dur = val_E/val_P
         print(rpad(@sprintf("%.2f", val_P), data_width))
         print(rpad(@sprintf("%.2f", val_E), data_width))
+        print(rpad(@sprintf("%.2f", Dur), data_width))
     end
 
     print(rpad(@sprintf("%.2fs", solve_time), time_width))
@@ -170,7 +173,9 @@ function print_objective_breakdown(m::OptimizationModel)
     # Compute CVaR term: ζ - (1 / Ψ) * ∑ P[o] * u[o]
     ζ = value(jm[:ζ_total])
     u = [value(jm[:u_total][o]) for o in O]
-    cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[o] for o in O)
+    #cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[o] for o in O)
+    cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[i] for (i, o) in enumerate(O))
+
 
     # Final blended objective
     objective = δ * expected_term + (1 - δ) * cvar_term
@@ -180,7 +185,7 @@ function print_objective_breakdown(m::OptimizationModel)
     println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=2))
     println("CVaR Term ((1 - δ) * CVaR):       ", round((1 - δ) * cvar_term, digits=2))
     println("  ↳ ζ_total:                       ", round(ζ, digits=2))
-    println("  ↳ u_total[o]:                    ", [round(u[o], digits=4) for o in eachindex(O)])
+    println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
     println("Full Objective Value:             ", round(objective, digits=2))
     println("===========================================")
 end
@@ -220,6 +225,7 @@ function print_individual_risks(model::OptimizationModel)
     m = model.model
     G = model.data["sets"]["G"]
     S = model.data["sets"]["S"]
+    O = model.data["sets"]["O"]
 
     # Extract individual risk-adjusted profit/welfare values
     risk_g = Dict(g => value(m[:ρ_g][g]) for g in G if haskey(m, :ρ_g))
@@ -238,6 +244,17 @@ function print_individual_risks(model::OptimizationModel)
     println("Consumer:")
     println("  ρ_d → $(risk_d isa Missing ? "n/a" : round(risk_d, digits=2))")
     println("========================================\n")
+
+    println("\n===== Max u_g and u_s per generator/storage (should be ≈ 0) =====")
+    for g in G
+        max_u_g = maximum(abs(value(m[:u_g][g, o])) for o in O)
+        println("Generator $g → max u_g = ", round(max_u_g, digits=6))
+    end
+
+    for s in S
+        max_u_s = maximum(abs(value(m[:u_s][s, o])) for o in O)
+        println("Storage $s → max u_s = ", round(max_u_s, digits=6))
+    end
 
     return Dict(
         "generators" => risk_g,

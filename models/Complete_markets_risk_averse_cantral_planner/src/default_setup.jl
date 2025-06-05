@@ -33,13 +33,13 @@ const default_setup = Dict(
     "objective" => "central",  # Options: "central" or "individual"
 
     # Data Path Options
-    "input_path" => "data/",
+    "input_path" => "data_final/d",
     #"input_path" => "synthetic_data/",
-    "availability" => "CF.csv",
-    "demand" => "load_profile.csv",
+    "availability" => "selected_capacity_factors.csv", #"CF.csv",
+    "demand" => "selected_load_profiles.csv", #"load_profile.csv",
     "storage_data" => "storagedata.csv",
     "generation_data" => "gendata.csv",
-    "time_weight" => "time_weight.csv",
+    "time_weight" => "selected_weights.csv", #"time_weight.csv",
 
     # Demand and Load Shedding Options
     "peak_demand" => 100,

@@ -88,12 +88,13 @@ m = run_central_planner(data, setup);
 """
 
 results = []
-for delta in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0] #[0.5]
+for delta in [1.0] #[, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
 
-        data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
+        #data = load_data(setup, user_sets = Dict("O" => 1:10, "T" => 1:720));
+        data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup);
 
         res = m.results["base"]["base_results"]
@@ -122,17 +123,18 @@ for delta in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0] #[0.5]
             max_dual = !isempty(duals) ? maximum(values(duals)) : 0.0,
             tail_scenarios = tail_scenarios,
             PV = safeget(cap, :x_g, "PV"),
-            Wind_Distributed = safeget(cap, :x_g, "Wind_Distributed"),
-            Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
-            Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
+            Wind = safeget(cap, :x_g, "Wind"),
             Gas = safeget(cap, :x_g, "Gas"),
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_4h_P = safeget(cap, :x_P, "BESS_4h"),
             BESS_4h_E = safeget(cap, :x_E, "BESS_4h"),
+            Duration_4h = (safeget(cap, :x_E, "BESS_4h")/safeget(cap, :x_P, "BESS_4h")),
             BESS_8h_P = safeget(cap, :x_P, "BESS_8h"),
             BESS_8h_E = safeget(cap, :x_E, "BESS_8h"),
+            Duration_8h = (safeget(cap, :x_E, "BESS_8h")/safeget(cap, :x_P, "BESS_8h")),
             LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
-            LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS")
+            LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
+            Duration_PHS = (safeget(cap, :x_E, "LDES_PHS")/safeget(cap, :x_P, "LDES_PHS"))
         ))
 
     end
@@ -141,7 +143,7 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O10T720_new_techs.csv", df)
+CSV.write("risk_aversion_results_O_selected_scenarios_T3600_no_nuclear.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 

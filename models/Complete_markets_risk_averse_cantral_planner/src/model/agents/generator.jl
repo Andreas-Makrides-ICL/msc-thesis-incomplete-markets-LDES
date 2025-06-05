@@ -138,6 +138,33 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end
+
+    # --- Nuclear Ramp Rate Constraints ---
+    # Define ramp rate as a fraction of installed capacity (e.g., 10% per hour)
+    ramp_rate = 0.1  # 10% of capacity per hour
+
+    for g in G
+        if g == "Nuclear"
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate * m[:x_g][g]
+            )
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate * m[:x_g][g]
+            )
+        end
+    end
+
+        # --- Nuclear Minimum Stable Output Constraint ---
+    min_output_frac = 0.5  # Minimum output is 50% of installed capacity
+
+    for g in G
+        if g == "Nuclear"
+            @constraint(m, [t in T, o in O],
+                m[:q][g, t, o] ≥ min_output_frac * m[:x_g][g]
+            )
+        end
+    end
+
 end
 
 export define_generator!
