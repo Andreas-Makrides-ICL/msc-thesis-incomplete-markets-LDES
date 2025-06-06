@@ -156,11 +156,15 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
         # --- Nuclear Minimum Stable Output Constraint ---
     min_output_frac = 0.5  # Minimum output is 50% of installed capacity
+    nuclear_fraction = 0.04
 
     for g in G
         if g == "Nuclear"
             @constraint(m, [t in T, o in O],
                 m[:q][g, t, o] ≥ min_output_frac * m[:x_g][g]
+            )
+            @constraint(m,
+                m[:x_g][g] ≤ nuclear_fraction.04 * setup["peak_demand"]
             )
         end
     end
