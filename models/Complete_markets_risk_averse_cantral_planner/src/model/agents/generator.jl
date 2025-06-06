@@ -163,9 +163,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             @constraint(m, [t in T, o in O],
                 m[:q][g, t, o] ≥ min_output_frac * m[:x_g][g]
             )
-            @constraint(m,
-                m[:x_g][g] ≤ nuclear_fraction.04 * setup["peak_demand"]
-            )
+            @constraint(m, m[:x_g][g] ≤ nuclear_fraction * setup["peak_demand"])
         end
     end
 
