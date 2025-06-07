@@ -98,7 +98,7 @@ for delta in [0.6] #[0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
         setup["δ"] = delta
         setup["Ψ"] = psi
 
-        data = load_data(setup, user_sets = Dict("O" => 1:40, "T" => 1:3600));
+        data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup);
 
