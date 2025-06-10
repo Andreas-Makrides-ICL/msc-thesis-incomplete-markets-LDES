@@ -15,6 +15,9 @@ function run_ADMM(data, setup)
     m = OptimizationModel(data, setup = setup)
     # Set solver attribute to suppress output
     set_attribute(m.model, "CPX_PARAM_SCRIND", false) #here controls the print of the output of the solver, true prints solver progress
+
+    #set_optimizer_attribute(m.model, "OutputFlag", 1)
+    #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
     # Define variables and create the base model
     define_variables!(m)
     create_base_model!(m)
@@ -23,7 +26,7 @@ function run_ADMM(data, setup)
     # Solve Base Optimization Model
     # ============================
     # Define the objective (expected value) and add constraints
-    define_objective!(m, expected_value = true)
+    define_objective!(m, expected_value = false)
     define_balances!(m)
     add_residual!(m)
 
@@ -37,7 +40,6 @@ function run_ADMM(data, setup)
         "base_results" => base_results,
         "op_results" => op_results
     )
-
     # ============================
     # Initialize prices
     # ============================
@@ -133,7 +135,7 @@ setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 
-setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
+setup["δ"] = 0.8   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
 data = load_data(setup, user_sets = Dict("O" => [1,2,3], "T" => 1:150));
