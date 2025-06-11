@@ -37,11 +37,18 @@ mutable struct OptimizationModel
     # Returns
     - `OptimizationModel`: A new instance of the `OptimizationModel` struct.
     """
-    function OptimizationModel(data::Dict; setup::Dict=Dict())
+    function OptimizationModel(data::Dict; setup::Dict=Dict(), solver::String)
         # Initialize a JuMP model with Gurobi solver
         # Configure solver settings using Gurobi-specific function
         optimizer = configure_gurobi()
-        m = Model(CPLEX.Optimizer)
+        
+        if solver == "CPLEX"
+            m = Model(CPLEX.Optimizer)  # CPLEX
+        elseif solver == "Gurobi"
+            m = Model(Gurobi.Optimizer)      # Gurobi 
+        else
+            error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")
+        end
         # Return a new OptimizationModel instance
         return new(m, data, setup, Dict(), optimizer)
     end

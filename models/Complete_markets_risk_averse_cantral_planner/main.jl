@@ -7,14 +7,23 @@ include("src/_init_.jl");
 
 Runs the central planner optimization workflow on the provided data and setup.
 """
-function run_central_planner(data, setup)
+function run_central_planner(data, setup, solver)
     # ============================
     # Create Base Optimization Model
     # ============================
     # Initialize the optimization model
-    m = OptimizationModel(data, setup = setup)
+    m = OptimizationModel(data, setup = setup, solver=solver)
+    
     # Set solver attribute to suppress output
-    set_attribute(m.model, "CPX_PARAM_SCRIND", true) #here controls the print of the output of the solver, true prints solver progress
+    if solver == "CPLEX"
+        set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
+    elseif solver == "Gurobi"
+        set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
+        set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
+        #set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
+    else
+        error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")
+    end
     # Define variables and create the base model
     define_variables!(m)
     create_base_model!(m)
@@ -75,7 +84,7 @@ end
 
 # Example usage: load data and run central planner
 setup = copy(default_setup)
-
+solver = "Gurobi"
 # Central planner parameter 
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
@@ -83,12 +92,12 @@ setup["tolerance"] = 0.01
 setup["objective"] = "central"
 setup["use_hierarchical_clustering"] = true
 
-"""
+
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
-m = run_central_planner(data, setup);
+data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:3600));
+m = run_central_planner(data, setup, solver);
 
 """
 
@@ -100,7 +109,7 @@ for delta in [0.4,0.2,0.0] #[0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.
 
         data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
-        m = run_central_planner(data, setup);
+        m = run_central_planner(data, setup, solver);
 
         res = m.results["base"]["base_results"]
         cap = res["capacities"]
@@ -149,4 +158,4 @@ CSV.write("risk_aversion_results_O30_T3600.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 
-
+"""

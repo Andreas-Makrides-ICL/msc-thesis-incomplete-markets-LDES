@@ -17,6 +17,8 @@ function run_ADMM(data, setup)
     #set_attribute(m.model, "CPX_PARAM_SCRIND", false) #here controls the print of the output of the solver, true prints solver progress
 
     set_optimizer_attribute(m.model, "OutputFlag", 1)
+    set_optimizer_attribute(m.model, "QCPDual", 1)
+    set_optimizer_attribute(m.model, "NonConvex", 2)
     #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
     # Define variables and create the base model
     define_variables!(m)
