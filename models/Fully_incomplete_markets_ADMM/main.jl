@@ -14,11 +14,11 @@ function run_ADMM(data, setup)
     # Initialize the optimization model
     m = OptimizationModel(data, setup = setup)
     # Set solver attribute to suppress output
-    #set_attribute(m.model, "CPX_PARAM_SCRIND", true) #here controls the print of the output of the solver, true prints solver progress
+    set_attribute(m.model, "CPX_PARAM_SCRIND", true) #here controls the print of the output of the solver, true prints solver progress
     
-    set_optimizer_attribute(m.model, "OutputFlag", 1)
-    set_optimizer_attribute(m.model, "QCPDual", 1)
-    set_optimizer_attribute(m.model, "NonConvex", 2)
+    #set_optimizer_attribute(m.model, "OutputFlag", 1)
+    #set_optimizer_attribute(m.model, "QCPDual", 1)
+    #set_optimizer_attribute(m.model, "NonConvex", 2)
     #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
     # Define variables and create the base model
     define_variables!(m)
@@ -88,6 +88,7 @@ function run_ADMM(data, setup)
         if iter % 10 == 0 || iter == 1
             print_table_header(m)
         end
+        
         # Extract results and compute convergence metrics
         # Save the results of the current iteration for analysis
         extract_iteration_results!(m, iter)
@@ -148,6 +149,8 @@ function run_ADMM(data, setup)
     return m
 end
 
+
+
 # Extract capacity safely
 function safeget(cap_dict, sym, key)
     sym ∈ keys(cap_dict) && key ∈ axes(cap_dict[sym], 1) ? cap_dict[sym][key] : 0.0
@@ -164,13 +167,12 @@ setup = copy(default_setup)
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
-
-
+setup["use_hierarchical_clustering"] = true
 
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1:15, "T" => 1:150));
+data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
 m = run_ADMM(data, setup);
 
 """
@@ -232,4 +234,3 @@ CSV.write("ADMM_risk_aversion_results_O30_T3600.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 """
-

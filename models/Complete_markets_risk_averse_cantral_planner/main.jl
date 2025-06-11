@@ -84,7 +84,7 @@ end
 
 # Example usage: load data and run central planner
 setup = copy(default_setup)
-solver = "Gurobi"
+solver = "CPLEX"
 # Central planner parameter 
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
@@ -96,7 +96,7 @@ setup["use_hierarchical_clustering"] = true
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:3600));
+data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
 m = run_central_planner(data, setup, solver);
 
 """
