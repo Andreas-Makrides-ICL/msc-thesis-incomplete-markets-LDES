@@ -47,7 +47,9 @@ function configure_gurobi(optimizer::Any = Gurobi.Optimizer; solver_options::Uni
         "BarConvTol" => 1e-8,   # Barrier convergence tolerance
         "OutputFlag" => 1,       # Enable solver output
         "LPWarmStart" => 0,      # Disable warm start by default
-        "BarHomogeneous" => -1   # Automatic homogeneous barrier
+        #"BarHomogeneous" => -1   # Automatic homogeneous barrier
+        "BarHomogeneous" => 1,   # Automatic homogeneous barrier
+        "BarQCPConvTol" => 1e-6   # Barrier QCP convergence tolerance
     )
 
     # Merge default settings with solver_options if provided

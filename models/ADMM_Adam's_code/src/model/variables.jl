@@ -84,9 +84,13 @@ function define_variables!(model)
     end
 
     # Investment Variables (always included as per the simplified model)
-    @variable(m, 0 <= x_g[g in G] <= get_bound(data, "x_g_up_bounds", g))  # Generator capacity
+""" @variable(m, 0 <= x_g[g in G] <= get_bound(data, "x_g_up_bounds", g))  # Generator capacity
     @variable(m, 0 <= x_P[s in S] <= get_bound(data, "x_P_up_bounds", s))  # Storage power capacity
-    @variable(m, 0 <= x_E[s in S] <= get_bound(data, "x_E_up_bounds", s))  # Storage energy capacity
+    @variable(m, 0 <= x_E[s in S] <= get_bound(data, "x_E_up_bounds", s))  # Storage energy capacity """
+
+    @variable(m, 0 <= x_g[g in G] )  # Generator capacity
+    @variable(m, 0 <= x_P[s in S] )  # Storage power capacity
+    @variable(m, 0 <= x_E[s in S] )  # Storage energy capacity
 
     # Risk Variables (always included as per the risk-averse model)
     @variable(m, u_g[g in G, o in O] >= 0)  # Loss relative to Value-at-Risk (VaR) for generators

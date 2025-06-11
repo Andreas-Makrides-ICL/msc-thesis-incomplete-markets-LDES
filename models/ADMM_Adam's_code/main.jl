@@ -14,9 +14,9 @@ function run_ADMM(data, setup)
     # Initialize the optimization model
     m = OptimizationModel(data, setup = setup)
     # Set solver attribute to suppress output
-    set_attribute(m.model, "CPX_PARAM_SCRIND", false) #here controls the print of the output of the solver, true prints solver progress
+    #set_attribute(m.model, "CPX_PARAM_SCRIND", false) #here controls the print of the output of the solver, true prints solver progress
 
-    #set_optimizer_attribute(m.model, "OutputFlag", 1)
+    set_optimizer_attribute(m.model, "OutputFlag", 1)
     #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
     # Define variables and create the base model
     define_variables!(m)
