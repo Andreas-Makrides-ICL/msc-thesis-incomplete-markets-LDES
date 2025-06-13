@@ -182,11 +182,11 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [0.4]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [0.0]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
         local_setup = copy(default_setup)
-        local_setup["max_iterations"] = 10000
+        local_setup["max_iterations"] = 3
         local_setup["penalty"] = 1.1
         local_setup["tolerance"] = 0.01
         local_setup["use_hierarchical_clustering"] = false
