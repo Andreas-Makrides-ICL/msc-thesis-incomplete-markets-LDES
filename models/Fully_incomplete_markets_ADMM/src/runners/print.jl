@@ -354,6 +354,15 @@ function print_agents_objective_breakdown(m)
         expected = sum(P[o] * (value(m.model[:π_g][g, o]) - value(m.model[:gen_total_costs][g, o])) for o in O)
         cvar = ζ - (1 / Ψ) * u_avg
         println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+        
+        println("  Scenario breakdown for Gen $g:")
+        for o in O
+            u = round(value(m.model[:u_g][g, o]), digits=4)
+            d = dual(m.model[:cvar_tail_g][g, o])
+            tail_flag = u > 1e-6 ? "TAIL" : ""
+            println("    Scenario $o: u = $u, dual = $d $tail_flag")
+        end
+        
     end
 
     # Storage
@@ -366,6 +375,15 @@ function print_agents_objective_breakdown(m)
         expected = sum(P[o] * (value(m.model[:π_s][s, o]) - value(m.model[:stor_total_costs][s, o])) for o in O)
         cvar = ζ - (1 / Ψ) * u_avg
         println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+        
+        println("  Scenario breakdown for Storage $s:")
+        for o in O
+            u = round(value(m.model[:u_s][s, o]), digits=4)
+            d = dual(m.model[:cvar_tail_s][s, o])
+            tail_flag = u > 1e-6 ? "TAIL" : ""
+            println("    Scenario $o: u = $u, dual = $d $tail_flag")
+        end
+
     end
 
     # Consumer (only one set of variables)
@@ -377,6 +395,14 @@ function print_agents_objective_breakdown(m)
     expected = compute_expected_consumer_welfare(m)
     cvar = ζ - (1 / Ψ) * u_avg
     println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+
+    println("  Scenario breakdown for Consumer:")
+    for o in O
+        u = round(value(m.model[:u_d][o]), digits=4)
+        d = dual(m.model[:cvar_tail_d][o])
+        tail_flag = u > 1e-6 ? "TAIL" : ""
+        println("    Scenario $o: u = $u, dual = $d $tail_flag")
+    end
 
     println("=================================\n")
 end

@@ -90,19 +90,19 @@ setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
 setup["tolerance"] = 0.01
 setup["objective"] = "central"
-setup["use_hierarchical_clustering"] = true
+setup["use_hierarchical_clustering"] = false
 
-
+"""
 setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
 setup["Ψ"] = 0.5
 
-data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
+data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
 m = run_central_planner(data, setup, solver);
 
 """
 
 results = []
-for delta in [0.4,0.2,0.0] #[0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1] #[0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
@@ -158,4 +158,3 @@ CSV.write("risk_aversion_results_O30_T3600.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 
-"""
