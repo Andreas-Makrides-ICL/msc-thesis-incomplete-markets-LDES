@@ -179,8 +179,10 @@ function print_objective_breakdown(m::OptimizationModel)
 
     # Print nicely
     println("\n===== Risk-Averse Objective Breakdown =====")
-    println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=2))
-    println("CVaR Term ((1 - δ) * CVaR):       ", round((1 - δ) * cvar_term, digits=2))
+    println("Expected Term (E[W - C]):     ", expected_term)
+    println("CVaR Term :       ", cvar_term)
+    println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=4))
+    println("CVaR Term ((1 - δ) * CVaR) :       ", round((1 - δ) * cvar_term, digits=4))
     println("  ↳ ζ_total:                       ", round(ζ, digits=2))
     println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
     println("Full Objective Value:             ", round(objective, digits=2))
