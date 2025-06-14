@@ -75,7 +75,7 @@ function run_ADMM(data, setup)
 
     # Main ADMM loop
     for iter in 1:m.setup["max_iterations"]
-
+        
         #print CVaR and ζ_d,ζ_g,ζ_s to ensure correct operation
         println("CVaR variable ζ_g exists? ", haskey(m.model, :ζ_g))
         println("CVaR variable ζ_s exists? ", haskey(m.model, :ζ_s))
@@ -119,6 +119,35 @@ function run_ADMM(data, setup)
         # Set the updated objective function in the model
         @objective(m.model, Max, m.model[:objective_expr])
         
+
+
+        #println("\n--- Iteration $iter: Objective Expression (Symbolic) ---")
+        #println(string(m.model[:objective_expr]))
+
+
+        #if haskey(m.model, :cvar_tail_d)
+        #    println("\n--- CVaR Constraint: Demand (Symbolic) ---")
+        #    for con in values(m.model[:cvar_tail_d])
+        #        println(string(con))
+        #    end
+        #end
+
+        #if haskey(m.model, :cvar_tail_s)
+        #    println("\n--- CVaR Constraint: Storage (Symbolic) ---")
+        #    for con in values(m.model[:cvar_tail_s])
+        #        println(string(con))
+        #    end
+        #end
+
+        #if haskey(m.model, :cvar_tail_g)
+        #    println("\n--- CVaR Constraint: Generator (Symbolic) ---")
+        #    for con in values(m.model[:cvar_tail_g])
+        #        println(string(con))
+        #    end
+        #end
+
+
+
         # Solve the updated model and check for optimality
         solution_pars = solve_and_check_optimality!(m.model)
         
