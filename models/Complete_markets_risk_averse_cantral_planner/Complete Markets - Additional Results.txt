@@ -1,0 +1,640 @@
+Complete Markets
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=1, Ψ=0.5
+
+Total Installed Capacity: 553.24 MW
+
+Total Installed Energy: 760.92 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.340940816929446e8
+CVaR Term :       -144.87145744915188
+Expected Term (δ * E[W - C]):     5.340940816929e8
+CVaR Term ((1 - δ) * CVaR) :       -0.0
+  ↳ ζ_total:                       0.91
+  ↳ u_total[o]:                    Dict(5 => 72.8914, 16 => 72.8914, 20 => 72.8914, 12 => 72.8914, 24 => 72.8914, 28 => 72.8914, 30 => 72.8914, 17 => 72.8914, 8 => 72.8914, 1 => 72.8914, 19 => 72.8914, 22 => 72.8914, 23 => 72.8914, 6 => 72.8914, 11 => 72.8914, 9 => 72.8914, 14 => 72.8914, 3 => 72.8914, 29 => 72.8914, 7 => 72.8914, 25 => 72.8914, 13 => 72.8914, 15 => 72.8914, 21 => 72.8914, 2 => 72.8914, 10 => 72.8914, 18 => 72.8914, 26 => 72.8914, 27 => 72.8914, 4 => 72.8914)
+Full Objective Value:             5.3409408169e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → -41.34
+  Nuclear → 449512.3
+  PV → -25.63
+  Wind → -56.0
+Storage:
+  BESS → -68.87
+  LDES_PHS → 51.81
+Consumer:
+  ρ_d → 4.1382711971e8
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = 1.256817954667e-09
+  Scenario 11 → dual = 1.256821169843e-09
+  Scenario 12 → dual = 1.256820453383e-09
+  Scenario 13 → dual = 1.256822580881e-09
+  Scenario 14 → dual = 1.256817946808e-09
+  Scenario 15 → dual = 1.256818977380e-09
+  Scenario 16 → dual = 1.256825177209e-09
+  Scenario 17 → dual = 1.256817482137e-09
+  Scenario 18 → dual = 1.256820457487e-09
+  Scenario 19 → dual = 1.256820695417e-09
+  Scenario 1 → dual = 1.256822997792e-09
+  Scenario 20 → dual = 1.256820003095e-09
+  Scenario 21 → dual = 1.256815511188e-09
+  Scenario 22 → dual = 1.256824678509e-09
+  Scenario 23 → dual = 1.256821494795e-09
+  Scenario 24 → dual = 1.256821923468e-09
+  Scenario 25 → dual = 1.256820526555e-09
+  Scenario 26 → dual = 1.256822647060e-09
+  Scenario 27 → dual = 1.256824070971e-09
+  Scenario 28 → dual = 1.256820499443e-09
+  Scenario 29 → dual = 1.256822537510e-09
+  Scenario 2 → dual = 1.256819664301e-09
+  Scenario 30 → dual = 1.256821866738e-09
+  Scenario 3 → dual = 1.256819179984e-09
+  Scenario 4 → dual = 1.256822757806e-09
+  Scenario 5 → dual = 1.256821316282e-09
+  Scenario 6 → dual = 1.256817248507e-09
+  Scenario 7 → dual = 1.256821038104e-09
+  Scenario 8 → dual = 1.256821006813e-09
+  Scenario 9 → dual = 1.295079064765e-09
+
+Normalized risk-adjusted probabilities:
+  Scenario 5 → risk_weight = 0.0333
+  Scenario 16 → risk_weight = 0.0333
+  Scenario 20 → risk_weight = 0.0333
+  Scenario 12 → risk_weight = 0.0333
+  Scenario 24 → risk_weight = 0.0333
+  Scenario 28 → risk_weight = 0.0333
+  Scenario 30 → risk_weight = 0.0333
+  Scenario 17 → risk_weight = 0.0333
+  Scenario 8 → risk_weight = 0.0333
+  Scenario 1 → risk_weight = 0.0333
+  Scenario 19 → risk_weight = 0.0333
+  Scenario 22 → risk_weight = 0.0333
+  Scenario 23 → risk_weight = 0.0333
+  Scenario 6 → risk_weight = 0.0333
+  Scenario 11 → risk_weight = 0.0333
+  Scenario 9 → risk_weight = 0.0343
+  Scenario 14 → risk_weight = 0.0333
+  Scenario 3 → risk_weight = 0.0333
+  Scenario 29 → risk_weight = 0.0333
+  Scenario 7 → risk_weight = 0.0333
+  Scenario 25 → risk_weight = 0.0333
+  Scenario 13 → risk_weight = 0.0333
+  Scenario 15 → risk_weight = 0.0333
+  Scenario 21 → risk_weight = 0.0333
+  Scenario 2 → risk_weight = 0.0333
+  Scenario 10 → risk_weight = 0.0333
+  Scenario 18 → risk_weight = 0.0333
+  Scenario 26 → risk_weight = 0.0333
+  Scenario 27 → risk_weight = 0.0333
+  Scenario 4 → risk_weight = 0.0333
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+
+welfare=demand_value - total_costs
+LHS = ζ - welfare
+RHS = u_o
+gap = LHS - RHS
+
+Scenario 10: welfare = 5.199718559259e8, LHS = -5.199718550146e8, RHS = 72.8914, Gap = -5.19971927906e8
+Scenario 11: welfare = 5.361386498634e8, LHS = -5.361386489521e8, RHS = 72.8914, Gap = -5.361387218435e8
+Scenario 12: welfare = 5.323310659977e8, LHS = -5.323310650864e8, RHS = 72.8914, Gap = -5.323311379777e8
+Scenario 13: welfare = 5.43606444699e8, LHS = -5.436064437877e8, RHS = 72.8914, Gap = -5.43606516679e8
+Scenario 14: welfare = 5.197546336746e8, LHS = -5.197546327633e8, RHS = 72.8914, Gap = -5.197547056547e8
+Scenario 15: welfare = 5.24977903919e8, LHS = -5.249779030077e8, RHS = 72.8914, Gap = -5.249779758991e8
+Scenario 16: welfare = 5.579167581308e8, LHS = -5.579167572195e8, RHS = 72.8914, Gap = -5.579168301109e8
+Scenario 17: welfare = 5.174305647227e8, LHS = -5.174305638114e8, RHS = 72.8914, Gap = -5.174306367028e8
+Scenario 18: welfare = 5.325069293829e8, LHS = -5.325069284716e8, RHS = 72.8914, Gap = -5.32507001363e8
+Scenario 19: welfare = 5.337458964957e8, LHS = -5.337458955844e8, RHS = 72.8914, Gap = -5.337459684758e8
+Scenario 1: welfare = 5.459146083492e8, LHS = -5.459146074379e8, RHS = 72.8914, Gap = -5.459146803293e8
+Scenario 20: welfare = 5.301528667287e8, LHS = -5.301528658174e8, RHS = 72.8914, Gap = -5.301529387088e8
+Scenario 21: welfare = 5.07921342117e8, LHS = -5.079213412057e8, RHS = 72.8914, Gap = -5.07921414097e8
+Scenario 22: welfare = 5.549572330673e8, LHS = -5.54957232156e8, RHS = 72.8914, Gap = -5.549573050474e8
+Scenario 23: welfare = 5.37775196577e8, LHS = -5.377751956657e8, RHS = 72.8914, Gap = -5.377752685571e8
+Scenario 24: welfare = 5.400296579613e8, LHS = -5.4002965705e8, RHS = 72.8914, Gap = -5.400297299414e8
+Scenario 25: welfare = 5.327280754982e8, LHS = -5.327280745869e8, RHS = 72.8914, Gap = -5.327281474783e8
+Scenario 26: welfare = 5.439457036942e8, LHS = -5.439457027829e8, RHS = 72.8914, Gap = -5.439457756743e8
+Scenario 27: welfare = 5.515140015599e8, LHS = -5.515140006486e8, RHS = 72.8914, Gap = -5.5151407354e8
+Scenario 28: welfare = 5.328262787085e8, LHS = -5.328262777972e8, RHS = 72.8914, Gap = -5.328263506886e8
+Scenario 29: welfare = 5.433295705809e8, LHS = -5.433295696696e8, RHS = 72.8914, Gap = -5.43329642561e8
+Scenario 2: welfare = 5.283012331683e8, LHS = -5.28301232257e8, RHS = 72.8914, Gap = -5.283013051484e8
+Scenario 30: welfare = 5.398010402185e8, LHS = -5.398010393072e8, RHS = 72.8914, Gap = -5.398011121986e8
+Scenario 3: welfare = 5.260231931393e8, LHS = -5.26023192228e8, RHS = 72.8914, Gap = -5.260232651193e8
+Scenario 4: welfare = 5.445256908347e8, LHS = -5.445256899234e8, RHS = 72.8914, Gap = -5.445257628148e8
+Scenario 5: welfare = 5.369935145426e8, LHS = -5.369935136313e8, RHS = 72.8914, Gap = -5.369935865227e8
+Scenario 6: welfare = 5.163296750187e8, LHS = -5.163296741074e8, RHS = 72.8914, Gap = -5.163297469988e8
+Scenario 7: welfare = 5.353089253807e8, LHS = -5.353089244694e8, RHS = 72.8914, Gap = -5.353089973608e8
+Scenario 8: welfare = 5.351253294615e8, LHS = -5.351253285502e8, RHS = 72.8914, Gap = -5.351254014416e8
+Scenario 9: welfare = 5.2093861137e8, LHS = -5.209386104587e8, RHS = 72.8914, Gap = -5.2093868335e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.8, Ψ=0.5
+
+Total Installed Capacity: 551.08 MW
+
+Total Installed Energy: 753.91 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.3408972027175736e8
+CVaR Term :       5.250713985279569e8
+Expected Term (δ * E[W - C]):     4.272717762174e8
+CVaR Term ((1 - δ) * CVaR) :       1.050142797056e8
+  ↳ ζ_total:                       5.3375264434e8
+  ↳ u_total[o]:                    Dict(5 => 0.1183, 16 => 0.1183, 20 => 3.5998246208e6, 12 => 1.4253694749e6, 24 => 0.1183, 28 => 916033.89, 30 => 0.1183, 17 => 1.62748057064e7, 8 => 0.1183, 1 => 0.1183, 19 => 22.6779, 22 => 0.1183, 23 => 0.1183, 6 => 1.74068643498e7, 11 => 0.1183, 9 => 1.27903240097e7, 14 => 1.40089683885e7, 3 => 7.6971546855e6, 29 => 0.1183, 7 => 0.1183, 25 => 1.0499603619e6, 13 => 0.1183, 15 => 8.7743449636e6, 21 => 2.58439866332e7, 2 => 5.4106886866e6, 10 => 1.37539981596e7, 18 => 1.2663387585e6, 26 => 0.1183, 27 => 0.1183, 4 => 0.1183)
+Full Objective Value:             5.3228605592e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → -54815.14
+  Nuclear → 362173.22
+  PV → -2086.65
+  Wind → -14499.56
+Storage:
+  BESS → -743.69
+  LDES_PHS → -602.33
+Consumer:
+  ρ_d → 3.3126820034e8
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -1.333755836968e-02
+  Scenario 11 → dual = 2.896618753787e-09
+  Scenario 12 → dual = -1.333750880164e-02
+  Scenario 13 → dual = 3.398241335720e-09
+  Scenario 14 → dual = -1.333755755710e-02
+  Scenario 15 → dual = -1.333755333904e-02
+  Scenario 16 → dual = 3.507644679342e-09
+  Scenario 17 → dual = -1.333755995900e-02
+  Scenario 18 → dual = -1.333739956618e-02
+  Scenario 19 → dual = -1.326783006766e-02
+  Scenario 1 → dual = 3.423323551711e-09
+  Scenario 20 → dual = -1.333754598421e-02
+  Scenario 21 → dual = -1.333756071086e-02
+  Scenario 22 → dual = 3.499270874651e-09
+  Scenario 23 → dual = 3.163440038986e-09
+  Scenario 24 → dual = 3.290566103672e-09
+  Scenario 25 → dual = -1.333742844980e-02
+  Scenario 26 → dual = 3.402141952591e-09
+  Scenario 27 → dual = 3.485210251259e-09
+  Scenario 28 → dual = -1.333740907960e-02
+  Scenario 29 → dual = 3.387303479674e-09
+  Scenario 2 → dual = -1.333754840062e-02
+  Scenario 30 → dual = 3.269861227502e-09
+  Scenario 3 → dual = -1.333755300905e-02
+  Scenario 4 → dual = 3.410330330115e-09
+  Scenario 5 → dual = 2.995670185756e-09
+  Scenario 6 → dual = -1.333755818536e-02
+  Scenario 7 → dual = 2.582177062408e-09
+  Scenario 8 → dual = 2.505229029428e-09
+  Scenario 9 → dual = -1.333755624712e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 5.19998808694e8, LHS = 1.37538356433e7, RHS = 1.37539981596e7, Gap = -162.5162
+Scenario 11: welfare = 5.361066220719e8, LHS = -2.3539777346e6, RHS = 0.1183, Gap = -2.3539778529e6
+Scenario 12: welfare = 5.323274299565e8, LHS = 1.4252143809e6, RHS = 1.4253694749e6, Gap = -155.094
+Scenario 13: welfare = 5.435799978906e8, LHS = -9.8273535533e6, RHS = 0.1183, Gap = -9.8273536715e6
+Scenario 14: welfare = 5.197438443706e8, LHS = 1.40087999668e7, RHS = 1.40089683885e7, Gap = -168.4217
+Scenario 15: welfare = 5.24978457838e8, LHS = 8.7741864993e6, RHS = 8.7743449636e6, Gap = -158.4642
+Scenario 16: welfare = 5.579087461397e8, LHS = -2.41561018023e7, RHS = 0.1183, Gap = -2.41561019206e7
+Scenario 17: welfare = 5.174779929967e8, LHS = 1.62746513407e7, RHS = 1.62748057064e7, Gap = -154.3658
+Scenario 18: welfare = 5.324864541406e8, LHS = 1.2661901968e6, RHS = 1.2663387585e6, Gap = -148.5618
+Scenario 19: welfare = 5.337528156619e8, LHS = -171.3245, RHS = 22.6779, Gap = -194.0024
+Scenario 1: welfare = 5.459286603747e8, LHS = -1.21760160374e7, RHS = 0.1183, Gap = -1.21760161557e7
+Scenario 20: welfare = 5.301529737748e8, LHS = 3.5996705626e6, RHS = 3.5998246208e6, Gap = -154.0583
+Scenario 21: welfare = 5.079088225099e8, LHS = 2.58438218274e7, RHS = 2.58439866332e7, Gap = -164.8058
+Scenario 22: welfare = 5.549210718968e8, LHS = -2.11684275594e7, RHS = 0.1183, Gap = -2.11684276777e7
+Scenario 23: welfare = 5.37723244007e8, LHS = -3.9705996696e6, RHS = 0.1183, Gap = -3.9705997879e6
+Scenario 24: welfare = 5.400170637052e8, LHS = -6.2644193679e6, RHS = 0.1183, Gap = -6.2644194861e6
+Scenario 25: welfare = 5.327028443099e8, LHS = 1.0498000275e6, RHS = 1.0499603619e6, Gap = -160.3344
+Scenario 26: welfare = 5.439402786735e8, LHS = -1.01876343361e7, RHS = 0.1183, Gap = -1.01876344544e7
+Scenario 27: welfare = 5.514934494604e8, LHS = -1.77408051231e7, RHS = 0.1183, Gap = -1.77408052413e7
+Scenario 28: welfare = 5.328367651062e8, LHS = 915879.2311, RHS = 916033.89, Gap = -154.6589
+Scenario 29: welfare = 5.432874972149e8, LHS = -9.5348528776e6, RHS = 0.1183, Gap = -9.5348529958e6
+Scenario 2: welfare = 5.283421378677e8, LHS = 5.4105064696e6, RHS = 5.4106886866e6, Gap = -182.217
+Scenario 30: welfare = 5.397845663287e8, LHS = -6.0319219914e6, RHS = 0.1183, Gap = -6.0319221097e6
+Scenario 3: welfare = 5.260556438499e8, LHS = 7.6970004875e6, RHS = 7.6971546855e6, Gap = -154.198
+Scenario 4: welfare = 5.445158308205e8, LHS = -1.07631864832e7, RHS = 0.1183, Gap = -1.07631866014e7
+Scenario 5: welfare = 5.369823590358e8, LHS = -3.2297146985e6, RHS = 0.1183, Gap = -3.2297148168e6
+Scenario 6: welfare = 5.163459418215e8, LHS = 1.74067025159e7, RHS = 1.74068643498e7, Gap = -161.834
+Scenario 7: welfare = 5.352911946605e8, LHS = -1.5385503232e6, RHS = 0.1183, Gap = -1.5385504414e6
+Scenario 8: welfare = 5.351376078198e8, LHS = -1.3849634825e6, RHS = 0.1183, Gap = -1.3849636007e6
+Scenario 9: welfare = 5.209624851546e8, LHS = 1.27901591827e7, RHS = 1.27903240097e7, Gap = -164.827
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.6, Ψ=0.5
+
+Total Installed Capacity: 548.67 MW
+
+Total Installed Energy: 747.82 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.340855614994027e8
+CVaR Term :       5.250807642706517e8
+Expected Term (δ * E[W - C]):     3.204513368996e8
+CVaR Term ((1 - δ) * CVaR) :       2.100323057083e8
+  ↳ ζ_total:                       5.3376052188e8
+  ↳ u_total[o]:                    Dict(5 => 0.0601, 16 => 0.0601, 20 => 3.6049061124e6, 12 => 1.4375222756e6, 24 => 0.0601, 28 => 911215.4283, 30 => 0.0601, 17 => 1.62366580972e7, 8 => 0.0601, 1 => 0.0601, 19 => 22.2653, 22 => 0.0601, 23 => 0.0601, 6 => 1.73962858222e7, 11 => 0.0601, 9 => 1.27724756436e7, 14 => 1.40267324484e7, 3 => 7.6716284022e6, 29 => 0.0601, 7 => 0.0601, 25 => 1.0859069616e6, 13 => 0.0601, 15 => 8.7807802582e6, 21 => 2.58642662864e7, 2 => 5.3808165787e6, 10 => 1.37352636653e7, 18 => 1.291882999e6, 26 => 0.0601, 27 => 0.0601, 4 => 0.0601)
+Full Objective Value:             5.3048364261e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → -84272.48
+  Nuclear → 273670.47
+  PV → -2884.12
+  Wind → -21362.61
+Storage:
+  BESS → -566.75
+  LDES_PHS → -458.37
+Consumer:
+  ρ_d → 2.4858435525e8
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -2.667092654711e-02
+  Scenario 11 → dual = 3.057469573937e-09
+  Scenario 12 → dual = -2.667085988197e-02
+  Scenario 13 → dual = 3.513219684445e-09
+  Scenario 14 → dual = -2.667092695239e-02
+  Scenario 15 → dual = -2.667092390930e-02
+  Scenario 16 → dual = 3.598741286369e-09
+  Scenario 17 → dual = -2.667092686188e-02
+  Scenario 18 → dual = -2.667086682866e-02
+  Scenario 19 → dual = -2.659944548524e-02
+  Scenario 1 → dual = 3.534292913128e-09
+  Scenario 20 → dual = -2.667091327989e-02
+  Scenario 21 → dual = -2.667092828816e-02
+  Scenario 22 → dual = 3.592200804751e-09
+  Scenario 23 → dual = 3.307901458990e-09
+  Scenario 24 → dual = 3.423299579842e-09
+  Scenario 25 → dual = -2.667083580304e-02
+  Scenario 26 → dual = 3.516115184062e-09
+  Scenario 27 → dual = 3.581386145316e-09
+  Scenario 28 → dual = -2.667085344499e-02
+  Scenario 29 → dual = 3.503582166691e-09
+  Scenario 2 → dual = -2.667091783889e-02
+  Scenario 30 → dual = 3.405653878625e-09
+  Scenario 3 → dual = -2.667092375212e-02
+  Scenario 4 → dual = 3.523564720860e-09
+  Scenario 5 → dual = 3.139359462190e-09
+  Scenario 6 → dual = -2.667092804745e-02
+  Scenario 7 → dual = 2.697133216658e-09
+  Scenario 8 → dual = 2.657608079679e-09
+  Scenario 9 → dual = -2.667092570015e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 5.20025418166e8, LHS = 1.37351037143e7, RHS = 1.37352636653e7, Gap = -159.951
+Scenario 11: welfare = 5.360743935652e8, LHS = -2.3138716849e6, RHS = 0.0601, Gap = -2.3138717449e6
+Scenario 12: welfare = 5.323231532576e8, LHS = 1.4373686228e6, RHS = 1.4375222756e6, Gap = -153.6528
+Scenario 13: welfare = 5.435536099962e8, LHS = -9.7930881158e6, RHS = 0.0601, Gap = -9.7930881759e6
+Scenario 14: welfare = 5.197339612038e8, LHS = 1.40265606765e7, RHS = 1.40267324484e7, Gap = -171.7718
+Scenario 15: welfare = 5.249798995354e8, LHS = 8.780622345e6, RHS = 8.7807802582e6, Gap = -157.9133
+Scenario 16: welfare = 5.579009533378e8, LHS = -2.41404314574e7, RHS = 0.0601, Gap = -2.41404315175e7
+Scenario 17: welfare = 5.17524016438e8, LHS = 1.62365054424e7, RHS = 1.62366580972e7, Gap = -152.6549
+Scenario 18: welfare = 5.324687877574e8, LHS = 1.2917341229e6, RHS = 1.291882999e6, Gap = -148.876
+Scenario 19: welfare = 5.337606763444e8, LHS = -154.464, RHS = 22.2653, Gap = -176.7293
+Scenario 1: welfare = 5.459444190356e8, LHS = -1.21838971552e7, RHS = 0.0601, Gap = -1.21838972153e7
+Scenario 20: welfare = 5.301557702423e8, LHS = 3.604751638e6, RHS = 3.6049061124e6, Gap = -154.4744
+Scenario 21: welfare = 5.078964168892e8, LHS = 2.58641049912e7, RHS = 2.58642662864e7, Gap = -161.2952
+Scenario 22: welfare = 5.548864066936e8, LHS = -2.11258848132e7, RHS = 0.0601, Gap = -2.11258848733e7
+Scenario 23: welfare = 5.376706012864e8, LHS = -3.9100794061e6, RHS = 0.0601, Gap = -3.9100794662e6
+Scenario 24: welfare = 5.40003997751e8, LHS = -6.2434758706e6, RHS = 0.0601, Gap = -6.2434759307e6
+Scenario 25: welfare = 5.326747743411e8, LHS = 1.0857475392e6, RHS = 1.0859069616e6, Gap = -159.4224
+Scenario 26: welfare = 5.439355757363e8, LHS = -1.01750538559e7, RHS = 0.0601, Gap = -1.0175053916e7
+Scenario 27: welfare = 5.514710867677e8, LHS = -1.77105648874e7, RHS = 0.0601, Gap = -1.77105649475e7
+Scenario 28: welfare = 5.328494594047e8, LHS = 911062.4757, RHS = 911215.4283, Gap = -152.9526
+Scenario 29: welfare = 5.432476953492e8, LHS = -9.4871734689e6, RHS = 0.0601, Gap = -9.4871735289e6
+Scenario 2: welfare = 5.283798850044e8, LHS = 5.3806368759e6, RHS = 5.3808165787e6, Gap = -179.7028
+Scenario 30: welfare = 5.397686540951e8, LHS = -6.0081322147e6, RHS = 0.0601, Gap = -6.0081322748e6
+Scenario 3: welfare = 5.260890458784e8, LHS = 7.6714760019e6, RHS = 7.6716284022e6, Gap = -152.4003
+Scenario 4: welfare = 5.445031056549e8, LHS = -1.07425837745e7, RHS = 0.0601, Gap = -1.07425838346e7
+Scenario 5: welfare = 5.369723037032e8, LHS = -3.2117818228e6, RHS = 0.0601, Gap = -3.2117818829e6
+Scenario 6: welfare = 5.163643962098e8, LHS = 1.73961256705e7, RHS = 1.73962858222e7, Gap = -160.1517
+Scenario 7: welfare = 5.352739534152e8, LHS = -1.5134315348e6, RHS = 0.0601, Gap = -1.5134315949e6
+Scenario 8: welfare = 5.351462138489e8, LHS = -1.3856919685e6, RHS = 0.0601, Gap = -1.3856920286e6
+Scenario 9: welfare = 5.209882140734e8, LHS = 1.2772307807e7, RHS = 1.27724756436e7, Gap = -167.8367
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.4, Ψ=0.5
+
+
+Total Installed Capacity: 546.22 MW
+
+Total Installed Energy: 741.86 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.340743107330003e8
+CVaR Term :       5.2508378699061954e8
+Expected Term (δ * E[W - C]):     2.136297242932e8
+CVaR Term ((1 - δ) * CVaR) :       3.150502721944e8
+  ↳ ζ_total:                       5.337619561e8
+  ↳ u_total[o]:                    Dict(5 => 0.0786, 16 => 0.0786, 20 => 3.6077118675e6, 12 => 1.4491113039e6, 24 => 0.0786, 28 => 905868.7157, 30 => 0.0786, 17 => 1.62003099902e7, 8 => 0.0786, 1 => 0.0786, 19 => 22.1396, 22 => 0.0786, 23 => 0.0786, 6 => 1.73852537405e7, 11 => 0.0786, 9 => 1.27541613184e7, 14 => 1.4044284594e7, 3 => 7.6451666897e6, 29 => 0.0786, 7 => 0.0786, 25 => 1.1245883599e6, 13 => 0.0786, 15 => 8.7862904004e6, 21 => 2.58843465417e7, 2 => 5.3524323814e6, 10 => 1.37184888621e7, 18 => 1.314498543e6, 26 => 0.0786, 27 => 0.0786, 4 => 0.0786)
+Full Objective Value:             5.2867999649e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → -86859.1
+  Nuclear → 183756.54
+  PV → -2864.93
+  Wind → -21594.52
+Storage:
+  BESS → -725.68
+  LDES_PHS → -607.96
+Consumer:
+  ρ_d → 1.6583451647e8
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -4.000838673752e-02
+  Scenario 11 → dual = 5.100969268146e-09
+  Scenario 12 → dual = -4.000811361136e-02
+  Scenario 13 → dual = 6.902569102316e-09
+  Scenario 14 → dual = -4.000838390992e-02
+  Scenario 15 → dual = -4.000837623285e-02
+  Scenario 16 → dual = 7.162265829123e-09
+  Scenario 17 → dual = -4.000838615948e-02
+  Scenario 18 → dual = -4.000828616717e-02
+  Scenario 19 → dual = -3.986609493184e-02
+  Scenario 1 → dual = 6.965836750348e-09
+  Scenario 20 → dual = -4.000835077470e-02
+  Scenario 21 → dual = -4.000838993015e-02
+  Scenario 22 → dual = 7.146321586434e-09
+  Scenario 23 → dual = 6.185456283043e-09
+  Scenario 24 → dual = 6.598688903578e-09
+  Scenario 25 → dual = -4.000803248620e-02
+  Scenario 26 → dual = 6.918038965680e-09
+  Scenario 27 → dual = 7.119221793051e-09
+  Scenario 28 → dual = -4.000816763557e-02
+  Scenario 29 → dual = 6.863080066905e-09
+  Scenario 2 → dual = -4.000835896702e-02
+  Scenario 30 → dual = 6.494852739164e-09
+  Scenario 3 → dual = -4.000837590645e-02
+  Scenario 4 → dual = 6.934430393601e-09
+  Scenario 5 → dual = 5.117738147376e-09
+  Scenario 6 → dual = -4.000838761200e-02
+  Scenario 7 → dual = 2.716716725712e-09
+  Scenario 8 → dual = 2.833309966429e-09
+  Scenario 9 → dual = -4.000838338097e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 5.200437835994e8, LHS = 1.37181724998e7, RHS = 1.37184888621e7, Gap = -316.3623
+Scenario 11: welfare = 5.360344857813e8, LHS = -2.2725296822e6, RHS = 0.0786, Gap = -2.2725297608e6
+Scenario 12: welfare = 5.323131544267e8, LHS = 1.4488016724e6, RHS = 1.4491113039e6, Gap = -309.6315
+Scenario 13: welfare = 5.435196582171e8, LHS = -9.757702118e6, RHS = 0.0786, Gap = -9.7577021966e6
+Scenario 14: welfare = 5.197180223496e8, LHS = 1.40439337496e7, RHS = 1.4044284594e7, Gap = -350.8444
+Scenario 15: welfare = 5.249759932448e8, LHS = 8.7859628543e6, RHS = 8.7862904004e6, Gap = -327.5461
+Scenario 16: welfare = 5.578854815437e8, LHS = -2.41235254445e7, RHS = 0.0786, Gap = -2.41235255232e7
+Scenario 17: welfare = 5.175619532561e8, LHS = 1.62000028431e7, RHS = 1.62003099902e7, Gap = -307.1472
+Scenario 18: welfare = 5.324477636433e8, LHS = 1.3141924558e6, RHS = 1.314498543e6, Gap = -306.0872
+Scenario 19: welfare = 5.337622730489e8, LHS = -316.9498, RHS = 22.1396, Gap = -339.0894
+Scenario 1: welfare = 5.459515980156e8, LHS = -1.21896419165e7, RHS = 0.0786, Gap = -1.21896419951e7
+Scenario 20: welfare = 5.301545453033e8, LHS = 3.6074107959e6, RHS = 3.6077118675e6, Gap = -301.0717
+Scenario 21: welfare = 5.078779236342e8, LHS = 2.58840324649e7, RHS = 2.58843465417e7, Gap = -314.0768
+Scenario 22: welfare = 5.548452658016e8, LHS = -2.10833097025e7, RHS = 0.0786, Gap = -2.10833097811e7
+Scenario 23: welfare = 5.376122131242e8, LHS = -3.8502570251e6, RHS = 0.0786, Gap = -3.8502571037e6
+Scenario 24: welfare = 5.399829984723e8, LHS = -6.2210423732e6, RHS = 0.0786, Gap = -6.2210424518e6
+Scenario 25: welfare = 5.326376866953e8, LHS = 1.1242694038e6, RHS = 1.1245883599e6, Gap = -318.9561
+Scenario 26: welfare = 5.439235301107e8, LHS = -1.01615740115e7, RHS = 0.0786, Gap = -1.01615740902e7
+Scenario 27: welfare = 5.514400191714e8, LHS = -1.76780630723e7, RHS = 0.0786, Gap = -1.76780631509e7
+Scenario 28: welfare = 5.328564041519e8, LHS = 905551.9472, RHS = 905868.7157, Gap = -316.7685
+Scenario 29: welfare = 5.432005237044e8, LHS = -9.4385676053e6, RHS = 0.0786, Gap = -9.4385676839e6
+Scenario 2: welfare = 5.284098832245e8, LHS = 5.3520728746e6, RHS = 5.3524323814e6, Gap = -359.5068
+Scenario 30: welfare = 5.397452293456e8, LHS = -5.9832732464e6, RHS = 0.0786, Gap = -5.9832733251e6
+Scenario 3: welfare = 5.261171045557e8, LHS = 7.6448515435e6, RHS = 7.6451666897e6, Gap = -315.1462
+Scenario 4: welfare = 5.444805648945e8, LHS = -1.07186087953e7, RHS = 0.0786, Gap = -1.0718608874e7
+Scenario 5: welfare = 5.369536346013e8, LHS = -3.1916785022e6, RHS = 0.0786, Gap = -3.1916785808e6
+Scenario 6: welfare = 5.163770101054e8, LHS = 1.73849459937e7, RHS = 1.73852537405e7, Gap = -307.7468
+Scenario 7: welfare = 5.352499751856e8, LHS = -1.4880190865e6, RHS = 0.0786, Gap = -1.4880191651e6
+Scenario 8: welfare = 5.351425077587e8, LHS = -1.3805516596e6, RHS = 0.0786, Gap = -1.3805517382e6
+Scenario 9: welfare = 5.21008135023e8, LHS = 1.27538210761e7, RHS = 1.27541613184e7, Gap = -340.2423
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.2, Ψ=0.5
+
+Total Installed Capacity: 543.68 MW
+
+Total Installed Energy: 735.63 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.340516693906418e8
+CVaR Term :       5.2508082373566633e8
+Expected Term (δ * E[W - C]):     1.068103338781e8
+CVaR Term ((1 - δ) * CVaR) :       4.200646589885e8
+  ↳ ζ_total:                       5.3375752086e8
+  ↳ u_total[o]:                    Dict(5 => 0.1173, 16 => 0.1173, 20 => 3.6088246083e6, 12 => 1.4615866199e6, 24 => 0.1173, 28 => 899154.5504, 30 => 0.1173, 17 => 1.61662508479e7, 8 => 0.1174, 1 => 0.1173, 19 => 21.8441, 22 => 0.1173, 23 => 0.1173, 6 => 1.7373658094e7, 11 => 0.1173, 9 => 1.27358209807e7, 14 => 1.40622980603e7, 3 => 7.6170348357e6, 29 => 0.1173, 7 => 0.1174, 25 => 1.1656884321e6, 13 => 0.1173, 15 => 8.7906631803e6, 21 => 2.59056435048e7, 2 => 5.3251308833e6, 10 => 1.3703286882e7, 18 => 1.3353917249e6, 26 => 0.1173, 27 => 0.1173, 4 => 0.1173)
+Full Objective Value:             5.2687499287e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → -60097.38
+  Nuclear → 92581.91
+  PV → -1822.05
+  Wind → -15037.41
+Storage:
+  BESS → -699.78
+  LDES_PHS → -617.45
+Consumer:
+  ρ_d → 8.299927897e7
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -5.335001873151e-02
+  Scenario 11 → dual = -6.318369181655e-08
+  Scenario 12 → dual = -5.334913167526e-02
+  Scenario 13 → dual = 1.066403597120e-08
+  Scenario 14 → dual = -5.335001242446e-02
+  Scenario 15 → dual = -5.334999224570e-02
+  Scenario 16 → dual = 1.392418033271e-08
+  Scenario 17 → dual = -5.335001912620e-02
+  Scenario 18 → dual = -5.334929942126e-02
+  Scenario 19 → dual = -5.306368264880e-02
+  Scenario 1 → dual = 1.206099997471e-08
+  Scenario 20 → dual = -5.334986709932e-02
+  Scenario 21 → dual = -5.335003385700e-02
+  Scenario 22 → dual = 1.380394457642e-08
+  Scenario 23 → dual = -9.146744730282e-09
+  Scenario 24 → dual = 5.398868841698e-09
+  Scenario 25 → dual = -5.334875729531e-02
+  Scenario 26 → dual = 1.138135858729e-08
+  Scenario 27 → dual = 1.355327737775e-08
+  Scenario 28 → dual = -5.334958055157e-02
+  Scenario 29 → dual = 1.020571693214e-08
+  Scenario 2 → dual = -5.334991918588e-02
+  Scenario 30 → dual = 2.571603834788e-09
+  Scenario 3 → dual = -5.334998729180e-02
+  Scenario 4 → dual = 1.138590572409e-08
+  Scenario 5 → dual = -3.706990359784e-08
+  Scenario 6 → dual = -5.335003352033e-02
+  Scenario 7 → dual = -2.325979611079e-07
+  Scenario 8 → dual = -2.961598048674e-07
+  Scenario 9 → dual = -5.335001474123e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 5.200548668058e8, LHS = 1.37026540504e7, RHS = 1.3703286882e7, Gap = -632.8315
+Scenario 11: welfare = 5.3597774306e8, LHS = -2.2202222039e6, RHS = 0.1173, Gap = -2.2202223212e6
+Scenario 12: welfare = 5.322965884026e8, LHS = 1.4609324535e6, RHS = 1.4615866199e6, Gap = -654.1664
+Scenario 13: welfare = 5.43469067176e8, LHS = -9.7115463198e6, RHS = 0.1173, Gap = -9.7115464371e6
+Scenario 14: welfare = 5.196959222084e8, LHS = 1.40615986478e7, RHS = 1.40622980603e7, Gap = -699.4125
+Scenario 15: welfare = 5.249675424376e8, LHS = 8.7899784186e6, RHS = 8.7906631803e6, Gap = -684.7617
+Scenario 16: welfare = 5.57852974078e8, LHS = -2.40954532218e7, RHS = 0.1173, Gap = -2.4095453339e7
+Scenario 17: welfare = 5.175918996759e8, LHS = 1.61656211803e7, RHS = 1.61662508479e7, Gap = -629.6677
+Scenario 18: welfare = 5.324227564426e8, LHS = 1.3347644135e6, RHS = 1.3353917249e6, Gap = -627.3113
+Scenario 19: welfare = 5.337581781819e8, LHS = -657.3257, RHS = 21.8441, Gap = -679.1698
+Scenario 1: welfare = 5.459423352134e8, LHS = -1.21848143572e7, RHS = 0.1173, Gap = -1.21848144745e7
+Scenario 20: welfare = 5.301493175753e8, LHS = 3.6082032809e6, RHS = 3.6088246083e6, Gap = -621.3274
+Scenario 21: welfare = 5.078525086768e8, LHS = 2.59050121793e7, RHS = 2.59056435048e7, Gap = -631.3254
+Scenario 22: welfare = 5.547877021157e8, LHS = -2.10301812595e7, RHS = 0.1173, Gap = -2.10301813768e7
+Scenario 23: welfare = 5.375383073822e8, LHS = -3.780786526e6, RHS = 0.1173, Gap = -3.7807866432e6
+Scenario 24: welfare = 5.399453114676e8, LHS = -6.1877906114e6, RHS = 0.1173, Gap = -6.1877907287e6
+Scenario 25: welfare = 5.325924910911e8, LHS = 1.1650297651e6, RHS = 1.1656884321e6, Gap = -658.6671
+Scenario 26: welfare = 5.438959237158e8, LHS = -1.01384028596e7, RHS = 0.1173, Gap = -1.01384029769e7
+Scenario 27: welfare = 5.513901715941e8, LHS = -1.76326507379e7, RHS = 0.1173, Gap = -1.76326508552e7
+Scenario 28: welfare = 5.328590278339e8, LHS = 898493.0223, RHS = 899154.5504, Gap = -661.528
+Scenario 29: welfare = 5.431360512676e8, LHS = -9.3785304114e6, RHS = 0.1173, Gap = -9.3785305287e6
+Scenario 2: welfare = 5.284331103851e8, LHS = 5.324410471e6, RHS = 5.3251308833e6, Gap = -720.4122
+Scenario 30: welfare = 5.397059326086e8, LHS = -5.9484117524e6, RHS = 0.1173, Gap = -5.9484118697e6
+Scenario 3: welfare = 5.261411442869e8, LHS = 7.6163765693e6, RHS = 7.6170348357e6, Gap = -658.2664
+Scenario 4: welfare = 5.444394982779e8, LHS = -1.06819774217e7, RHS = 0.1173, Gap = -1.06819775389e7
+Scenario 5: welfare = 5.369198391596e8, LHS = -3.1623183035e6, RHS = 0.1173, Gap = -3.1623184208e6
+Scenario 6: welfare = 5.163844902407e8, LHS = 1.73730306155e7, RHS = 1.7373658094e7, Gap = -627.4785
+Scenario 7: welfare = 5.352104204342e8, LHS = -1.452899578e6, RHS = 0.1174, Gap = -1.4528996954e6
+Scenario 8: welfare = 5.351165743278e8, LHS = -1.3590534717e6, RHS = 0.1174, Gap = -1.359053589e6
+Scenario 9: welfare = 5.21022385596e8, LHS = 1.27351352602e7, RHS = 1.27358209807e7, Gap = -685.7205
+
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.0, Ψ=0.5
+
+Total Installed Capacity: 541.31 MW
+
+Total Installed Energy: 729.32 MWh
+
+===== Risk-Averse Objective Breakdown =====
+Expected Term (E[W - C]):     5.294017564393206e8
+CVaR Term :       5.250623897377668e8
+Expected Term (δ * E[W - C]):     0.0
+CVaR Term ((1 - δ) * CVaR) :       5.250623897378e8
+  ↳ ζ_total:                       5.3373745235e8
+  ↳ u_total[o]:                    Dict(5 => 0.2265, 16 => 0.2245, 20 => 3.6082639391e6, 12 => 1.4735055127e6, 24 => 0.2254, 28 => 892197.9752, 30 => 0.2255, 17 => 1.61337985726e7, 8 => 0.2292, 1 => 0.2248, 19 => 10.2319, 22 => 0.2246, 23 => 0.2262, 6 => 1.73622134303e7, 11 => 0.2274, 9 => 1.27179661947e7, 14 => 1.40793079266e7, 3 => 7.5882057596e6, 29 => 0.2251, 7 => 0.2287, 25 => 1.2082059969e6, 13 => 0.225, 15 => 8.794039548e6, 21 => 2.59280082037e7, 2 => 5.2984108827e6, 10 => 1.36883806196e7, 18 => 1.3534210503e6, 26 => 0.2249, 27 => 0.2247, 4 => 0.225)
+Full Objective Value:             5.2506238974e8
+===========================================
+
+===== Recalculated Individual Risk Measures with Dual Prices =====
+Generators:
+  Gas → 0.0
+  Nuclear → 0.0
+  PV → 0.0
+  Wind → 0.0
+Storage:
+  BESS → 0.0
+  LDES_PHS → 0.0
+Consumer:
+  ρ_d → 0.0
+==============================================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -6.670664494493e-02
+  Scenario 11 → dual = -1.069715959617e-04
+  Scenario 12 → dual = -6.669780238986e-02
+  Scenario 13 → dual = -2.166280115247e-05
+  Scenario 14 → dual = -6.670657955891e-02
+  Scenario 15 → dual = -6.670641224934e-02
+  Scenario 16 → dual = -7.334910354464e-06
+  Scenario 17 → dual = -6.670660692993e-02
+  Scenario 18 → dual = -6.669959602898e-02
+  Scenario 19 → dual = -6.526292761020e-02
+  Scenario 1 → dual = -1.536652096186e-05
+  Scenario 20 → dual = -6.670547368679e-02
+  Scenario 21 → dual = -6.670669060293e-02
+  Scenario 22 → dual = -8.435794349061e-06
+  Scenario 23 → dual = -6.036566832396e-05
+  Scenario 24 → dual = -3.381747903472e-05
+  Scenario 25 → dual = -6.670321456094e-02
+  Scenario 26 → dual = -1.893497440007e-05
+  Scenario 27 → dual = -1.088625103870e-05
+  Scenario 28 → dual = -6.669521343432e-02
+  Scenario 29 → dual = -2.224736157627e-05
+  Scenario 2 → dual = -6.670593097444e-02
+  Scenario 30 → dual = -3.571731401512e-05
+  Scenario 3 → dual = -6.670641921728e-02
+  Scenario 4 → dual = -1.905672335889e-05
+  Scenario 5 → dual = -6.766058951831e-05
+  Scenario 6 → dual = -6.670667552144e-02
+  Scenario 7 → dual = -1.614856020252e-04
+  Scenario 8 → dual = -1.834466302878e-04
+  Scenario 9 → dual = -6.670660778028e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 5.200506136624e8, LHS = 1.36868386908e7, RHS = 1.36883806196e7, Gap = -1541.9288
+Scenario 11: welfare = 5.337390136336e8, LHS = -1561.2804, RHS = 0.2274, Gap = -1561.5077
+Scenario 12: welfare = 5.32265579526e8, LHS = 1.4718728272e6, RHS = 1.4735055127e6, Gap = -1632.6855
+Scenario 13: welfare = 5.337393971505e8, LHS = -1944.7973, RHS = 0.225, Gap = -1945.0224
+Scenario 14: welfare = 5.196597892583e8, LHS = 1.40776630949e7, RHS = 1.40793079266e7, Gap = -1644.8317
+Scenario 15: welfare = 5.249450015358e8, LHS = 8.7924508174e6, RHS = 8.794039548e6, Gap = -1588.7306
+Scenario 16: welfare = 5.337407140554e8, LHS = -3261.7022, RHS = 0.2245, Gap = -3261.9268
+Scenario 17: welfare = 5.176051763365e8, LHS = 1.61322760167e7, RHS = 1.61337985726e7, Gap = -1522.556
+Scenario 18: welfare = 5.323856099389e8, LHS = 1.3518424143e6, RHS = 1.3534210503e6, Gap = -1578.636
+Scenario 19: welfare = 5.337391505326e8, LHS = -1698.1794, RHS = 10.2319, Gap = -1708.4113
+Scenario 1: welfare = 5.337396905821e8, LHS = -2238.2289, RHS = 0.2248, Gap = -2238.4537
+Scenario 20: welfare = 5.301307818658e8, LHS = 3.6066704874e6, RHS = 3.6082639391e6, Gap = -1593.4516
+Scenario 21: welfare = 5.078109755164e8, LHS = 2.59264768368e7, RHS = 2.59280082037e7, Gap = -1531.3669
+Scenario 22: welfare = 5.337404847385e8, LHS = -3032.3853, RHS = 0.2246, Gap = -3032.6099
+Scenario 23: welfare = 5.33739140019e8, LHS = -1687.6658, RHS = 0.2262, Gap = -1687.892
+Scenario 24: welfare = 5.337392319844e8, LHS = -1779.6312, RHS = 0.2254, Gap = -1779.8567
+Scenario 25: welfare = 5.325308617734e8, LHS = 1.2065905798e6, RHS = 1.2082059969e6, Gap = -1615.4171
+Scenario 26: welfare = 5.337394642817e8, LHS = -2011.9285, RHS = 0.2249, Gap = -2012.1535
+Scenario 27: welfare = 5.337400410567e8, LHS = -2588.7035, RHS = 0.2247, Gap = -2588.9281
+Scenario 28: welfare = 5.328468722857e8, LHS = 890580.0675, RHS = 892197.9752, Gap = -1617.9077
+Scenario 29: welfare = 5.337393403157e8, LHS = -1887.9625, RHS = 0.2251, Gap = -1888.1875
+Scenario 2: welfare = 5.284407428385e8, LHS = 5.2967095147e6, RHS = 5.2984108827e6, Gap = -1701.368
+Scenario 30: welfare = 5.337392149226e8, LHS = -1762.5694, RHS = 0.2255, Gap = -1762.7949
+Scenario 3: welfare = 5.261508886122e8, LHS = 7.586563741e6, RHS = 7.5882057596e6, Gap = -1642.0186
+Scenario 4: welfare = 5.337395018084e8, LHS = -2049.4552, RHS = 0.225, Gap = -2049.6802
+Scenario 5: welfare = 5.337390792897e8, LHS = -1626.9366, RHS = 0.2265, Gap = -1627.163
+Scenario 6: welfare = 5.163768268392e8, LHS = 1.7360625514e7, RHS = 1.73622134303e7, Gap = -1587.9162
+Scenario 7: welfare = 5.337392049473e8, LHS = -1752.5941, RHS = 0.2287, Gap = -1752.8228
+Scenario 8: welfare = 5.337391717295e8, LHS = -1719.3763, RHS = 0.2292, Gap = -1719.6055
+Scenario 9: welfare = 5.210211321428e8, LHS = 1.27163202103e7, RHS = 1.27179661947e7, Gap = -1645.9844
+
