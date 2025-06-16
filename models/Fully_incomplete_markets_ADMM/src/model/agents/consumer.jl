@@ -90,7 +90,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     if demand_type == "QP"
         @expression(m, demand_value[o in O], 
             sum(W[t, o] * B * 
-                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / (2 * flexible_demand)) 
+                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / (2 * ((flexible_demand-1) * D[t, o] * peak_demand))) 
                 for t in T)
         )
         @expression(m, unserved_demand_cost[o in O], 
@@ -125,7 +125,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
                 m[:d_fix][t, o] <= D[t, o] * peak_demand
             )
             @constraint(m, d_flex_limit[t in T, o in O], 
-                m[:d_flex][t, o] <= flexible_demand
+                m[:d_flex][t, o] <= (flexible_demand-1) * D[t, o] * peak_demand
             )
         end
     end

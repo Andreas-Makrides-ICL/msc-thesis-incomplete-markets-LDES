@@ -55,7 +55,7 @@ function configure_gurobi(optimizer::Any = Gurobi.Optimizer; solver_options::Uni
 
     # Return optimizer with merged attributes
     optimizer_instance = optimizer_with_attributes(optimizer, attributes...)
-    println("   Gurobi optimizer configured with attributes: ", keys(attributes))
+    println("   Gurobi/CPLEX optimizer configured with attributes: ", keys(attributes))
     return optimizer_instance
 end
 

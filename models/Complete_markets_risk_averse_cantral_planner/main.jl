@@ -3,7 +3,7 @@ using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, P
 include("src/_init_.jl");
 
 """
-    run_central_planner(data, setup)
+    run_central_planner(data, setup, solver)
 
 Runs the central planner optimization workflow on the provided data and setup.
 """
@@ -21,6 +21,7 @@ function run_central_planner(data, setup, solver)
         set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
         #set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
+        #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
     else
         error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")
     end

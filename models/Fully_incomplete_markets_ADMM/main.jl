@@ -3,24 +3,27 @@ using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, P
 include("src/_init_.jl");
 
 """
-    run_ADMM(data, setup)
+    run_ADMM(data, setup, solver)
 
 Runs the ADMM optimization workflow on the provided data and setup.
 """
-function run_ADMM(data, setup)
+function run_ADMM(data, setup, solver)
     # ============================
     # Create Base Optimization Model
     # ============================
     # Initialize the optimization model
-    m = OptimizationModel(data, setup = setup)
+    m = OptimizationModel(data, setup = setup, solver=solver)
     # Set solver attribute to suppress output
-    set_attribute(m.model, "CPX_PARAM_SCRIND", true) #here controls the print of the output of the solver, true prints solver progress
-    
-    #set_optimizer_attribute(m.model, "OutputFlag", 1)
-    #set_optimizer_attribute(m.model, "QCPDual", 1)
-    #set_optimizer_attribute(m.model, "NonConvex", 2)
-    #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
-    # Define variables and create the base model
+    if solver == "CPLEX"
+        set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
+    elseif solver == "Gurobi"
+        set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
+        set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
+        #set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
+        #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
+    else
+        error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")
+    end
     define_variables!(m)
     create_base_model!(m)
 
@@ -168,6 +171,12 @@ function run_ADMM(data, setup)
             end
         end
 
+        # Final iteration reached without convergence
+        if iter == m.setup["max_iterations"] && !converged
+            println("Convergence criteria not met at iteration $iter")
+            m.results["final"] = m.results[iter]
+        end
+
         print(iter)
 
     end
@@ -194,7 +203,7 @@ end
 
 # Example usage: load data and run central planner
 setup = copy(default_setup)
-
+solver = "CPLEX"
 # Central planner parameter 
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
@@ -221,13 +230,13 @@ for delta in [0.0]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6
         local_setup["use_hierarchical_clustering"] = false
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
-
+        solver = "CPLEX"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
         data = load_data(local_setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
-        m = run_ADMM(data, local_setup);
+        m = run_ADMM(data, local_setup, solver);
 
         res = m.results["final"]
         cap = res[:capacities]

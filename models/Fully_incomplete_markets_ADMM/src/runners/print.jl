@@ -55,6 +55,11 @@ function print_iteration(model, iter, total_time)
     print(rpad(@sprintf("%.2fs", total_time), time_width))
 
     println()  # Move to next line
+
+    total_cap = sum(values(results[:capacities][:x_g])) + sum(values(results[:capacities][:x_P]))
+    total_energy = sum(values(results[:capacities][:x_E]))
+    println("\nTotal Installed Capacity: ", round(total_cap, digits=2), " MW")
+    println("\nTotal Installed Energy: ", round(total_energy, digits=2), " MWh")
 end
 
 function print_table_header(model)
@@ -353,11 +358,13 @@ function print_agents_objective_breakdown(m)
         ρ = value(m.model[:ρ_g][g])
         expected = sum(P[o] * (value(m.model[:π_g][g, o]) - value(m.model[:gen_total_costs][g, o])) for o in O)
         cvar = ζ - (1 / Ψ) * u_avg
-        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+        expected_term = δ * expected
+        cvar_term = (1 - δ) * cvar
+        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
         
         println("  Scenario breakdown for Gen $g:")
         for o in O
-            u = round(value(m.model[:u_g][g, o]), digits=4)
+            u = value(m.model[:u_g][g, o])
             d = dual(m.model[:cvar_tail_g][g, o])
             tail_flag = u > 1e-6 ? "TAIL" : ""
             println("    Scenario $o: u = $u, dual = $d $tail_flag")
@@ -374,11 +381,13 @@ function print_agents_objective_breakdown(m)
         ρ = value(m.model[:ρ_s][s])
         expected = sum(P[o] * (value(m.model[:π_s][s, o]) - value(m.model[:stor_total_costs][s, o])) for o in O)
         cvar = ζ - (1 / Ψ) * u_avg
-        println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+        expected_term = δ * expected
+        cvar_term = (1 - δ) * cvar
+        println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
         
         println("  Scenario breakdown for Storage $s:")
         for o in O
-            u = round(value(m.model[:u_s][s, o]), digits=4)
+            u = value(m.model[:u_s][s, o])
             d = dual(m.model[:cvar_tail_s][s, o])
             tail_flag = u > 1e-6 ? "TAIL" : ""
             println("    Scenario $o: u = $u, dual = $d $tail_flag")
@@ -394,11 +403,13 @@ function print_agents_objective_breakdown(m)
     ρ = value(m.model[:ρ_d])
     expected = compute_expected_consumer_welfare(m)
     cvar = ζ - (1 / Ψ) * u_avg
-    println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4))")
+    expected_term = δ * expected
+    cvar_term = (1 - δ) * cvar
+    println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
 
     println("  Scenario breakdown for Consumer:")
     for o in O
-        u = round(value(m.model[:u_d][o]), digits=4)
+        u = value(m.model[:u_d][o])
         d = dual(m.model[:cvar_tail_d][o])
         tail_flag = u > 1e-6 ? "TAIL" : ""
         println("    Scenario $o: u = $u, dual = $d $tail_flag")
