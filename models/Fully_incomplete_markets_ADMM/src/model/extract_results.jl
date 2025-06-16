@@ -74,12 +74,14 @@ function extract_price!(model; verbose = false)
         if avg_price < 0
             price = -price
         end
-
+        
     else
         if verbose
             @warn "The demand_balance constraint does not exist in the model. Dual prices cannot be extracted."
         end
         price = Dict{Any, Any}()
+        print("The demand_balance constraint does not exist in the model. Dual prices cannot be extracted.")
+        
     end
     return price
 end
@@ -151,6 +153,7 @@ function extract_iteration_results!(model, name)
     iteration_results[:of] = objective_value(model.model)  # Extract objective function value
 
     model.results[name] = iteration_results  # Store the results in the model's results dictionary
+    
 end
 
 """
