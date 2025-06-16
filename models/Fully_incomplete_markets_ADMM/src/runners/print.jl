@@ -346,6 +346,15 @@ function print_agents_objective_breakdown(m)
     P = m.data["data"]["additional_params"]["P"]
     δ = m.data["data"]["additional_params"]["δ"]
     Ψ = m.data["data"]["additional_params"]["Ψ"]
+    λ = m.data["data"]["additional_params"]["λ"]
+
+    for o in O
+        avg_price = sum(W[t, o] * λ[t, o] for t in T) / sum(W[t, o] for t in T)
+        println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
+    end
+    total_avg_price = sum(W[t, o] * P[o] * λ[t, o] for t in T, o in O)
+    println("Overall average price = $(round(total_avg_price, digits=4)) [£/MWh]")
+
 
     println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
 
