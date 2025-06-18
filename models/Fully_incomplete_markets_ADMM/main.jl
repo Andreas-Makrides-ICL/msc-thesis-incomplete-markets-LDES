@@ -103,13 +103,13 @@ function run_ADMM(data, setup, solver)
         if iter > 1
             calculate_dual_convergence(m, iter)
         end
-
+        
         # Compute the penalty term based on the current iteration results
         define_and_compute_penalty!(m, iter)
         
         # Update the price values based on the penalty and iteration results
         update_price_values!(m, iter)
-
+        
         # Rebuild the optimization model with updated prices and objective
         create_base_model!(m, update_prices = true)
         
@@ -117,12 +117,12 @@ function run_ADMM(data, setup, solver)
         define_objective!(m)
         
         # Add the penalty term to the objective expression
-        add_to_expression!(m.model[:objective_expr], -m.model[:total_penalty_term])
+        #add_to_expression!(m.model[:objective_expr], -m.model[:total_penalty_term])
         
         # Set the updated objective function in the model
-        @objective(m.model, Max, m.model[:objective_expr])
-        
-
+        @objective(m.model, Max, m.model[:objective_expr]-m.model[:total_penalty_term])
+        println("\n1st print for iteration =", iter)
+        #print(objective_function(m.model))
 
         #println("\n--- Iteration $iter: Objective Expression (Symbolic) ---")
         #println(string(m.model[:objective_expr]))
@@ -177,7 +177,7 @@ function run_ADMM(data, setup, solver)
             m.results["final"] = m.results[iter]
         end
 
-        print(iter)
+        println("\n2nd print for iteration =", iter)
 
     end
 

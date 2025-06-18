@@ -152,6 +152,14 @@ function extract_iteration_results!(model, name)
 
     iteration_results[:of] = objective_value(model.model)  # Extract objective function value
 
+    m = model.model
+    G = model.data["sets"]["G"]
+    S = model.data["sets"]["S"]
+    O = model.data["sets"]["O"]
+    iteration_results[:μ_g] = Dict((g, o) => dual(m[:cvar_tail_g][g, o]) for g in G, o in O)
+    iteration_results[:μ_s] = Dict((s, o) => dual(m[:cvar_tail_s][s, o]) for s in S, o in O)
+    iteration_results[:μ_d] = Dict(o => dual(m[:cvar_tail_d][o]) for o in O)
+
     model.results[name] = iteration_results  # Store the results in the model's results dictionary
     
 end

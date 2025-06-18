@@ -106,7 +106,11 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         δ * sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O) + 
         (1 - δ) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
     )
-
+"""
+    @expression(m, ρ_s[s in S], 
+        (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
+    )
+"""
     # Energy Cost Expression (using λ values if available)
     if price_available
         @expression(m, energy_cost, 

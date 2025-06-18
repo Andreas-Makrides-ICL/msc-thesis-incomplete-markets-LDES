@@ -342,7 +342,8 @@ function print_agents_objective_breakdown(m)
 
     println("\n=== Agent Objective Breakdown ===")
 
-    G, S, O = m.data["sets"]["G"], m.data["sets"]["S"], m.data["sets"]["O"]
+    G, S, O, T = m.data["sets"]["G"], m.data["sets"]["S"], m.data["sets"]["O"], m.data["sets"]["T"]
+    W = m.data["data"]["time_weights"]
     P = m.data["data"]["additional_params"]["P"]
     δ = m.data["data"]["additional_params"]["δ"]
     Ψ = m.data["data"]["additional_params"]["Ψ"]
