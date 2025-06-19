@@ -155,7 +155,7 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T3600_new.csv", df)
+#CSV.write("risk_aversion_results_O30_T3600_new.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 
