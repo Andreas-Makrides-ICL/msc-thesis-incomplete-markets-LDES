@@ -16,6 +16,7 @@ function run_ADMM(data, setup, solver)
     # Set solver attribute to suppress output
     if solver == "CPLEX"
         set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
+        set_optimizer_attribute(m.model, "CPX_PARAM_SCAIND", 1)  # Enable scaling: 0 for equilibrium scaling (default), 1 for aggressive scaling
     elseif solver == "Gurobi"
         set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
@@ -78,7 +79,7 @@ function run_ADMM(data, setup, solver)
 
     # Main ADMM loop
     for iter in 1:m.setup["max_iterations"]
-        
+        println("\n1st print for iteration = ", iter)
         #print CVaR and ζ_d,ζ_g,ζ_s to ensure correct operation
         println("CVaR variable ζ_g exists? ", haskey(m.model, :ζ_g))
         println("CVaR variable ζ_s exists? ", haskey(m.model, :ζ_s))
@@ -121,39 +122,10 @@ function run_ADMM(data, setup, solver)
         
         # Set the updated objective function in the model
         @objective(m.model, Max, m.model[:objective_expr]-m.model[:total_penalty_term])
-        println("\n1st print for iteration =", iter)
-        #print(objective_function(m.model))
-
-        #println("\n--- Iteration $iter: Objective Expression (Symbolic) ---")
-        #println(string(m.model[:objective_expr]))
-
-
-        #if haskey(m.model, :cvar_tail_d)
-        #    println("\n--- CVaR Constraint: Demand (Symbolic) ---")
-        #    for con in values(m.model[:cvar_tail_d])
-        #        println(string(con))
-        #    end
-        #end
-
-        #if haskey(m.model, :cvar_tail_s)
-        #    println("\n--- CVaR Constraint: Storage (Symbolic) ---")
-        #    for con in values(m.model[:cvar_tail_s])
-        #        println(string(con))
-        #    end
-        #end
-
-        #if haskey(m.model, :cvar_tail_g)
-        #    println("\n--- CVaR Constraint: Generator (Symbolic) ---")
-        #    for con in values(m.model[:cvar_tail_g])
-        #        println(string(con))
-        #    end
-        #end
-
-
-
+        
         # Solve the updated model and check for optimality
         solution_pars = solve_and_check_optimality!(m.model)
-        
+
         # Store the solution status for the current iteration
         m.results[iter][:solution_status] = solution_pars
 
@@ -177,7 +149,7 @@ function run_ADMM(data, setup, solver)
             m.results["final"] = m.results[iter]
         end
 
-        println("\n2nd print for iteration =", iter)
+        println("\n2nd print for iteration = ", iter)
 
     end
 
@@ -225,7 +197,7 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
         
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
-        local_setup["penalty"] = 1.1
+        local_setup["penalty"] = 0.1
         local_setup["tolerance"] = 0.05
         local_setup["use_hierarchical_clustering"] = false
         local_setup["δ"] = delta
@@ -234,7 +206,7 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
-        data = load_data(local_setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
+        data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver);
 
@@ -264,6 +236,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-#CSV.write("ADMM_risk_aversion_results_O3_T150_tuning_t0.01.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672tun.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

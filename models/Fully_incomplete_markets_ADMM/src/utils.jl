@@ -266,7 +266,7 @@ function solve_and_check_optimality!(m, verbose::Bool = true)
     #MOI.set(m, MOI.RawParameter("OutputFlag"), 1)
 
     # Solve
-    optimize!(m)
+    @time optimize!(m)
     term_status = termination_status(m)
     if termination_status(m) != MOI.OPTIMAL
         throw(ErrorException("Model not solved to optimality: $term_status"))
