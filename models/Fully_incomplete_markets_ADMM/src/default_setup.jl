@@ -33,7 +33,7 @@ const default_setup = Dict(
     "objective" => "central",  # Options: "central" or "individual"
 
     # Data Path Options
-    "input_path" => "data_final/f",
+    "input_path" => "data_final/f672",
     #"input_path" => "synthetic_data/",
     "availability" => "concatenated_capacity_factors_30yr_lf.csv", #"CF.csv",
     "demand" => "concatenated_load_profiles_30yr.csv", #"load_profile.csv",

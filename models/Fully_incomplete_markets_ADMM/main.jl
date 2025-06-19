@@ -198,8 +198,8 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
         local_setup["penalty"] = 0.1
-        local_setup["tolerance"] = 0.05
-        local_setup["use_hierarchical_clustering"] = false
+        local_setup["tolerance"] = 0.02
+        local_setup["use_hierarchical_clustering"] = true
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
         solver = "CPLEX"
@@ -236,6 +236,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672tun.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
