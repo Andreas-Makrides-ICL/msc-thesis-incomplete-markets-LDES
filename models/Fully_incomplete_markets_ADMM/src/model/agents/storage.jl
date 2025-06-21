@@ -100,17 +100,25 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         sum(W[t, o] * (m[:q_dch][s, t, o] - m[:q_ch][s, t, o]) * (price_available ? λ[t, o] : 0) for t in T)
     )
 
-    # Define Risk-Adjusted Profit Expression
-    # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-    @expression(m, ρ_s[s in S], 
-        δ * sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O) + 
-        (1 - δ) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
-    )
-"""
-    @expression(m, ρ_s[s in S], 
-        (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
-    )
-"""
+    if δ==1.0
+        # Define Risk-Adjusted Profit Expression
+        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
+        @expression(m, ρ_s[s in S], sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O)
+        )
+    elseif δ==0.0
+        # Define Risk-Adjusted Profit Expression
+        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
+        @expression(m, ρ_s[s in S], (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
+        )
+    else
+        # Define Risk-Adjusted Profit Expression
+        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
+        @expression(m, ρ_s[s in S], 
+            δ * sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O) + 
+            (1 - δ) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
+        )
+    end
+
     # Energy Cost Expression (using λ values if available)
     if price_available
         @expression(m, energy_cost, 

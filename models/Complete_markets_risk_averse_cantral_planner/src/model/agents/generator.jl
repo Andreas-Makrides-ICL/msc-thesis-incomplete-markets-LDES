@@ -86,18 +86,27 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         )
     end
 
+
     # Define Revenue Expression (excluding costs)
     # Generation revenue per scenario: Use λ if available, otherwise set to 0
-    @expression(m, π_g[g in G, o in O], 
-        sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
+    @expression(m, π_g[g in G, o in O], sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
     )
 
-    # Define Risk-Adjusted Profit Expression
-    # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-    @expression(m, ρ_g[g in G], 
-        δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-        (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
-    )
+
+    if δ == 1.0
+        @expression(m, ρ_g[g in G], sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O)
+        )
+    elseif δ == 0.0
+        @expression(m, ρ_g[g in G], (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
+        )
+    else
+        # Define Risk-Adjusted Profit Expression
+        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
+        @expression(m, ρ_g[g in G], 
+            δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
+            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
+        )
+    end
 
     if !update_prices
         # Generation Limits: Ensures generator output does not exceed capacity times availability

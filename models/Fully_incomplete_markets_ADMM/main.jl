@@ -16,7 +16,7 @@ function run_ADMM(data, setup, solver)
     # Set solver attribute to suppress output
     if solver == "CPLEX"
         set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
-        set_optimizer_attribute(m.model, "CPX_PARAM_SCAIND", 1)  # Enable scaling: 0 for equilibrium scaling (default), 1 for aggressive scaling
+        #set_optimizer_attribute(m.model, "CPX_PARAM_SCAIND", 1)  # Enable scaling: 0 for equilibrium scaling (default), 1 for aggressive scaling
     elseif solver == "Gurobi"
         set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
@@ -179,8 +179,8 @@ solver = "CPLEX"
 # Central planner parameter 
 setup["max_iterations"] = 10000
 setup["penalty"] = 1.1
-setup["tolerance"] = 0.01
-setup["use_hierarchical_clustering"] = false
+setup["tolerance"] = 0.0001
+setup["use_hierarchical_clustering"] = true
 
 """
 setup["δ"] = 0.8   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
@@ -197,16 +197,16 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
         
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
-        local_setup["penalty"] = 0.1
-        local_setup["tolerance"] = 0.02
-        local_setup["use_hierarchical_clustering"] = true
+        local_setup["penalty"] = 1.1
+        local_setup["tolerance"] = 0.0001
+        local_setup["use_hierarchical_clustering"] = false
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
         solver = "CPLEX"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
-        data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
+        data = load_data(local_setup, user_sets = Dict("O" => 1:3, "T" => 1:100));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver);
 
@@ -236,6 +236,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672.csv", df)
+#CSV.write("ADMM_risk_aversion_results_O30_T672.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

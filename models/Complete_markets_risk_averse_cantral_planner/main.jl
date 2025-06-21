@@ -103,12 +103,12 @@ m = run_central_planner(data, setup, solver);
 """
 
 results = []
-for delta in [1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [0.4, 0.2, 0.0] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
 
-        data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:3600));
+        data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup, solver);
 
@@ -155,7 +155,7 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-#CSV.write("risk_aversion_results_O30_T3600_new.csv", df)
+CSV.write("risk_aversion_results_O30_T672_06.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 
