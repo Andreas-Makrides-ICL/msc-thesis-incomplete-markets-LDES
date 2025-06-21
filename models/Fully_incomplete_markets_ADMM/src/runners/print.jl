@@ -417,7 +417,7 @@ function print_agents_objective_breakdown(m)
     println("  Scenario breakdown for Consumer:")
     for o in O
         u = value(m.model[:u_d][o])
-        d = dual(m.model[:cvar_tail_d][o])
+        #d = dual(m.model[:cvar_tail_d][o])
         tail_flag = u > 1e-6 ? "TAIL" : ""
         println("    Scenario $o: u = $u, dual = $d $tail_flag")
     end
