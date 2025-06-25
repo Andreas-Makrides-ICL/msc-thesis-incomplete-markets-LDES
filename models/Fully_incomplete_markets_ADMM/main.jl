@@ -7,7 +7,7 @@ include("src/_init_.jl");
 
 Runs the ADMM optimization workflow on the provided data and setup.
 """
-function run_ADMM(data, setup, solver)
+function run_ADMM(data, setup, solver, delta)
     # ============================
     # Create Base Optimization Model
     # ============================
@@ -154,7 +154,13 @@ function run_ADMM(data, setup, solver)
     end
 
     if termination_status(m.model) == MOI.OPTIMAL
-        print_agents_objective_breakdown(m)
+        # Then call the function with output redirected
+        filename = "agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
+        open(filename, "w") do io
+            redirect_stdout(io) do
+                print_agents_objective_breakdown(m)
+            end
+        end
     else
         println("Model did not solve to optimality — skipping breakdown.")
     end
@@ -192,7 +198,7 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [0.0]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
         local_setup = copy(default_setup)
@@ -208,7 +214,7 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
 
         data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
-        m = run_ADMM(data, local_setup, solver);
+        m = run_ADMM(data, local_setup, solver, delta);
 
         res = m.results["final"]
         cap = res[:capacities]
@@ -236,6 +242,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672_d1.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672_d0.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

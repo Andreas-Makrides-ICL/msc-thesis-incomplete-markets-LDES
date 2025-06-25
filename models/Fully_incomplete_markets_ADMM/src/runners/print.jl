@@ -404,23 +404,25 @@ function print_agents_objective_breakdown(m)
 
     # Consumer (only one set of variables)
     println("\n--- Consumer ---")
-    ζ = value(m.model[:ζ_d])
-    u_vals = [value(m.model[:u_d][o]) for o in O]
-    u_avg = sum(P[o] * u_vals[o] for o in O)
+    #ζ = value(m.model[:ζ_d])
+    #u_vals = [value(m.model[:u_d][o]) for o in O]
+    #u_avg = sum(P[o] * u_vals[o] for o in O)
     ρ = value(m.model[:ρ_d])
-    expected = compute_expected_consumer_welfare(m)
-    cvar = ζ - (1 / Ψ) * u_avg
-    expected_term = δ * expected
-    cvar_term = (1 - δ) * cvar
-    println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+    #expected = compute_expected_consumer_welfare(m)
+    #cvar = ζ - (1 / Ψ) * u_avg
+    #expected_term = δ * expected
+    #cvar_term = (1 - δ) * cvar
+    #println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+    println("Consumer: ρ = $(round(ρ, digits=4))")
 
-    println("  Scenario breakdown for Consumer:")
-    for o in O
-        u = value(m.model[:u_d][o])
-        #d = dual(m.model[:cvar_tail_d][o])
-        tail_flag = u > 1e-6 ? "TAIL" : ""
-        println("    Scenario $o: u = $u, dual = $d $tail_flag")
-    end
+    #println("  Scenario breakdown for Consumer:")
+    #for o in O
+    #    u = value(m.model[:u_d][o])
+    #    #d = dual(m.model[:cvar_tail_d][o])
+    #    tail_flag = u > 1e-6 ? "TAIL" : ""
+    #    #println("    Scenario $o: u = $u, dual = $d $tail_flag")
+    #    println("    Scenario $o: u = $u $tail_flag")
+    #end
 
     println("=================================\n")
 end

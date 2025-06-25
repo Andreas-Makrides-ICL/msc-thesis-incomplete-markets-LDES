@@ -1,0 +1,1229 @@
+Fully Incomplete Markets
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=1, Ψ=0.5, Time= 2h 50 min, 203 iterations, 50sec/iter
+
+Total Installed Capacity: 579.29 MW
+
+Total Installed Energy: 717.25 MWh
+
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 10 = 80.2106 [£/MWh]
+Average price in scenario 11 = 98.304 [£/MWh]
+Average price in scenario 12 = 127.9962 [£/MWh]
+Average price in scenario 13 = 115.2249 [£/MWh]
+Average price in scenario 14 = 97.0465 [£/MWh]
+Average price in scenario 15 = 106.5153 [£/MWh]
+Average price in scenario 16 = 97.6985 [£/MWh]
+Average price in scenario 17 = 131.5815 [£/MWh]
+Average price in scenario 18 = 86.3109 [£/MWh]
+Average price in scenario 19 = 89.975 [£/MWh]
+Average price in scenario 1 = 85.8344 [£/MWh]
+Average price in scenario 20 = 104.6322 [£/MWh]
+Average price in scenario 21 = 111.3884 [£/MWh]
+Average price in scenario 22 = 100.6322 [£/MWh]
+Average price in scenario 23 = 108.3212 [£/MWh]
+Average price in scenario 24 = 101.218 [£/MWh]
+Average price in scenario 25 = 111.9342 [£/MWh]
+Average price in scenario 26 = 91.5699 [£/MWh]
+Average price in scenario 27 = 119.9614 [£/MWh]
+Average price in scenario 28 = 84.5348 [£/MWh]
+Average price in scenario 29 = 96.1449 [£/MWh]
+Average price in scenario 2 = 117.5819 [£/MWh]
+Average price in scenario 30 = 99.3234 [£/MWh]
+Average price in scenario 3 = 89.384 [£/MWh]
+Average price in scenario 4 = 97.851 [£/MWh]
+Average price in scenario 5 = 78.1822 [£/MWh]
+Average price in scenario 6 = 70.3313 [£/MWh]
+Average price in scenario 7 = 96.3128 [£/MWh]
+Average price in scenario 8 = 130.8498 [£/MWh]
+Average price in scenario 9 = 69.0774 [£/MWh]
+Risk aversion (δ): 1.0, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Gen Gas: ζ = 0.0, ū = 1.1251870173e6, ρ = 76.2226, Expected = 76.2226, CVaR = -2.2503740346e6, Expected Term (δ * E[W - C]) = 76.2226, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Gen Gas:
+    Scenario 10: u = 49391.90305801311, dual = 0.0 TAIL
+    Scenario 11: u = 1.4341795827507214e6, dual = 0.0 TAIL
+    Scenario 12: u = 0.0, dual = 0.0 
+    Scenario 13: u = 0.0, dual = 0.0 
+    Scenario 14: u = 1.8631786709696818e6, dual = 0.0 TAIL
+    Scenario 15: u = 0.0, dual = 0.0 
+    Scenario 16: u = 0.0, dual = 0.0 
+    Scenario 17: u = 0.0, dual = 0.0 
+    Scenario 18: u = 3.9756112234826367e6, dual = 0.0 TAIL
+    Scenario 19: u = 0.0, dual = 0.0 
+    Scenario 1: u = 0.0, dual = 0.0 
+    Scenario 20: u = 0.0, dual = 0.0 
+    Scenario 21: u = 1.4377486878093227e6, dual = 0.0 TAIL
+    Scenario 22: u = 3.504052596144016e6, dual = 0.0 TAIL
+    Scenario 23: u = 2.2693643187029376e6, dual = 0.0 TAIL
+    Scenario 24: u = 324512.43162915006, dual = 0.0 TAIL
+    Scenario 25: u = 0.0, dual = 0.0 
+    Scenario 26: u = 1.0057527711392837e6, dual = 0.0 TAIL
+    Scenario 27: u = 0.0, dual = 0.0 
+    Scenario 28: u = 1.9885670792623642e6, dual = 0.0 TAIL
+    Scenario 29: u = 3.056604867148813e6, dual = 0.0 TAIL
+    Scenario 2: u = 0.0, dual = 0.0 
+    Scenario 30: u = 886305.0870218574, dual = 0.0 TAIL
+    Scenario 3: u = 0.0, dual = 0.0 
+    Scenario 4: u = 0.0, dual = 0.0 
+    Scenario 5: u = 3.682104851018139e6, dual = 0.0 TAIL
+    Scenario 6: u = 3.28768403945318e6, dual = 0.0 TAIL
+    Scenario 7: u = 1.6581527240798296e6, dual = 0.0 TAIL
+    Scenario 8: u = 0.0, dual = 0.0 
+    Scenario 9: u = 3.3323996855664374e6, dual = 0.0 TAIL
+Gen PV: ζ = 0.0, ū = 723003.6618, ρ = -2468.6789, Expected = -2468.6789, CVaR = -1.4460073235e6, Expected Term (δ * E[W - C]) = -2468.6789, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Gen PV:
+    Scenario 10: u = 2.61162408339799e6, dual = 0.0 TAIL
+    Scenario 11: u = 572990.7194454054, dual = 0.0 TAIL
+    Scenario 12: u = 0.0, dual = 0.0 
+    Scenario 13: u = 0.0, dual = 0.0 
+    Scenario 14: u = 1.3883025846028652e6, dual = 0.0 TAIL
+    Scenario 15: u = 0.0, dual = 0.0 
+    Scenario 16: u = 0.0, dual = 0.0 
+    Scenario 17: u = 0.0, dual = 0.0 
+    Scenario 18: u = 644432.8360777589, dual = 0.0 TAIL
+    Scenario 19: u = 1.7895298569257772e6, dual = 0.0 TAIL
+    Scenario 1: u = 996887.1539916318, dual = 0.0 TAIL
+    Scenario 20: u = 65229.64739862364, dual = 0.0 TAIL
+    Scenario 21: u = 0.0, dual = 0.0 
+    Scenario 22: u = 0.0, dual = 0.0 
+    Scenario 23: u = 0.0, dual = 0.0 
+    Scenario 24: u = 30965.581386530695, dual = 0.0 TAIL
+    Scenario 25: u = 0.0, dual = 0.0 
+    Scenario 26: u = 75946.44092446474, dual = 0.0 TAIL
+    Scenario 27: u = 0.0, dual = 0.0 
+    Scenario 28: u = 1.7305201693768767e6, dual = 0.0 TAIL
+    Scenario 29: u = 527305.6849871876, dual = 0.0 TAIL
+    Scenario 2: u = 0.0, dual = 0.0 
+    Scenario 30: u = 0.0, dual = 0.0 
+    Scenario 3: u = 663219.8877100394, dual = 0.0 TAIL
+    Scenario 4: u = 504056.3826644375, dual = 0.0 TAIL
+    Scenario 5: u = 2.213090900694658e6, dual = 0.0 TAIL
+    Scenario 6: u = 3.4183948111203886e6, dual = 0.0 TAIL
+    Scenario 7: u = 738679.7156621414, dual = 0.0 TAIL
+    Scenario 8: u = 0.0, dual = 0.0 
+    Scenario 9: u = 3.7189333968086233e6, dual = 0.0 TAIL
+Gen Nuclear: ζ = 0.0, ū = 82982.802, ρ = 368028.2258, Expected = 368028.2258, CVaR = -165965.6039, Expected Term (δ * E[W - C]) = 368028.2258, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Gen Nuclear:
+    Scenario 10: u = 320636.11432479596, dual = 0.0 TAIL
+    Scenario 11: u = 0.0, dual = 0.0 
+    Scenario 12: u = 0.0, dual = 0.0 
+    Scenario 13: u = 0.0, dual = 0.0 
+    Scenario 14: u = 0.0, dual = 0.0 
+    Scenario 15: u = 0.0, dual = 0.0 
+    Scenario 16: u = 0.0, dual = 0.0 
+    Scenario 17: u = 0.0, dual = 0.0 
+    Scenario 18: u = 106882.52439694399, dual = 0.0 TAIL
+    Scenario 19: u = 0.0, dual = 0.0 
+    Scenario 1: u = 123578.22331502695, dual = 0.0 TAIL
+    Scenario 20: u = 0.0, dual = 0.0 
+    Scenario 21: u = 0.0, dual = 0.0 
+    Scenario 22: u = 0.0, dual = 0.0 
+    Scenario 23: u = 0.0, dual = 0.0 
+    Scenario 24: u = 0.0, dual = 0.0 
+    Scenario 25: u = 0.0, dual = 0.0 
+    Scenario 26: u = 0.0, dual = 0.0 
+    Scenario 27: u = 0.0, dual = 0.0 
+    Scenario 28: u = 169118.5296285947, dual = 0.0 TAIL
+    Scenario 29: u = 0.0, dual = 0.0 
+    Scenario 2: u = 0.0, dual = 0.0 
+    Scenario 30: u = 0.0, dual = 0.0 
+    Scenario 3: u = 0.0, dual = 0.0 
+    Scenario 4: u = 0.0, dual = 0.0 
+    Scenario 5: u = 391713.68123613583, dual = 0.0 TAIL
+    Scenario 6: u = 666809.5736076522, dual = 0.0 TAIL
+    Scenario 7: u = 0.0, dual = 0.0 
+    Scenario 8: u = 0.0, dual = 0.0 
+    Scenario 9: u = 710745.4124657589, dual = 0.0 TAIL
+Gen Wind: ζ = 0.0, ū = 1.3961171159e6, ρ = 1430.0317, Expected = 1430.0317, CVaR = -2.7922342319e6, Expected Term (δ * E[W - C]) = 1430.0317, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Gen Wind:
+    Scenario 10: u = 5.705013926060598e6, dual = 0.0 TAIL
+    Scenario 11: u = 959532.8510199937, dual = 0.0 TAIL
+    Scenario 12: u = 0.0, dual = 0.0 
+    Scenario 13: u = 0.0, dual = 0.0 
+    Scenario 14: u = 0.0, dual = 0.0 
+    Scenario 15: u = 0.0, dual = 0.0 
+    Scenario 16: u = 0.0, dual = 0.0 
+    Scenario 17: u = 0.0, dual = 0.0 
+    Scenario 18: u = 1.6253799184650797e6, dual = 0.0 TAIL
+    Scenario 19: u = 3.997274103677817e6, dual = 0.0 TAIL
+    Scenario 1: u = 5.850539332247344e6, dual = 0.0 TAIL
+    Scenario 20: u = 0.0, dual = 0.0 
+    Scenario 21: u = 0.0, dual = 0.0 
+    Scenario 22: u = 0.0, dual = 0.0 
+    Scenario 23: u = 0.0, dual = 0.0 
+    Scenario 24: u = 0.0, dual = 0.0 
+    Scenario 25: u = 0.0, dual = 0.0 
+    Scenario 26: u = 2.6268804162730523e6, dual = 0.0 TAIL
+    Scenario 27: u = 0.0, dual = 0.0 
+    Scenario 28: u = 894096.1007111222, dual = 0.0 TAIL
+    Scenario 29: u = 0.0, dual = 0.0 
+    Scenario 2: u = 0.0, dual = 0.0 
+    Scenario 30: u = 0.0, dual = 0.0 
+    Scenario 3: u = 1.2624541711045739e6, dual = 0.0 TAIL
+    Scenario 4: u = 1.1989207696480993e6, dual = 0.0 TAIL
+    Scenario 5: u = 3.7462631770798503e6, dual = 0.0 TAIL
+    Scenario 6: u = 7.135188539690962e6, dual = 0.0 TAIL
+    Scenario 7: u = 833605.1463121529, dual = 0.0 TAIL
+    Scenario 8: u = 0.0, dual = 0.0 
+    Scenario 9: u = 6.048365025748014e6, dual = 0.0 TAIL
+
+--- Storage ---
+Storage BESS: ζ = 0.0, ū = 0.3033, ρ = -0.3033, Expected = -0.3033, CVaR = -0.6065, Expected Term (δ * E[W - C]) = -0.3033, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Storage BESS:
+    Scenario 10: u = 0.40100304664522435, dual = 0.0 TAIL
+    Scenario 11: u = 0.1713575261831907, dual = 0.0 TAIL
+    Scenario 12: u = 0.2096610486422124, dual = 0.0 TAIL
+    Scenario 13: u = 0.2040977688114331, dual = 0.0 TAIL
+    Scenario 14: u = 0.25363748429680805, dual = 0.0 TAIL
+    Scenario 15: u = 0.3069942730230276, dual = 0.0 TAIL
+    Scenario 16: u = 0.39992406403983494, dual = 0.0 TAIL
+    Scenario 17: u = 0.17176907110321363, dual = 0.0 TAIL
+    Scenario 18: u = 0.3444201250321714, dual = 0.0 TAIL
+    Scenario 19: u = 0.2952402291869604, dual = 0.0 TAIL
+    Scenario 1: u = 0.32001112232459294, dual = 0.0 TAIL
+    Scenario 20: u = 0.34836475769014186, dual = 0.0 TAIL
+    Scenario 21: u = 0.3412487947032102, dual = 0.0 TAIL
+    Scenario 22: u = 0.2898682471276966, dual = 0.0 TAIL
+    Scenario 23: u = 0.23245293103399375, dual = 0.0 TAIL
+    Scenario 24: u = 0.2058439834019783, dual = 0.0 TAIL
+    Scenario 25: u = 0.18431862941922098, dual = 0.0 TAIL
+    Scenario 26: u = 0.292532023947431, dual = 0.0 TAIL
+    Scenario 27: u = 0.19070702624548969, dual = 0.0 TAIL
+    Scenario 28: u = 0.42995694910397414, dual = 0.0 TAIL
+    Scenario 29: u = 0.232168993444232, dual = 0.0 TAIL
+    Scenario 2: u = 0.34919604999747095, dual = 0.0 TAIL
+    Scenario 30: u = 0.3574546922593436, dual = 0.0 TAIL
+    Scenario 3: u = 0.5597980792815013, dual = 0.0 TAIL
+    Scenario 4: u = 0.30264921238544257, dual = 0.0 TAIL
+    Scenario 5: u = 0.36109148562010945, dual = 0.0 TAIL
+    Scenario 6: u = 0.46161771963475345, dual = 0.0 TAIL
+    Scenario 7: u = 0.2392926062177906, dual = 0.0 TAIL
+    Scenario 8: u = 0.19878796890479736, dual = 0.0 TAIL
+    Scenario 9: u = 0.4425148706313446, dual = 0.0 TAIL
+Storage LDES_PHS: ζ = 0.0, ū = 425918.0957, ρ = -479.7525, Expected = -479.7525, CVaR = -851836.1914, Expected Term (δ * E[W - C]) = -479.7525, CVaR Term ((1 - δ) * CVaR) = -0.0
+  Scenario breakdown for Storage LDES_PHS:
+    Scenario 10: u = 743467.8690795727, dual = 0.0 TAIL
+    Scenario 11: u = 0.0, dual = 0.0 
+    Scenario 12: u = 0.0, dual = 0.0 
+    Scenario 13: u = 0.0, dual = 0.0 
+    Scenario 14: u = 0.0, dual = 0.0 
+    Scenario 15: u = 0.0, dual = 0.0 
+    Scenario 16: u = 637043.8163621429, dual = 0.0 TAIL
+    Scenario 17: u = 0.0, dual = 0.0 
+    Scenario 18: u = 708676.5756189154, dual = 0.0 TAIL
+    Scenario 19: u = 0.0, dual = 0.0 
+    Scenario 1: u = 273261.8724917874, dual = 0.0 TAIL
+    Scenario 20: u = 144068.63396731866, dual = 0.0 TAIL
+    Scenario 21: u = 686269.1433579989, dual = 0.0 TAIL
+    Scenario 22: u = 213205.4141117162, dual = 0.0 TAIL
+    Scenario 23: u = 0.0, dual = 0.0 
+    Scenario 24: u = 0.0, dual = 0.0 
+    Scenario 25: u = 0.0, dual = 0.0 
+    Scenario 26: u = 17698.79619535711, dual = 0.0 TAIL
+    Scenario 27: u = 0.0, dual = 0.0 
+    Scenario 28: u = 1.127302770750767e6, dual = 0.0 TAIL
+    Scenario 29: u = 0.0, dual = 0.0 
+    Scenario 2: u = 588491.9285359787, dual = 0.0 TAIL
+    Scenario 30: u = 480895.51433007885, dual = 0.0 TAIL
+    Scenario 3: u = 2.753665394855849e6, dual = 0.0 TAIL
+    Scenario 4: u = 123822.10193679613, dual = 0.0 TAIL
+    Scenario 5: u = 266964.6438479368, dual = 0.0 TAIL
+    Scenario 6: u = 2.077536702627719e6, dual = 0.0 TAIL
+    Scenario 7: u = 0.0, dual = 0.0 
+    Scenario 8: u = 0.0, dual = 0.0 
+    Scenario 9: u = 1.93517169265405e6, dual = 0.0 TAIL
+
+--- Consumer ---
+Consumer: ρ = 5.354425221363e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.8, Ψ=0.5, Time= 1h 40 min, 20 sec/iter
+
+Total Installed Capacity: 572.89 MW
+
+Total Installed Energy: 731.08 MWh
+Convergence criteria met at iteration 249
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 10 = 82.5235 [£/MWh]
+Average price in scenario 11 = 100.4631 [£/MWh]
+Average price in scenario 12 = 131.4849 [£/MWh]
+Average price in scenario 13 = 117.4109 [£/MWh]
+Average price in scenario 14 = 100.4247 [£/MWh]
+Average price in scenario 15 = 108.8204 [£/MWh]
+Average price in scenario 16 = 100.3142 [£/MWh]
+Average price in scenario 17 = 132.2834 [£/MWh]
+Average price in scenario 18 = 87.6508 [£/MWh]
+Average price in scenario 19 = 91.6617 [£/MWh]
+Average price in scenario 1 = 87.3608 [£/MWh]
+Average price in scenario 20 = 106.9821 [£/MWh]
+Average price in scenario 21 = 113.9663 [£/MWh]
+Average price in scenario 22 = 103.5491 [£/MWh]
+Average price in scenario 23 = 110.7212 [£/MWh]
+Average price in scenario 24 = 104.4072 [£/MWh]
+Average price in scenario 25 = 114.826 [£/MWh]
+Average price in scenario 26 = 92.9293 [£/MWh]
+Average price in scenario 27 = 122.5599 [£/MWh]
+Average price in scenario 28 = 87.2662 [£/MWh]
+Average price in scenario 29 = 97.9737 [£/MWh]
+Average price in scenario 2 = 121.1779 [£/MWh]
+Average price in scenario 30 = 101.9069 [£/MWh]
+Average price in scenario 3 = 92.5537 [£/MWh]
+Average price in scenario 4 = 101.517 [£/MWh]
+Average price in scenario 5 = 79.28 [£/MWh]
+Average price in scenario 6 = 72.165 [£/MWh]
+Average price in scenario 7 = 98.5228 [£/MWh]
+Average price in scenario 8 = 132.5376 [£/MWh]
+Average price in scenario 9 = 71.7588 [£/MWh]
+Risk aversion (δ): 0.8, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Gen Gas: ζ = 441054.4928, ū = 1.1118009459e6, ρ = -63.2113, Expected = 445557.8357, CVaR = -1.782547399e6, Expected Term (δ * E[W - C]) = 356446.2685, CVaR Term ((1 - δ) * CVaR)) = -356509.4798
+  Scenario breakdown for Gen Gas:
+    Scenario 10: u = 0.00013850571525663965, dual = 2.551325615023291e-10 TAIL
+    Scenario 11: u = 1.462450560626537e6, dual = 0.01333333333241171 TAIL
+    Scenario 12: u = 0.0001164137902661959, dual = 2.4927740847271856e-13 TAIL
+    Scenario 13: u = 0.00011644874051390877, dual = 1.1400222144258088e-12 TAIL
+    Scenario 14: u = 1.4592636342305937e6, dual = 0.013333333332414899 TAIL
+    Scenario 15: u = 0.0001164831450818824, dual = 1.299475618882206e-12 TAIL
+    Scenario 16: u = 0.0001169388796212487, dual = 5.524396802048825e-12 TAIL
+    Scenario 17: u = 0.00011643831670647914, dual = 1.2564519572823376e-13 TAIL
+    Scenario 18: u = 4.3492988011159785e6, dual = 0.013333333333029124 TAIL
+    Scenario 19: u = 0.00011701712273148998, dual = 3.9758874746054935e-12 TAIL
+    Scenario 1: u = 0.00011695302256570705, dual = 3.340890068386183e-12 TAIL
+    Scenario 20: u = 0.00011716322004574637, dual = 1.01958446896857e-11 TAIL
+    Scenario 21: u = 1.3375985261776773e6, dual = 0.013333333332300513 TAIL
+    Scenario 22: u = 3.3137154318779567e6, dual = 0.013333333332932363 TAIL
+    Scenario 23: u = 2.2596945926556266e6, dual = 0.013333333332736896 TAIL
+    Scenario 24: u = 18440.877530144062, dual = 0.013333333052576826 TAIL
+    Scenario 25: u = 0.00011657098403194694, dual = 3.5250691376347403e-12 TAIL
+    Scenario 26: u = 1.1111506065439673e6, dual = 0.01333333333211797 TAIL
+    Scenario 27: u = 0.0001164181693391244, dual = 5.673498740302199e-13 TAIL
+    Scenario 28: u = 1.6491059848323762e6, dual = 0.013333333332526044 TAIL
+    Scenario 29: u = 3.135867395663002e6, dual = 0.013333333332909616 TAIL
+    Scenario 2: u = 0.00011640620804796373, dual = 2.2355892548254083e-13 TAIL
+    Scenario 30: u = 819036.8426745596, dual = 0.013333333331629088 TAIL
+    Scenario 3: u = 0.00011664507696377288, dual = 1.3566069492120685e-12 TAIL
+    Scenario 4: u = 0.00011675225435477067, dual = 3.797182874607327e-12 TAIL
+    Scenario 5: u = 3.9749576582693304e6, dual = 0.013333333333000394 TAIL
+    Scenario 6: u = 3.49791512540736e6, dual = 0.01333333333295543 TAIL
+    Scenario 7: u = 1.8583855927916227e6, dual = 0.01333333333261285 TAIL
+    Scenario 8: u = 0.00011640613118621065, dual = 2.2910223327987677e-13 TAIL
+    Scenario 9: u = 3.1071467460067086e6, dual = 0.01333333333290792 TAIL
+Gen PV: ζ = 141103.1567, ū = 654294.5395, ρ = 1800.719, Expected = 294122.3793, CVaR = -1.1674859224e6, Expected Term (δ * E[W - C]) = 235297.9035, CVaR Term ((1 - δ) * CVaR) =  -233497.1845
+  Scenario breakdown for Gen PV:
+    Scenario 10: u = 2.5346414182939227e6, dual = 0.013333333332793653 TAIL
+    Scenario 11: u = 448863.7137569321, dual = 0.013333333330212842 TAIL
+    Scenario 12: u = 0.00011633628161519544, dual = 3.1351652225763947e-13 TAIL
+    Scenario 13: u = 0.00011634778918738964, dual = 1.6531963882775055e-12 TAIL
+    Scenario 14: u = 1.1715972478838477e6, dual = 0.01333333333214174 TAIL
+    Scenario 15: u = 0.00011633699086025266, dual = 1.9464127142230773e-12 TAIL
+    Scenario 16: u = 0.00011630226163379448, dual = 1.3727471179769904e-12 TAIL
+    Scenario 17: u = 0.00011651271227134611, dual = 1.172149280708417e-12 TAIL
+    Scenario 18: u = 602976.9262024873, dual = 0.013333333330990418 TAIL
+    Scenario 19: u = 1.664677486173853e6, dual = 0.013333333332502367 TAIL
+    Scenario 1: u = 932740.3555152878, dual = 0.013333333331797394 TAIL
+    Scenario 20: u = 0.00011924686084189597, dual = 4.0403397895423013e-11 TAIL
+    Scenario 21: u = 0.00011628283743444091, dual = 9.595538210789337e-13 TAIL
+    Scenario 22: u = 0.0001162838952289435, dual = 9.644245660839412e-13 TAIL
+    Scenario 23: u = 0.00011625640593063971, dual = 5.382575275412527e-13 TAIL
+    Scenario 24: u = 0.00011688749791462704, dual = 6.3399016125705044e-12 TAIL
+    Scenario 25: u = 0.00011634466378861001, dual = 9.947906413357088e-13 TAIL
+    Scenario 26: u = 55241.59268271287, dual = 0.013333333300057768 TAIL
+    Scenario 27: u = 0.0001162592601395237, dual = 4.939646393751953e-13 TAIL
+    Scenario 28: u = 1.5579403856381057e6, dual = 0.013333333332442904 TAIL
+    Scenario 29: u = 432828.26642358, dual = 0.013333333330060782 TAIL
+    Scenario 2: u = 0.00011633620666150809, dual = 4.636420203866673e-13 TAIL
+    Scenario 30: u = 0.00011636567156847943, dual = 2.104970985790974e-12 TAIL
+    Scenario 3: u = 437981.853208301, dual = 0.013333333330071537 TAIL
+    Scenario 4: u = 224715.96941672213, dual = 0.013333333327005007 TAIL
+    Scenario 5: u = 2.1778317209852724e6, dual = 0.013333333332703631 TAIL
+    Scenario 6: u = 3.332438956438936e6, dual = 0.013333333332928656 TAIL
+    Scenario 7: u = 578011.9590709984, dual = 0.013333333330901004 TAIL
+    Scenario 8: u = 0.00011625971644314316, dual = 4.602039919984451e-13 TAIL
+    Scenario 9: u = 3.4763483330458812e6, dual = 0.013333333332946217 TAIL
+Gen Nuclear: ζ = 412263.8516, ū = 203293.3529, ρ = 361966.1117, Expected = 451038.3532, CVaR = 5677.1457, Expected Term (δ * E[W - C]) = 360830.6826, CVaR Term ((1 - δ) * CVaR)  = 1135.4291
+  Scenario breakdown for Gen Nuclear:
+    Scenario 10: u = 651857.1353341768, dual = 0.013333333330869852 TAIL
+    Scenario 11: u = 23253.68100018111, dual = 0.013333333251762414 TAIL
+    Scenario 12: u = 0.00011724054285308693, dual = 1.4851058458315557e-12 TAIL
+    Scenario 13: u = 0.00011739451556826413, dual = 2.825805072912772e-12 TAIL
+    Scenario 14: u = 24598.468440020995, dual = 0.0133333332330462 TAIL
+    Scenario 15: u = 0.00011779153185700149, dual = 6.056599339710034e-12 TAIL
+    Scenario 16: u = 28472.53882360014, dual = 0.013333333266630927 TAIL
+    Scenario 17: u = 0.00011724055548080871, dual = 1.4313504675861161e-12 TAIL
+    Scenario 18: u = 472196.78550480155, dual = 0.013333333329956659 TAIL
+    Scenario 19: u = 331653.91704254923, dual = 0.013333333328415927 TAIL
+    Scenario 1: u = 482359.73976552795, dual = 0.01333333332997591 TAIL
+    Scenario 20: u = 0.00011797188353026211, dual = 7.928710574447477e-12 TAIL
+    Scenario 21: u = 0.00011752171077442433, dual = 3.6264809146139928e-12 TAIL
+    Scenario 22: u = 0.00011975127077591165, dual = 2.2776560423303968e-11 TAIL
+    Scenario 23: u = 0.000117801486075209, dual = 5.033291795700446e-12 TAIL
+    Scenario 24: u = 0.00011870183526825964, dual = 1.5023004031512033e-11 TAIL
+    Scenario 25: u = 0.00011747953908918191, dual = 3.3845808239158725e-12 TAIL
+    Scenario 26: u = 287237.32121473475, dual = 0.013333333327686426 TAIL
+    Scenario 27: u = 0.0001173155047686134, dual = 2.1420057223133097e-12 TAIL
+    Scenario 28: u = 485673.7220732735, dual = 0.013333333330019185 TAIL
+    Scenario 29: u = 110482.2486856288, dual = 0.01333333331870614 TAIL
+    Scenario 2: u = 0.00011729078378633004, dual = 2.245460568667977e-12 TAIL
+    Scenario 30: u = 0.00012299743773076495, dual = 7.693831127582814e-11 TAIL
+    Scenario 3: u = 300397.1000556013, dual = 0.013333333327901903 TAIL
+    Scenario 4: u = 0.00012844418060364848, dual = 1.6239250653697704e-10 TAIL
+    Scenario 5: u = 765509.4041221589, dual = 0.013333333331266769 TAIL
+    Scenario 6: u = 1.0148171836825637e6, dual = 0.013333333331772685 TAIL
+    Scenario 7: u = 91240.44018441506, dual = 0.013333333315217537 TAIL
+    Scenario 8: u = 0.00011723832181278213, dual = 1.4353316769093504e-12 TAIL
+    Scenario 9: u = 1.0290509005505363e6, dual = 0.013333333331792725 TAIL
+Gen Wind: ζ = 1.2442269884e6, ū = 1.7332220375e6, ρ = -916.5006, Expected = 554408.6459, CVaR = -2.2222170865e6, Expected Term (δ * E[W - C]) = 443526.9168, CVaR Term ((1 - δ) ** CVaR) = -444443.4173
+  Scenario breakdown for Gen Wind:
+    Scenario 10: u = 6.298091524692545e6, dual = 0.013333333333095203 TAIL
+    Scenario 11: u = 1.7032137225495232e6, dual = 0.013333333332450311 TAIL
+    Scenario 12: u = 0.0001164026337451096, dual = 3.841724502945419e-13 TAIL
+    Scenario 13: u = 0.00011639068365898626, dual = 4.1969490351109756e-13 TAIL
+    Scenario 14: u = 0.00011702204778923659, dual = 9.946876958329874e-12 TAIL
+    Scenario 15: u = 0.00011644704010263995, dual = 1.1279279338135856e-12 TAIL
+    Scenario 16: u = 0.00011647018713752816, dual = 1.5192666239284626e-12 TAIL
+    Scenario 17: u = 0.00011645378410667269, dual = 7.596990940160429e-13 TAIL
+    Scenario 18: u = 2.458745677666515e6, dual = 0.013333333332720968 TAIL
+    Scenario 19: u = 4.934761596582056e6, dual = 0.01333333333302978 TAIL
+    Scenario 1: u = 6.640995015957216e6, dual = 0.013333333333107258 TAIL
+    Scenario 20: u = 0.0001164551918444571, dual = 1.2505194753100561e-12 TAIL
+    Scenario 21: u = 0.00011640746385970305, dual = 6.101574969501452e-13 TAIL
+    Scenario 22: u = 0.00011640930585498461, dual = 7.703356199951502e-13 TAIL
+    Scenario 23: u = 0.0001164045818072678, dual = 6.267734755123557e-13 TAIL
+    Scenario 24: u = 122160.23878135034, dual = 0.013333333320524618 TAIL
+    Scenario 25: u = 0.00011641725326554282, dual = 7.095145634896413e-13 TAIL
+    Scenario 26: u = 3.6836715484569515e6, dual = 0.013333333332926784 TAIL
+    Scenario 27: u = 0.00011639147775531402, dual = 4.504809771035959e-13 TAIL
+    Scenario 28: u = 1.4843756715923275e6, dual = 0.013333333332314914 TAIL
+    Scenario 29: u = 459197.4128961339, dual = 0.013333333330024805 TAIL
+    Scenario 2: u = 0.00011657188728758996, dual = 2.8791095843988797e-12 TAIL
+    Scenario 30: u = 0.00011645141099512037, dual = 1.2799299772341084e-12 TAIL
+    Scenario 3: u = 1.7818259816424302e6, dual = 0.013333333332491027 TAIL
+    Scenario 4: u = 1.602419338359434e6, dual = 0.01333333333239219 TAIL
+    Scenario 5: u = 4.766282177992034e6, dual = 0.013333333333018721 TAIL
+    Scenario 6: u = 7.915141963729897e6, dual = 0.013333333333143927 TAIL
+    Scenario 7: u = 1.513821529980096e6, dual = 0.013333333332338214 TAIL
+    Scenario 8: u = 0.00011639126988953691, dual = 3.230000589900947e-13 TAIL
+    Scenario 9: u = 6.63195772142765e6, dual = 0.013333333333107161 TAIL
+
+--- Storage ---
+Storage BESS: ζ = -0.1587, ū = 0.0207, ρ = -0.1699, Expected = -0.1624, CVaR = -0.2001, Expected Term (δ * E[W - C]) = -0.1299, CVaR Term ((1 - δ) * CVaR) = -0.04
+  Scenario breakdown for Storage BESS:
+    Scenario 10: u = 0.05318719016352724, dual = 0.013307013037134625 TAIL
+    Scenario 11: u = 0.00011736749744559877, dual = 2.198070915704785e-5 TAIL
+    Scenario 12: u = 0.00012045638541885494, dual = 3.238461331756188e-5 TAIL
+    Scenario 13: u = 0.00011937247698214559, dual = 3.333373930739428e-5 TAIL
+    Scenario 14: u = 0.00011785160532797306, dual = 6.740961248301719e-5 TAIL
+    Scenario 15: u = 0.0006752253320588125, dual = 0.01134778364259003 TAIL
+    Scenario 16: u = 0.04558606568184009, dual = 0.013303700741826465 TAIL
+    Scenario 17: u = 0.00011745583427527802, dual = 2.2239520038112828e-5 TAIL
+    Scenario 18: u = 0.020438995958826534, dual = 0.013267763992955107 TAIL
+    Scenario 19: u = 0.000166956909304526, dual = 0.004174665314117406 TAIL
+    Scenario 1: u = 0.01108591686323157, dual = 0.013217073219190075 TAIL
+    Scenario 20: u = 0.02133116829917603, dual = 0.01327105626290653 TAIL
+    Scenario 21: u = 0.01934044609515151, dual = 0.01326349125244742 TAIL
+    Scenario 22: u = 0.00012974849585974894, dual = 0.0005431969431569223 TAIL
+    Scenario 23: u = 0.00012203277591460232, dual = 5.028831286034907e-5 TAIL
+    Scenario 24: u = 0.00011789208840062501, dual = 3.1607829582221004e-5 TAIL
+    Scenario 25: u = 0.00011913342475052989, dual = 2.1545135117116736e-5 TAIL
+    Scenario 26: u = 0.00016377732519182696, dual = 0.003864657222475801 TAIL
+    Scenario 27: u = 0.0001217722901098164, dual = 2.7422202102719708e-5 TAIL
+    Scenario 28: u = 0.06940037438413249, dual = 0.013313235898067169 TAIL
+    Scenario 29: u = 0.0001179883944645915, dual = 4.586084384555903e-5 TAIL
+    Scenario 2: u = 0.02654555692256444, dual = 0.013282906111156728 TAIL
+    Scenario 30: u = 0.025573535105303247, dual = 0.013281122994995247 TAIL
+    Scenario 3: u = 0.13850352017875966, dual = 0.013323407506567941 TAIL
+    Scenario 4: u = 0.00024381597351330088, dual = 0.006887168363488303 TAIL
+    Scenario 5: u = 0.02921970889607206, dual = 0.013287068847608587 TAIL
+    Scenario 6: u = 0.0815935214586736, dual = 0.013315923443031317 TAIL
+    Scenario 7: u = 0.00011774532090108548, dual = 4.774706898953968e-5 TAIL
+    Scenario 8: u = 0.00012115254424398649, dual = 3.224014433510074e-5 TAIL
+    Scenario 9: u = 0.0760510946444024, dual = 0.013314705474807028 TAIL
+Storage LDES_PHS: ζ = 145465.1481, ū = 408304.9135, ρ = 379.7797, Expected = 168260.8944, CVaR = -671144.679, Expected Term (δ * E[W - C]) = 134608.7156, CVaR Term ((1 - δ) * CVVaR) = -134228.9358
+  Scenario breakdown for Storage LDES_PHS:
+    Scenario 10: u = 735304.4760947261, dual = 0.013333333331452566 TAIL
+    Scenario 11: u = 0.00011687223701690877, dual = 1.1707555205133691e-12 TAIL
+    Scenario 12: u = 0.00011773643172637883, dual = 9.436725457607551e-13 TAIL
+    Scenario 13: u = 0.00011742949516095223, dual = 1.6854518912851394e-12 TAIL
+    Scenario 14: u = 0.0001175918272409795, dual = 5.382020191088274e-12 TAIL
+    Scenario 15: u = 0.000134430558016152, dual = 1.699180566909801e-11 TAIL
+    Scenario 16: u = 504304.74276034377, dual = 0.013333333330728702 TAIL
+    Scenario 17: u = 0.00011685039226919493, dual = 8.340300340518643e-13 TAIL
+    Scenario 18: u = 705557.7813084259, dual = 0.01333333333130334 TAIL
+    Scenario 19: u = 0.00011717238436698401, dual = 6.981726037014613e-12 TAIL
+    Scenario 1: u = 310067.94375155075, dual = 0.013333333328082524 TAIL
+    Scenario 20: u = 111699.66592674174, dual = 0.013333333320430641 TAIL
+    Scenario 21: u = 635079.1724438597, dual = 0.01333333333121389 TAIL
+    Scenario 22: u = 103274.6009382361, dual = 0.01333333330012903 TAIL
+    Scenario 23: u = 0.0001181378813148704, dual = 2.384928586771525e-12 TAIL
+    Scenario 24: u = 0.00011712920270061508, dual = 2.3793593372676314e-12 TAIL
+    Scenario 25: u = 0.0001170850710079446, dual = 8.740285321699054e-13 TAIL
+    Scenario 26: u = 0.00012934941819278114, dual = 8.901772220659853e-11 TAIL
+    Scenario 27: u = 0.00011770307423995992, dual = 1.0303713625409674e-12 TAIL
+    Scenario 28: u = 1.1362776008530085e6, dual = 0.013333333332142884 TAIL
+    Scenario 29: u = 0.00011703651214440246, dual = 1.355272755996816e-12 TAIL
+    Scenario 2: u = 621210.374182673, dual = 0.013333333331152653 TAIL
+    Scenario 30: u = 419623.31261260284, dual = 0.013333333330081961 TAIL
+    Scenario 3: u = 2.6941902708545467e6, dual = 0.013333333332838298 TAIL
+    Scenario 4: u = 55829.97381434209, dual = 0.01333333327124364 TAIL
+    Scenario 5: u = 246742.92881243365, dual = 0.013333333327624212 TAIL
+    Scenario 6: u = 2.0356000621897012e6, dual = 0.013333333332657522 TAIL
+    Scenario 7: u = 0.00011723463357899257, dual = 4.069204184738044e-12 TAIL
+    Scenario 8: u = 0.00011767312573666717, dual = 9.479916241973541e-13 TAIL
+    Scenario 9: u = 1.9343844978678194e6, dual = 0.01333333333261645 TAIL
+
+--- Consumer ---
+Consumer: ρ = 5.338892220557e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.6, Ψ=0.5, Time=2h 10min, 20 sec/iter
+
+Total Installed Capacity: 567.46 MW
+
+Total Installed Energy: 746.8 MWh
+Convergence criteria met at iteration 344
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 10 = 84.2065 [£/MWh]
+Average price in scenario 11 = 103.0605 [£/MWh]
+Average price in scenario 12 = 135.6928 [£/MWh]
+Average price in scenario 13 = 120.3328 [£/MWh]
+Average price in scenario 14 = 103.6848 [£/MWh]
+Average price in scenario 15 = 111.4102 [£/MWh]
+Average price in scenario 16 = 103.3438 [£/MWh]
+Average price in scenario 17 = 134.4838 [£/MWh]
+Average price in scenario 18 = 88.6479 [£/MWh]
+Average price in scenario 19 = 93.6944 [£/MWh]
+Average price in scenario 1 = 88.9446 [£/MWh]
+Average price in scenario 20 = 109.407 [£/MWh]
+Average price in scenario 21 = 119.5466 [£/MWh]
+Average price in scenario 22 = 105.725 [£/MWh]
+Average price in scenario 23 = 113.6873 [£/MWh]
+Average price in scenario 24 = 107.7741 [£/MWh]
+Average price in scenario 25 = 116.84 [£/MWh]
+Average price in scenario 26 = 93.8398 [£/MWh]
+Average price in scenario 27 = 125.4307 [£/MWh]
+Average price in scenario 28 = 89.2492 [£/MWh]
+Average price in scenario 29 = 99.769 [£/MWh]
+Average price in scenario 2 = 124.905 [£/MWh]
+Average price in scenario 30 = 103.8705 [£/MWh]
+Average price in scenario 3 = 95.6069 [£/MWh]
+Average price in scenario 4 = 105.4407 [£/MWh]
+Average price in scenario 5 = 80.332 [£/MWh]
+Average price in scenario 6 = 74.3526 [£/MWh]
+Average price in scenario 7 = 100.4013 [£/MWh]
+Average price in scenario 8 = 134.7302 [£/MWh]
+Average price in scenario 9 = 73.9775 [£/MWh]
+Risk aversion (δ): 0.6, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Gen Gas: ζ = 857331.5667, ū = 1.0988550398e6, ρ = -69.6514, Expected = 893469.5895, CVaR = -1.3403785128e6, Expected Term (δ * E[W - C]) = 536081.7537, CVaR Term ((1 - δ) * CVaRR) = -536151.4051
+  Scenario breakdown for Gen Gas:
+    Scenario 10: u = 1159.4892023682796, dual = 0.02666603362950864 TAIL
+    Scenario 11: u = 1.4073096474802936e6, dual = 0.026666666663636054 TAIL
+    Scenario 12: u = 0.0001847493495299949, dual = 7.445349691572617e-13 TAIL
+    Scenario 13: u = 0.00018481610626526826, dual = 3.263230537400465e-12 TAIL
+    Scenario 14: u = 1.0285181196363711e6, dual = 0.02666666666242964 TAIL
+    Scenario 15: u = 0.00018490489504027763, dual = 3.877224578467349e-12 TAIL
+    Scenario 16: u = 0.0001938308689851979, dual = 2.9454984219511907e-10 TAIL
+    Scenario 17: u = 0.00018474979877370398, dual = 4.125706062740479e-13 TAIL
+    Scenario 18: u = 4.6976381670649005e6, dual = 0.026666666665802755 TAIL
+    Scenario 19: u = 0.00018533576086077544, dual = 1.18455750093687e-11 TAIL
+    Scenario 1: u = 0.00018576558892173696, dual = 2.0842073386791157e-11 TAIL
+    Scenario 20: u = 0.0002371241871186175, dual = 6.290509461494193e-7 TAIL
+    Scenario 21: u = 545922.9184686438, dual = 0.02666666665823436 TAIL
+    Scenario 22: u = 3.2707861473951847e6, dual = 0.0266666666654184 TAIL
+    Scenario 23: u = 2.0496349899896001e6, dual = 0.02666666666462482 TAIL
+    Scenario 24: u = 0.00018507640676233058, dual = 1.010037458891596e-11 TAIL
+    Scenario 25: u = 0.00020151378990563087, dual = 3.664119165055256e-9 TAIL
+    Scenario 26: u = 1.336685358281106e6, dual = 0.02666666666349498 TAIL
+    Scenario 27: u = 0.00018476900861088934, dual = 1.7829282498072554e-12 TAIL
+    Scenario 28: u = 1.4659133315966239e6, dual = 0.026666666663819446 TAIL
+    Scenario 29: u = 3.3478737393168826e6, dual = 0.026666666665447862 TAIL
+    Scenario 2: u = 0.00018474694219399596, dual = 6.735167370529386e-13 TAIL
+    Scenario 30: u = 780909.547688253, dual = 0.026666666660713274 TAIL
+    Scenario 3: u = 0.00018491331580969012, dual = 3.2242003229036627e-12 TAIL
+    Scenario 4: u = 0.00018509094072640103, dual = 7.944972665249799e-12 TAIL
+    Scenario 5: u = 4.268724725024556e6, dual = 0.026666666665715322 TAIL
+    Scenario 6: u = 3.7148657496865573e6, dual = 0.026666666665573505 TAIL
+    Scenario 7: u = 2.0850049833418368e6, dual = 0.026666666664683706 TAIL
+    Scenario 8: u = 0.00018474725090961153, dual = 7.213062088177095e-13 TAIL
+    Scenario 9: u = 2.964704276152391e6, dual = 0.026666666665293732 TAIL
+Gen PV: ζ = 425188.6179, ū = 668115.6366, ρ = 41.4277, Expected = 607430.8164, CVaR = -911042.6552, Expected Term (δ * E[W - C]) = 364458.4898, CVaR Term ((1 - δ) * CVaR) = -3644417.0621
+  Scenario breakdown for Gen PV:
+    Scenario 10: u = 2.6440518322629496e6, dual = 0.02666666666501333 TAIL
+    Scenario 11: u = 441198.3827016053, dual = 0.026666666656450976 TAIL
+    Scenario 12: u = 0.00018468708593224418, dual = 9.299116857045364e-13 TAIL
+    Scenario 13: u = 0.00018476759264713077, dual = 5.615455494986684e-12 TAIL
+    Scenario 14: u = 1.098270532206521e6, dual = 0.026666666662630692 TAIL
+    Scenario 15: u = 0.0001847074728587323, dual = 6.0742356764762214e-12 TAIL
+    Scenario 16: u = 0.00018464317337905326, dual = 3.3393978633448382e-12 TAIL
+    Scenario 17: u = 0.00018483703568132961, dual = 3.8263481847229886e-12 TAIL
+    Scenario 18: u = 741286.4816708679, dual = 0.02666666666065463 TAIL
+    Scenario 19: u = 1.723952033155516e6, dual = 0.02666666666412794 TAIL
+    Scenario 1: u = 1.0005838848743631e6, dual = 0.026666666662200394 TAIL
+    Scenario 20: u = 0.00018748613274857055, dual = 9.71481052892857e-11 TAIL
+    Scenario 21: u = 0.00018464264239914392, dual = 2.473241727940209e-12 TAIL
+    Scenario 22: u = 0.00018465241757895968, dual = 3.0799661729401988e-12 TAIL
+    Scenario 23: u = 0.0001846227605761296, dual = 1.6242073829056233e-12 TAIL
+    Scenario 24: u = 0.00018508141652499085, dual = 1.2911994142133577e-11 TAIL
+    Scenario 25: u = 0.00018472608571127886, dual = 3.204865415214795e-12 TAIL
+    Scenario 26: u = 217655.6743979334, dual = 0.026666666641902675 TAIL
+    Scenario 27: u = 0.00018462322252415023, dual = 1.4952045417583542e-12 TAIL
+    Scenario 28: u = 1.6092780706347174e6, dual = 0.026666666663935367 TAIL
+    Scenario 29: u = 458778.2926242259, dual = 0.02666666665676538 TAIL
+    Scenario 2: u = 0.00018468807158894193, dual = 1.3552496748778302e-12 TAIL
+    Scenario 30: u = 0.00018477250465926548, dual = 7.325139117293313e-12 TAIL
+    Scenario 3: u = 357754.74280272337, dual = 0.02666666665334226 TAIL
+    Scenario 4: u = 95515.72265943127, dual = 0.0266666666053148 TAIL
+    Scenario 5: u = 2.235579411058914e6, dual = 0.02666666666471535 TAIL
+    Scenario 6: u = 3.319095659559996e6, dual = 0.026666666665356727 TAIL
+    Scenario 7: u = 640122.5012272994, dual = 0.026666666659685315 TAIL
+    Scenario 8: u = 0.0001846290170108133, dual = 1.5302984220259565e-12 TAIL
+    Scenario 9: u = 3.4603458728945283e6, dual = 0.026666666665405812 TAIL
+Gen Nuclear: ζ = 508230.0749, ū = 215929.9196, ρ = 354003.1858, Expected = 539091.8192, CVaR = 76370.2358, Expected Term (δ * E[W - C]) = 323455.0915, CVaR Term ((1 - δ) * CVaR)) = 30548.0943
+  Scenario breakdown for Gen Nuclear:
+    Scenario 10: u = 688849.597974495, dual = 0.026666666659183078 TAIL
+    Scenario 11: u = 28208.04353365446, dual = 0.026666666424936553 TAIL
+    Scenario 12: u = 0.00018597258281277413, dual = 4.80675397046237e-12 TAIL
+    Scenario 13: u = 0.00018626044189718697, dual = 9.998548931491532e-12 TAIL
+    Scenario 14: u = 6330.357420795895, dual = 0.026666658287550916 TAIL
+    Scenario 15: u = 0.0001868474351683358, dual = 2.4013710166574102e-11 TAIL
+    Scenario 16: u = 18279.43303221979, dual = 0.026666666286577292 TAIL
+    Scenario 17: u = 0.00018596145048668192, dual = 4.893855925266582e-12 TAIL
+    Scenario 18: u = 533225.6751211534, dual = 0.026666666657110913 TAIL
+    Scenario 19: u = 356393.3537814784, dual = 0.02666666665187802 TAIL
+    Scenario 1: u = 522826.50980972534, dual = 0.02666666665670991 TAIL
+    Scenario 20: u = 0.000187228764540367, dual = 3.416665266214376e-11 TAIL
+    Scenario 21: u = 0.0001862918528611453, dual = 1.0629411299433019e-11 TAIL
+    Scenario 22: u = 0.00020012176062664255, dual = 3.92694007217446e-10 TAIL
+    Scenario 23: u = 0.00018675794560379065, dual = 1.9525479395861878e-11 TAIL
+    Scenario 24: u = 0.00018811153726183173, dual = 5.993594217995407e-11 TAIL
+    Scenario 25: u = 0.00018641992867234752, dual = 1.3224208839772815e-11 TAIL
+    Scenario 26: u = 351300.6180596594, dual = 0.02666666665185005 TAIL
+    Scenario 27: u = 0.00018613834246932002, dual = 7.500930945931108e-12 TAIL
+    Scenario 28: u = 512156.2739601291, dual = 0.026666666656564274 TAIL
+    Scenario 29: u = 143541.3559476482, dual = 0.026666666630427015 TAIL
+    Scenario 2: u = 0.00018610037806980617, dual = 7.389925487295241e-12 TAIL
+    Scenario 30: u = 0.0002707780116914839, dual = 8.32077202189316e-9 TAIL
+    Scenario 3: u = 289379.7061656641, dual = 0.026666666648254615 TAIL
+    Scenario 4: u = 0.00019438573073101827, dual = 2.6736702468186133e-10 TAIL
+    Scenario 5: u = 824614.2109156243, dual = 0.02666666666052593 TAIL
+    Scenario 6: u = 1.0341302528201282e6, dual = 0.026666666661765825 TAIL
+    Scenario 7: u = 121386.0950010682, dual = 0.02666666662238234 TAIL
+    Scenario 8: u = 0.00018598896870704925, dual = 4.9883577850537275e-12 TAIL
+    Scenario 9: u = 1.047276100167767e6, dual = 0.02666666666181062 TAIL
+Gen Wind: ζ = 1.9479832534e6, ū = 1.8392129288e6, ρ = 133.4717, Expected = 1.1538508557e6, CVaR = -1.7304426043e6, Expected Term (δ * E[W - C]) = 692310.5134, CVaR Term ((1 - δ)) * CVaR) = -692177.0417
+  Scenario breakdown for Gen Wind:
+    Scenario 10: u = 6.53148318191602e6, dual = 0.026666666665951737 TAIL
+    Scenario 11: u = 1.7297567778451324e6, dual = 0.02666666666394027 TAIL
+    Scenario 12: u = 0.00018474817281710718, dual = 1.151716715895519e-12 TAIL
+    Scenario 13: u = 0.00018474477314276653, dual = 1.2585519773749834e-12 TAIL
+    Scenario 14: u = 0.00018585242859287497, dual = 3.2725554290589743e-11 TAIL
+    Scenario 15: u = 0.0001848596286855072, dual = 4.094891493423467e-12 TAIL
+    Scenario 16: u = 0.00018486461248358888, dual = 5.247825992748011e-12 TAIL
+    Scenario 17: u = 0.00018478710769169807, dual = 2.6974179547348126e-12 TAIL
+    Scenario 18: u = 2.8707670010461276e6, dual = 0.02666666666503269 TAIL
+    Scenario 19: u = 5.279960168690847e6, dual = 0.026666666665782223 TAIL
+    Scenario 1: u = 6.890007393074046e6, dual = 0.026666666665988624 TAIL
+    Scenario 20: u = 0.0001848252159372529, dual = 4.0040850200229004e-12 TAIL
+    Scenario 21: u = 0.00018475470660414984, dual = 1.6099152291510186e-12 TAIL
+    Scenario 22: u = 0.00018481547584942026, dual = 2.7543869606093065e-12 TAIL
+    Scenario 23: u = 0.00018480762626652946, dual = 2.150684436780206e-12 TAIL
+    Scenario 24: u = 117219.92331808341, dual = 0.026666666619230645 TAIL
+    Scenario 25: u = 0.0001847860533770538, dual = 2.4516229432689827e-12 TAIL
+    Scenario 26: u = 4.242022161812111e6, dual = 0.026666666665564234 TAIL
+    Scenario 27: u = 0.00018475724984002174, dual = 1.4298540286045404e-12 TAIL
+    Scenario 28: u = 1.745650982314487e6, dual = 0.02666666666391229 TAIL
+    Scenario 29: u = 767316.1067844301, dual = 0.02666666666042037 TAIL
+    Scenario 2: u = 0.00018490685987453646, dual = 6.8623312560595465e-12 TAIL
+    Scenario 30: u = 0.0001848721014344355, dual = 5.248254766199095e-12 TAIL
+    Scenario 3: u = 1.7879495158047366e6, dual = 0.02666666666402757 TAIL
+    Scenario 4: u = 1.327956115642652e6, dual = 0.026666666663084176 TAIL
+    Scenario 5: u = 5.280795393973427e6, dual = 0.026666666665782286 TAIL
+    Scenario 6: u = 8.077151678145542e6, dual = 0.026666666666089228 TAIL
+    Scenario 7: u = 1.7011381269165063e6, dual = 0.026666666663895017 TAIL
+    Scenario 8: u = 0.00018474317387954468, dual = 1.0786585383563542e-12 TAIL
+    Scenario 9: u = 6.827213335359038e6, dual = 0.026666666665982587 TAIL
+
+--- Storage ---
+Storage BESS: ζ = -0.4776, ū = 0.0602, ρ = -0.5399, Expected = -0.5011, CVaR = -0.598, Expected Term (δ * E[W - C]) = -0.3007, CVaR Term ((1 - δ) * CVaR) = -0.2392
+  Scenario breakdown for Storage BESS:
+    Scenario 10: u = 0.16936725892399007, dual = 0.026639503702202343 TAIL
+    Scenario 11: u = 0.00018583407188434067, dual = 2.7491468282607723e-5 TAIL
+    Scenario 12: u = 0.00018848682842002515, dual = 4.986705749470442e-5 TAIL
+    Scenario 13: u = 0.00018752717737171784, dual = 5.007949675499299e-5 TAIL
+    Scenario 14: u = 0.0001875306149508333, dual = 0.00013191987855223553 TAIL
+    Scenario 15: u = 0.0003924224583303215, dual = 0.01454233156096311 TAIL
+    Scenario 16: u = 0.11474400939846774, dual = 0.02662936415406305 TAIL
+    Scenario 17: u = 0.00018596203925569463, dual = 2.6776839325439065e-5 TAIL
+    Scenario 18: u = 0.05890801931705614, dual = 0.026599237492083965 TAIL
+    Scenario 19: u = 0.00025022932104302315, dual = 0.006971625007507261 TAIL
+    Scenario 1: u = 0.036525589532515834, dual = 0.026549751642579267 TAIL
+    Scenario 20: u = 0.04793404975610227, dual = 0.02657880002143144 TAIL
+    Scenario 21: u = 0.03025391747383588, dual = 0.02653041725969758 TAIL
+    Scenario 22: u = 0.0002535056244935569, dual = 0.005943530272958994 TAIL
+    Scenario 23: u = 0.00019074960211611352, dual = 0.00010329113738461822 TAIL
+    Scenario 24: u = 0.00018635933826741894, dual = 4.37403458824162e-5 TAIL
+    Scenario 25: u = 0.0001869983019402383, dual = 2.4717840136963197e-5 TAIL
+    Scenario 26: u = 0.0004566362592873033, dual = 0.01708984704453585 TAIL
+    Scenario 27: u = 0.00018899881581738946, dual = 3.7799832633925934e-5 TAIL
+    Scenario 28: u = 0.21757756383440174, dual = 0.02664609965438288 TAIL
+    Scenario 29: u = 0.00018695509014692545, dual = 7.850611830750883e-5 TAIL
+    Scenario 2: u = 0.07958040907662145, dual = 0.026613493324165946 TAIL
+    Scenario 30: u = 0.07385385508765507, dual = 0.026609653703029514 TAIL
+    Scenario 3: u = 0.42368190607974654, dual = 0.026656485137825398 TAIL
+    Scenario 4: u = 0.0002845406936512161, dual = 0.008783759732130919 TAIL
+    Scenario 5: u = 0.08519189501521574, dual = 0.026619468212104314 TAIL
+    Scenario 6: u = 0.22911800614042122, dual = 0.02664717021085958 TAIL
+    Scenario 7: u = 0.00018663443827256036, dual = 7.506825032801291e-5 TAIL
+    Scenario 8: u = 0.00018876146910368988, dual = 5.3007759871400654e-5 TAIL
+    Scenario 9: u = 0.23531009009814063, dual = 0.026647195841533924 TAIL
+Storage LDES_PHS: ζ = 331039.7525, ū = 415643.4592, ρ = -7.8021, Expected = 333485.1072, CVaR = -500247.1659, Expected Term (δ * E[W - C]) = 200091.0643, CVaR Term ((1 - δ) * CVVaR) = -200098.8664
+  Scenario breakdown for Storage LDES_PHS:
+    Scenario 10: u = 829396.2967200228, dual = 0.026666666661525635 TAIL
+    Scenario 11: u = 0.00018528546660040533, dual = 4.0576920238150684e-12 TAIL
+    Scenario 12: u = 0.0001863185074532439, dual = 3.044058473476037e-12 TAIL
+    Scenario 13: u = 0.00018608391384173674, dual = 6.961741668388131e-12 TAIL
+    Scenario 14: u = 0.0001864126274530864, dual = 1.882726587013046e-11 TAIL
+    Scenario 15: u = 0.00019024583782673195, dual = 4.1298536884124124e-11 TAIL
+    Scenario 16: u = 415447.8588155286, dual = 0.026666666656363854 TAIL
+    Scenario 17: u = 0.00018524279938070438, dual = 2.5740811398136934e-12 TAIL
+    Scenario 18: u = 775450.5356689465, dual = 0.02666666666086134 TAIL
+    Scenario 19: u = 0.0001860113542826577, dual = 2.5506097195825924e-11 TAIL
+    Scenario 1: u = 378134.1241454391, dual = 0.026666666653477458 TAIL
+    Scenario 20: u = 172658.23492049216, dual = 0.02666666663468373 TAIL
+    Scenario 21: u = 478190.629799081, dual = 0.02666666665792319 TAIL
+    Scenario 22: u = 109423.08465348843, dual = 0.02666666657385538 TAIL
+    Scenario 23: u = 0.00018657244059519344, dual = 7.492643704459579e-12 TAIL
+    Scenario 24: u = 0.0001857351635281496, dual = 8.404606976271466e-12 TAIL
+    Scenario 25: u = 0.00018548035256870255, dual = 2.8056458062480198e-12 TAIL
+    Scenario 26: u = 40406.32920001778, dual = 0.02666666535094925 TAIL
+    Scenario 27: u = 0.0001862379313778053, dual = 3.4951879203514527e-12 TAIL
+    Scenario 28: u = 1.2263762853924455e6, dual = 0.026666666663315443 TAIL
+    Scenario 29: u = 0.00018560822394825087, dual = 4.398872511823381e-12 TAIL
+    Scenario 2: u = 645343.2139001533, dual = 0.026666666660077856 TAIL
+    Scenario 30: u = 443352.88997279626, dual = 0.026666666656740824 TAIL
+    Scenario 3: u = 2.6746140270757936e6, dual = 0.02666666666518576 TAIL
+    Scenario 4: u = 0.00023083891903269774, dual = 1.3739510182861481e-9 TAIL
+    Scenario 5: u = 308566.90443713474, dual = 0.02666666665133797 TAIL
+    Scenario 6: u = 1.987272382487044e6, dual = 0.026666666664620243 TAIL
+    Scenario 7: u = 0.00018590381688006127, dual = 1.7782344157187863e-11 TAIL
+    Scenario 8: u = 0.00018605940336995433, dual = 3.343392741096577e-12 TAIL
+    Scenario 9: u = 1.9846709763943488e6, dual = 0.026666666664591672 TAIL
+
+--- Consumer ---
+Consumer: ρ = 5.322573672354e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.4, Ψ=0.5, Time= 2h 13min, 391 iterations, 20 sec/iter
+
+Total Installed Capacity: 561.46 MW
+
+Total Installed Energy: 759.81 MWh
+
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 10 = 86.0273 [£/MWh]
+Average price in scenario 11 = 104.961 [£/MWh]
+Average price in scenario 12 = 139.679 [£/MWh]
+Average price in scenario 13 = 122.8191 [£/MWh]
+Average price in scenario 14 = 107.4633 [£/MWh]
+Average price in scenario 15 = 114.5772 [£/MWh]
+Average price in scenario 16 = 106.3697 [£/MWh]
+Average price in scenario 17 = 136.3845 [£/MWh]
+Average price in scenario 18 = 89.3029 [£/MWh]
+Average price in scenario 19 = 96.2674 [£/MWh]
+Average price in scenario 1 = 90.9288 [£/MWh]
+Average price in scenario 20 = 111.4743 [£/MWh]
+Average price in scenario 21 = 126.3331 [£/MWh]
+Average price in scenario 22 = 108.8614 [£/MWh]
+Average price in scenario 23 = 117.1982 [£/MWh]
+Average price in scenario 24 = 110.8427 [£/MWh]
+Average price in scenario 25 = 118.7003 [£/MWh]
+Average price in scenario 26 = 94.6903 [£/MWh]
+Average price in scenario 27 = 128.2518 [£/MWh]
+Average price in scenario 28 = 91.5559 [£/MWh]
+Average price in scenario 29 = 102.1401 [£/MWh]
+Average price in scenario 2 = 128.0237 [£/MWh]
+Average price in scenario 30 = 105.8284 [£/MWh]
+Average price in scenario 3 = 99.3325 [£/MWh]
+Average price in scenario 4 = 109.5272 [£/MWh]
+Average price in scenario 5 = 81.3443 [£/MWh]
+Average price in scenario 6 = 77.4461 [£/MWh]
+Average price in scenario 7 = 101.9353 [£/MWh]
+Average price in scenario 8 = 137.6907 [£/MWh]
+Average price in scenario 9 = 76.5887 [£/MWh]
+Risk aversion (δ): 0.4, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Gen Gas: ζ = 1.1501298675e6, ū = 1.0315370939e6, ρ = 109.6224, Expected = 1.3696905364e6, CVaR = -912944.3202, Expected Term (δ * E[W - C]) = 547876.2146, CVaR Term ((1 - δ) * CVaR) = -547766.5921
+  Scenario breakdown for Gen Gas:
+    Scenario 10: u = 6.40015467134659e-5, dual = 6.799388620783206e-10 TAIL
+    Scenario 11: u = 1.30173138795172e6, dual = 0.03999999999848045 TAIL
+    Scenario 12: u = 5.759098141150257e-5, dual = 3.4038475601365447e-13 TAIL
+    Scenario 13: u = 5.7648146633771085e-5, dual = 1.658241072015478e-12 TAIL
+    Scenario 14: u = 376882.3401935523, dual = 0.03999999999233605 TAIL
+    Scenario 15: u = 5.7666340434713676e-5, dual = 1.5624204008309227e-12 TAIL
+    Scenario 16: u = 1086.4648650432541, dual = 0.03999999804670748 TAIL
+    Scenario 17: u = 5.758987630299548e-5, dual = 2.058527596971768e-13 TAIL
+    Scenario 18: u = 4.928546698571376e6, dual = 0.03999999999960811 TAIL
+    Scenario 19: u = 5.7858424773674175e-5, dual = 4.158983004834305e-12 TAIL
+    Scenario 1: u = 5.897825869174457e-5, dual = 3.6838877593670825e-11 TAIL
+    Scenario 20: u = 6.627248572238856e-5, dual = 1.2547609845368182e-9 TAIL
+    Scenario 21: u = 5.7773296159208815e-5, dual = 4.042668449833492e-12 TAIL
+    Scenario 22: u = 2.826554178407021e6, dual = 0.03999999999931151 TAIL
+    Scenario 23: u = 1.5951144091621179e6, dual = 0.03999999999874022 TAIL
+    Scenario 24: u = 5.772815977208613e-5, dual = 2.7850342019905006e-12 TAIL
+    Scenario 25: u = 267905.42208311264, dual = 0.039999999981846654 TAIL
+    Scenario 26: u = 1.4129559111031848e6, dual = 0.039999999998594375 TAIL
+    Scenario 27: u = 5.760753886630346e-5, dual = 7.697112414414311e-13 TAIL
+    Scenario 28: u = 1.0581935425181317e6, dual = 0.03999999999808755 TAIL
+    Scenario 29: u = 3.407337891122098e6, dual = 0.039999999999430685 TAIL
+    Scenario 2: u = 5.759193772208104e-5, dual = 3.1824043085924653e-13 TAIL
+    Scenario 30: u = 784750.6991807552, dual = 0.039999999997354194 TAIL
+    Scenario 3: u = 5.766434284457762e-5, dual = 1.177369721208652e-12 TAIL
+    Scenario 4: u = 5.77541221118505e-5, dual = 3.0115270372459466e-12 TAIL
+    Scenario 5: u = 4.432804510668223e6, dual = 0.039999999999564 TAIL
+    Scenario 6: u = 3.7692895874634683e6, dual = 0.0399999999994872 TAIL
+    Scenario 7: u = 2.166345408442714e6, dual = 0.03999999999909661 TAIL
+    Scenario 8: u = 5.759117721484681e-5, dual = 3.370220949441143e-13 TAIL
+    Scenario 9: u = 2.616614362924516e6, dual = 0.039999999999259024 TAIL
+Gen PV: ζ = 708214.3609, ū = 662957.7026, ρ = -145.3585, Expected = 926188.1705, CVaR = -617701.0444, Expected Term (δ * E[W - C]) = 370475.2682, CVaR Term ((1 - δ) * CVaR) = -370620.6267
+  Scenario breakdown for Gen PV:
+    Scenario 10: u = 2.657150832176172e6, dual = 0.03999999999921584 TAIL
+    Scenario 11: u = 479536.935285764, dual = 0.03999999999557359 TAIL
+    Scenario 12: u = 5.757461561586505e-5, dual = 4.39916112385014e-13 TAIL
+    Scenario 13: u = 5.764079837317841e-5, dual = 3.1352717291840783e-12 TAIL
+    Scenario 14: u = 972496.385249162, dual = 0.03999999999783105 TAIL
+    Scenario 15: u = 5.7603875901415455e-5, dual = 3.244979065180493e-12 TAIL
+    Scenario 16: u = 5.7570629497783604e-5, dual = 1.4409870399626251e-12 TAIL
+    Scenario 17: u = 5.761502398317071e-5, dual = 1.9296152734822513e-12 TAIL
+    Scenario 18: u = 903841.2693776868, dual = 0.03999999999767532 TAIL
+    Scenario 19: u = 1.7817803327414752e6, dual = 0.039999999998829035 TAIL
+    Scenario 1: u = 1.0428279670564967e6, dual = 0.03999999999797789 TAIL
+    Scenario 20: u = 6.844301274241309e-5, dual = 2.7233038242256103e-8 TAIL
+    Scenario 21: u = 5.756711558717689e-5, dual = 1.0108196150529614e-12 TAIL
+    Scenario 22: u = 5.7575962265343826e-5, dual = 1.4569737953464226e-12 TAIL
+    Scenario 23: u = 5.756287133531048e-5, dual = 7.379448949884568e-13 TAIL
+    Scenario 24: u = 5.775609975725796e-5, dual = 6.090779035936673e-12 TAIL
+    Scenario 25: u = 5.759897004056487e-5, dual = 1.6510416502291427e-12 TAIL
+    Scenario 26: u = 388359.8440946778, dual = 0.039999999994302676 TAIL
+    Scenario 27: u = 5.7563107445924395e-5, dual = 7.649786379565175e-13 TAIL
+    Scenario 28: u = 1.6554833869811327e6, dual = 0.03999999999873734 TAIL
+    Scenario 29: u = 394428.25258462585, dual = 0.039999999994563315 TAIL
+    Scenario 2: u = 5.757548246524942e-5, dual = 6.156418967144207e-13 TAIL
+    Scenario 30: u = 5.764947953626758e-5, dual = 4.2039439218826634e-12 TAIL
+    Scenario 3: u = 94228.54828095963, dual = 0.03999999996495828 TAIL
+    Scenario 4: u = 2461.1555873533043, dual = 0.0399999728046747 TAIL
+    Scenario 5: u = 2.188382272480198e6, dual = 0.03999999999904718 TAIL
+    Scenario 6: u = 3.1708135533264554e6, dual = 0.03999999999934335 TAIL
+    Scenario 7: u = 745918.7167609229, dual = 0.03999999999717813 TAIL
+    Scenario 8: u = 5.756358094503259e-5, dual = 7.544091889637593e-13 TAIL
+    Scenario 9: u = 3.4110216266417764e6, dual = 0.0399999999993898 TAIL
+Gen Nuclear: ζ = 608246.7845, ū = 229020.2609, ρ = 343210.2814, Expected = 632716.3095, CVaR = 150206.2626, Expected Term (δ * E[W - C]) = 253086.5238, CVaR Term ((1 - δ) * CVaR) = 90123.7576
+  Scenario breakdown for Gen Nuclear:
+    Scenario 10: u = 725065.3052704227, dual = 0.039999999996615396 TAIL
+    Scenario 11: u = 61631.09791747272, dual = 0.039999999935658975 TAIL
+    Scenario 12: u = 5.790616835821445e-5, dual = 2.3288576868758003e-12 TAIL
+    Scenario 13: u = 5.805758620204744e-5, dual = 5.7430138669803806e-12 TAIL
+    Scenario 14: u = 6.551994977510795e-5, dual = 7.737988354402915e-10 TAIL
+    Scenario 15: u = 5.8349251891927096e-5, dual = 1.4209937508276228e-11 TAIL
+    Scenario 16: u = 12268.689380163732, dual = 0.03999999915481163 TAIL
+    Scenario 17: u = 5.7903548872274445e-5, dual = 2.5126533222273283e-12 TAIL
+    Scenario 18: u = 610290.7358838562, dual = 0.03999999999602283 TAIL
+    Scenario 19: u = 366255.0849581805, dual = 0.0399999999929776 TAIL
+    Scenario 1: u = 553317.3356115425, dual = 0.03999999999544428 TAIL
+    Scenario 20: u = 5.866695224574208e-5, dual = 2.7527329017014443e-11 TAIL
+    Scenario 21: u = 5.798983620365107e-5, dual = 4.42058053384936e-12 TAIL
+    Scenario 22: u = 6.212220530384203e-5, dual = 1.9859054239071013e-10 TAIL
+    Scenario 23: u = 5.8242474156400574e-5, dual = 1.1030837492519517e-11 TAIL
+    Scenario 24: u = 5.896809337436679e-5, dual = 4.007393506978437e-11 TAIL
+    Scenario 25: u = 5.815553692742575e-5, dual = 8.518501683845173e-12 TAIL
+    Scenario 26: u = 421515.7820838308, dual = 0.03999999999399089 TAIL
+    Scenario 27: u = 5.799042679295813e-5, dual = 4.08490166035173e-12 TAIL
+    Scenario 28: u = 531344.1146001423, dual = 0.039999999995276085 TAIL
+    Scenario 29: u = 160472.77269321005, dual = 0.03999999998304042 TAIL
+    Scenario 2: u = 5.7978675276497676e-5, dual = 3.897378003438932e-12 TAIL
+    Scenario 30: u = 31236.956447680066, dual = 0.03999999982203132 TAIL
+    Scenario 3: u = 258853.14309185834, dual = 0.03999999998945676 TAIL
+    Scenario 4: u = 5.9495710736154296e-5, dual = 6.932050277542017e-11 TAIL
+    Scenario 5: u = 889158.570908241, dual = 0.039999999997313816 TAIL
+    Scenario 6: u = 1.0257508801980518e6, dual = 0.039999999997674035 TAIL
+    Scenario 7: u = 167652.18613409376, dual = 0.039999999983151596 TAIL
+    Scenario 8: u = 5.79220472213351e-5, dual = 2.5608639814560937e-12 TAIL
+    Scenario 9: u = 1.0557951724350727e6, dual = 0.039999999997730185 TAIL
+Gen Wind: ζ = 2.6195680943e6, ū = 1.9090645166e6, ρ = -140.4193, Expected = 1.7974903602e6, CVaR = -1.198560939e6, Expected Term (δ * E[W - C]) = 718996.1441, CVaR Term ((1 - δ) * CVaR) = -719136.5634
+  Scenario breakdown for Gen Wind:
+    Scenario 10: u = 6.739444981996296e6, dual = 0.039999999999674615 TAIL
+    Scenario 11: u = 1.9616456983283763e6, dual = 0.03999999999887025 TAIL
+    Scenario 12: u = 5.7591275038022804e-5, dual = 5.106193565886298e-13 TAIL
+    Scenario 13: u = 5.759131526803939e-5, dual = 5.709504008380732e-13 TAIL
+    Scenario 14: u = 5.808359349535053e-5, dual = 1.3908114478559285e-11 TAIL
+    Scenario 15: u = 5.762963624677273e-5, dual = 1.7615000086130526e-12 TAIL
+    Scenario 16: u = 5.766033351124007e-5, dual = 2.7272627261735582e-12 TAIL
+    Scenario 17: u = 5.7608461669753e-5, dual = 1.5435511769379881e-12 TAIL
+    Scenario 18: u = 3.3600211173001956e6, dual = 0.03999999999934571 TAIL
+    Scenario 19: u = 5.453407509902678e6, dual = 0.039999999999597635 TAIL
+    Scenario 1: u = 6.908010064986899e6, dual = 0.03999999999968272 TAIL
+    Scenario 20: u = 5.764186635096209e-5, dual = 2.356145755140364e-12 TAIL
+    Scenario 21: u = 5.7593196564705365e-5, dual = 6.352233482658458e-13 TAIL
+    Scenario 22: u = 5.761779936559589e-5, dual = 1.3008363536169355e-12 TAIL
+    Scenario 23: u = 5.7615461102994555e-5, dual = 1.0316190445086753e-12 TAIL
+    Scenario 24: u = 142094.3299525742, dual = 0.039999999976512844 TAIL
+    Scenario 25: u = 5.761598756949212e-5, dual = 1.3231493901536529e-12 TAIL
+    Scenario 26: u = 4.742232053992258e6, dual = 0.03999999999953705 TAIL
+    Scenario 27: u = 5.7596295763583365e-5, dual = 6.764478367121456e-13 TAIL
+    Scenario 28: u = 1.928880161488828e6, dual = 0.039999999998841525 TAIL
+    Scenario 29: u = 920229.7397827976, dual = 0.03999999999751787 TAIL
+    Scenario 2: u = 5.7666011869817466e-5, dual = 3.2070193390295246e-12 TAIL
+    Scenario 30: u = 5.77310545283058e-5, dual = 4.250974726221427e-12 TAIL
+    Scenario 3: u = 1.6012439094335786e6, dual = 0.039999999998576584 TAIL
+    Scenario 4: u = 898421.8264606809, dual = 0.03999999999746159 TAIL
+    Scenario 5: u = 5.782095509522883e6, dual = 0.039999999999620846 TAIL
+    Scenario 6: u = 7.989278341533197e6, dual = 0.03999999999972592 TAIL
+    Scenario 7: u = 1.9332566007202538e6, dual = 0.03999999999884977 TAIL
+    Scenario 8: u = 5.7590637459343065e-5, dual = 5.128441217005119e-13 TAIL
+    Scenario 9: u = 6.911673653213366e6, dual = 0.039999999999682734 TAIL
+
+--- Storage ---
+Storage BESS: ζ = -0.2152, ū = 0.0283, ρ = -0.2576, Expected = -0.2362, CVaR = -0.2718, Expected Term (δ * E[W - C]) = -0.0945, CVaR Term ((1 - δ) * CVaR) = -0.1631
+  Scenario breakdown for Storage BESS:
+    Scenario 10: u = 0.08787333760678484, dual = 0.039975256652747815 TAIL
+    Scenario 11: u = 5.822131301546924e-5, dual = 5.7665833958345575e-5 TAIL
+    Scenario 12: u = 5.94742266250242e-5, dual = 0.00015621540919699527 TAIL
+    Scenario 13: u = 5.966758219489907e-5, dual = 0.00025035575346334647 TAIL
+    Scenario 14: u = 6.228647321924888e-5, dual = 0.001855860695326526 TAIL
+    Scenario 15: u = 9.885431300931313e-5, dual = 0.017082583054704573 TAIL
+    Scenario 16: u = 0.043160704189386445, dual = 0.03994726438745335 TAIL
+    Scenario 17: u = 5.814574802399529e-5, dual = 4.5918540166195515e-5 TAIL
+    Scenario 18: u = 0.03194846466731516, dual = 0.039923454837464206 TAIL
+    Scenario 19: u = 7.253377424626568e-5, dual = 0.008068274192080031 TAIL
+    Scenario 1: u = 0.020027378451989764, dual = 0.039853313750366694 TAIL
+    Scenario 20: u = 0.02406719571860294, dual = 0.03989156759608879 TAIL
+    Scenario 21: u = 0.0002278409557935632, dual = 0.031235909225583298 TAIL
+    Scenario 22: u = 8.39761544630612e-5, dual = 0.011951465406487137 TAIL
+    Scenario 23: u = 6.308251316259478e-5, dual = 0.0015105654319058645 TAIL
+    Scenario 24: u = 5.860170218566457e-5, dual = 0.00010464853297841554 TAIL
+    Scenario 25: u = 5.837288921126636e-5, dual = 4.0002283229476325e-5 TAIL
+    Scenario 26: u = 0.000462195948776176, dual = 0.03665086604930237 TAIL
+    Scenario 27: u = 5.9161481010490185e-5, dual = 8.498419464547117e-5 TAIL
+    Scenario 28: u = 0.10686024727050603, dual = 0.039980028097770966 TAIL
+    Scenario 29: u = 6.0204157812086215e-5, dual = 0.0004817706990634248 TAIL
+    Scenario 2: u = 0.04414824780407223, dual = 0.039951824271983995 TAIL
+    Scenario 30: u = 0.03023923020153385, dual = 0.039921383549063515 TAIL
+    Scenario 3: u = 0.20736633072215493, dual = 0.039990297528015896 TAIL
+    Scenario 4: u = 7.827681087031052e-5, dual = 0.010037325817526423 TAIL
+    Scenario 5: u = 0.04579306444048181, dual = 0.03994888589522591 TAIL
+    Scenario 6: u = 0.09248364385060581, dual = 0.039977374862792965 TAIL
+    Scenario 7: u = 6.077456184436008e-5, dual = 0.0008412902058943998 TAIL
+    Scenario 8: u = 5.973256196860712e-5, dual = 0.0002027797483907756 TAIL
+    Scenario 9: u = 0.11319268801586757, dual = 0.039980867496673955 TAIL
+Storage LDES_PHS: ζ = 530366.4379, ū = 432888.6391, ρ = 8.5553, Expected = 503137.6486, CVaR = -335410.8402, Expected Term (δ * E[W - C]) = 201255.0594, CVaR Term ((1 - δ) * CVaR) = -201246.5041
+  Scenario breakdown for Storage LDES_PHS:
+    Scenario 10: u = 975590.4572897321, dual = 0.039999999997799594 TAIL
+    Scenario 11: u = 5.7867990868989364e-5, dual = 2.8901540703135324e-12 TAIL
+    Scenario 12: u = 5.817652767631286e-5, dual = 2.169785540224022e-12 TAIL
+    Scenario 13: u = 5.8341657969713384e-5, dual = 1.0194411481103689e-11 TAIL
+    Scenario 14: u = 5.8528705945502324e-5, dual = 1.6637188196211234e-11 TAIL
+    Scenario 15: u = 5.920172503026634e-5, dual = 2.9064533667916033e-11 TAIL
+    Scenario 16: u = 331648.9246451465, dual = 0.03999999999276521 TAIL
+    Scenario 17: u = 5.7831227765795966e-5, dual = 1.5482044607881925e-12 TAIL
+    Scenario 18: u = 903452.9847890561, dual = 0.03999999999738261 TAIL
+    Scenario 19: u = 5.81940721748424e-5, dual = 1.4417474781854077e-11 TAIL
+    Scenario 1: u = 446315.96571643103, dual = 0.03999999999142498 TAIL
+    Scenario 20: u = 271484.8917524074, dual = 0.03999999998786847 TAIL
+    Scenario 21: u = 216669.79427692477, dual = 0.03999999998308539 TAIL
+    Scenario 22: u = 70744.42765139823, dual = 0.03999999966026724 TAIL
+    Scenario 23: u = 5.8315448895749104e-5, dual = 6.303319079156199e-12 TAIL
+    Scenario 24: u = 5.809815481918712e-5, dual = 6.974536661834534e-12 TAIL
+    Scenario 25: u = 5.7867375772816584e-5, dual = 1.701785573698611e-12 TAIL
+    Scenario 26: u = 184526.13173088248, dual = 0.03999999996263587 TAIL
+    Scenario 27: u = 5.809413141320569e-5, dual = 2.24039556527813e-12 TAIL
+    Scenario 28: u = 1.2980734204315033e6, dual = 0.039999999998468615 TAIL
+    Scenario 29: u = 5.800807913871188e-5, dual = 3.056978041554582e-12 TAIL
+    Scenario 2: u = 785090.8880902276, dual = 0.039999999997201684 TAIL
+    Scenario 30: u = 462357.7519544632, dual = 0.039999999995037956 TAIL
+    Scenario 3: u = 2.693178357508949e6, dual = 0.039999999999293025 TAIL
+    Scenario 4: u = 6.111601161858603e-5, dual = 2.8117587609283337e-10 TAIL
+    Scenario 5: u = 453283.2231640587, dual = 0.03999999999468267 TAIL
+    Scenario 6: u = 1.8860171644051825e6, dual = 0.0399999999989597 TAIL
+    Scenario 7: u = 5.8910339184566844e-5, dual = 6.332051752566413e-11 TAIL
+    Scenario 8: u = 5.808926770618501e-5, dual = 2.21187988377042e-12 TAIL
+    Scenario 9: u = 2.0082247882039363e6, dual = 0.03999999999903384 TAIL
+
+--- Consumer ---
+Consumer: ρ = 5.305215112917e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.2, Ψ=0.5, Time= 2h 30 min, 463 iterations, 20sec/iter
+
+Total Installed Capacity: 556.04 MW
+
+Total Installed Energy: 761.27 MWh
+
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 10 = 87.2724 [£/MWh]
+Average price in scenario 11 = 106.4392 [£/MWh]
+Average price in scenario 12 = 144.0246 [£/MWh]
+Average price in scenario 13 = 125.4798 [£/MWh]
+Average price in scenario 14 = 112.5292 [£/MWh]
+Average price in scenario 15 = 118.013 [£/MWh]
+Average price in scenario 16 = 110.921 [£/MWh]
+Average price in scenario 17 = 138.5777 [£/MWh]
+Average price in scenario 18 = 90.0327 [£/MWh]
+Average price in scenario 19 = 99.0867 [£/MWh]
+Average price in scenario 1 = 93.6011 [£/MWh]
+Average price in scenario 20 = 113.5244 [£/MWh]
+Average price in scenario 21 = 134.7187 [£/MWh]
+Average price in scenario 22 = 113.0696 [£/MWh]
+Average price in scenario 23 = 120.9699 [£/MWh]
+Average price in scenario 24 = 114.2789 [£/MWh]
+Average price in scenario 25 = 120.3236 [£/MWh]
+Average price in scenario 26 = 95.7232 [£/MWh]
+Average price in scenario 27 = 132.1405 [£/MWh]
+Average price in scenario 28 = 95.0376 [£/MWh]
+Average price in scenario 29 = 104.8934 [£/MWh]
+Average price in scenario 2 = 132.2921 [£/MWh]
+Average price in scenario 30 = 107.6436 [£/MWh]
+Average price in scenario 3 = 103.2386 [£/MWh]
+Average price in scenario 4 = 112.5324 [£/MWh]
+Average price in scenario 5 = 82.1284 [£/MWh]
+Average price in scenario 6 = 80.4982 [£/MWh]
+Average price in scenario 7 = 103.5064 [£/MWh]
+Average price in scenario 8 = 140.5792 [£/MWh]
+Average price in scenario 9 = 79.906 [£/MWh]
+Risk aversion (δ): 0.2, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Gen Gas: ζ = 1.5587762411e6, ū = 1.0216233031e6, ρ = 293.9097, Expected = 1.9393510094e6, CVaR = -484470.3652, Expected Term (δ * E[W - C]) = 387870.2019, CVaR Term ((1 - δ) * CVaR) = -387576.2922
+  Scenario breakdown for Gen Gas:
+    Scenario 10: u = 150797.91042981157, dual = 0.05333333326984713 TAIL
+    Scenario 11: u = 1.500096383423158e6, dual = 0.05333333332730921 TAIL
+    Scenario 12: u = 0.00019729883370571584, dual = 1.5249699285693624e-12 TAIL
+    Scenario 13: u = 0.00019731232913753304, dual = 8.902986550247e-12 TAIL
+    Scenario 14: u = 0.00019777637367623295, dual = 1.2462004780693404e-10 TAIL
+    Scenario 15: u = 0.00019730585583314182, dual = 5.7882803969584596e-12 TAIL
+    Scenario 16: u = 0.0002538201486276051, dual = 3.8001169240465985e-8 TAIL
+    Scenario 17: u = 0.0001972981173308983, dual = 1.0169990914906538e-12 TAIL
+    Scenario 18: u = 5.272067871040167e6, dual = 0.05333333333162917 TAIL
+    Scenario 19: u = 0.00019732992686593122, dual = 1.2605653877000422e-11 TAIL
+    Scenario 1: u = 0.00020016482851236382, dual = 9.1498078932635e-10 TAIL
+    Scenario 20: u = 16528.57083106947, dual = 0.05333329436773574 TAIL
+    Scenario 21: u = 0.0001973028975603714, dual = 4.178641453027049e-12 TAIL
+    Scenario 22: u = 2.2039449600856793e6, dual = 0.05333333332924184 TAIL
+    Scenario 23: u = 1.152387823997045e6, dual = 0.0533333333254591 TAIL
+    Scenario 24: u = 0.00019731031708080998, dual = 7.847242754738126e-12 TAIL
+    Scenario 25: u = 569963.400154907, dual = 0.053333333317225416 TAIL
+    Scenario 26: u = 1.5519086567779966e6, dual = 0.053333333327514325 TAIL
+    Scenario 27: u = 0.00019730122231610301, dual = 3.126387480773271e-12 TAIL
+    Scenario 28: u = 604399.7551866019, dual = 0.05333333331823744 TAIL
+    Scenario 29: u = 3.488946825598683e6, dual = 0.053333333330754115 TAIL
+    Scenario 2: u = 0.0001972986745285613, dual = 1.408050799046184e-12 TAIL
+    Scenario 30: u = 1.0061845812619225e6, dual = 0.05333333332431874 TAIL
+    Scenario 3: u = 0.0001973032709582899, dual = 4.314436333124074e-12 TAIL
+    Scenario 4: u = 0.00019734511943803393, dual = 1.6488748703831065e-11 TAIL
+    Scenario 5: u = 4.681209671522085e6, dual = 0.05333333333141353 TAIL
+    Scenario 6: u = 3.929682983380609e6, dual = 0.053333333331046416 TAIL
+    Scenario 7: u = 2.2708988811182235e6, dual = 0.053333333329364074 TAIL
+    Scenario 8: u = 0.0001972989427204935, dual = 1.5999315413574107e-12 TAIL
+    Scenario 9: u = 2.2496808162058815e6, dual = 0.05333333332933213 TAIL
+Gen PV: ζ = 1.0513524275e6, ū = 685748.9888, ρ = 402.4725, Expected = 1.2825945622e6, CVaR = -320145.55, Expected Term (δ * E[W - C]) = 256518.9124, CVaR Term ((1 - δ) * CVaR) = -256116.44
+  Scenario breakdown for Gen PV:
+    Scenario 10: u = 2.8262269656040207e6, dual = 0.0533333333298065 TAIL
+    Scenario 11: u = 653589.136819771, dual = 0.05333333331735343 TAIL
+    Scenario 12: u = 0.0001972998717588003, dual = 2.11316762362663e-12 TAIL
+    Scenario 13: u = 0.00019732462926718613, dual = 1.5265543443160367e-11 TAIL
+    Scenario 14: u = 789026.9234111746, dual = 0.05333333332016586 TAIL
+    Scenario 15: u = 0.00019732817352093425, dual = 1.817225806609447e-11 TAIL
+    Scenario 16: u = 0.00019730629446032023, dual = 6.202310153505817e-12 TAIL
+    Scenario 17: u = 0.00019731234245790735, dual = 9.834097721198755e-12 TAIL
+    Scenario 18: u = 1.0490713634156107e6, dual = 0.05333333332360385 TAIL
+    Scenario 19: u = 1.8543385041257555e6, dual = 0.05333333332792023 TAIL
+    Scenario 1: u = 1.0721884447613026e6, dual = 0.05333333332380008 TAIL
+    Scenario 20: u = 129407.37783369888, dual = 0.05333333319845154 TAIL
+    Scenario 21: u = 0.00019730257115197283, dual = 3.865156972849087e-12 TAIL
+    Scenario 22: u = 0.00019730651455390075, dual = 6.316410466257406e-12 TAIL
+    Scenario 23: u = 0.00019730162631792416, dual = 3.2477411469992326e-12 TAIL
+    Scenario 24: u = 0.00019736771586895347, dual = 3.024536332899482e-11 TAIL
+    Scenario 25: u = 0.0001973110675897202, dual = 8.899340553071204e-12 TAIL
+    Scenario 26: u = 632099.1028067174, dual = 0.053333333316602456 TAIL
+    Scenario 27: u = 0.00019730213685818527, dual = 3.5787591873563666e-12 TAIL
+    Scenario 28: u = 1.5622566725876043e6, dual = 0.053333333326882656 TAIL
+    Scenario 29: u = 316924.6726657883, dual = 0.05333333329730739 TAIL
+    Scenario 2: u = 0.0001973008866628192, dual = 2.792848155980563e-12 TAIL
+    Scenario 30: u = 0.00019733885993677676, dual = 2.2123665044371945e-11 TAIL
+    Scenario 3: u = 0.00020264511572422187, dual = 1.8235833018174794e-9 TAIL
+    Scenario 4: u = 69505.29818778724, dual = 0.05333333164808055 TAIL
+    Scenario 5: u = 2.3755278878454617e6, dual = 0.05333333332912541 TAIL
+    Scenario 6: u = 3.117507362152169e6, dual = 0.05333333333013849 TAIL
+    Scenario 7: u = 800118.2436692339, dual = 0.05333333332040407 TAIL
+    Scenario 8: u = 0.0001973024320615752, dual = 3.775781199618547e-12 TAIL
+    Scenario 9: u = 3.324681703923345e6, dual = 0.05333333333034162 TAIL
+Gen Nuclear: ζ = 763369.8804, ū = 265456.8985, ρ = 333634.0391, Expected = 738345.862, CVaR = 232456.0834, Expected Term (δ * E[W - C]) = 147669.1724, CVaR Term ((1 - δ) * CVaR) = 185964.8667
+  Scenario breakdown for Gen Nuclear:
+    Scenario 10: u = 836561.1995757421, dual = 0.05333333332042085 TAIL
+    Scenario 11: u = 164958.37979018898, dual = 0.053333333258240176 TAIL
+    Scenario 12: u = 0.0001973139111266565, dual = 9.973334235259282e-12 TAIL
+    Scenario 13: u = 0.000197351679770549, dual = 2.687785045210637e-11 TAIL
+    Scenario 14: u = 0.0002122321403176656, dual = 5.0785844054426055e-9 TAIL
+    Scenario 15: u = 0.00019753025643667573, dual = 8.765250797115965e-11 TAIL
+    Scenario 16: u = 7915.970072511515, dual = 0.05333331437853833 TAIL
+    Scenario 17: u = 0.00019731712496781672, dual = 1.1907877810852633e-11 TAIL
+    Scenario 18: u = 739841.2896568294, dual = 0.05333333331872369 TAIL
+    Scenario 19: u = 422588.31042422866, dual = 0.053333333307063746 TAIL
+    Scenario 1: u = 614804.8991217143, dual = 0.05333333331559522 TAIL
+    Scenario 20: u = 0.00020358877878973993, dual = 2.0620113154250465e-9 TAIL
+    Scenario 21: u = 0.00019732350303353942, dual = 1.4603957647815993e-11 TAIL
+    Scenario 22: u = 0.0002122051281538656, dual = 4.9342437196251144e-9 TAIL
+    Scenario 23: u = 0.00019744110851364167, dual = 5.554675903029867e-11 TAIL
+    Scenario 24: u = 0.0002013075181859945, dual = 1.3199819719584602e-9 TAIL
+    Scenario 25: u = 0.00019743599143116387, dual = 5.571738672102208e-11 TAIL
+    Scenario 26: u = 540445.8831039433, dual = 0.053333333313081245 TAIL
+    Scenario 27: u = 0.00019732874375617002, dual = 1.6904512934426112e-11 TAIL
+    Scenario 28: u = 564469.1112474191, dual = 0.05333333331397288 TAIL
+    Scenario 29: u = 219123.11847391768, dual = 0.053333333280442756 TAIL
+    Scenario 2: u = 0.0001973254820346903, dual = 1.5931195240622564e-11 TAIL
+    Scenario 30: u = 122753.38110007723, dual = 0.053333333213790905 TAIL
+    Scenario 3: u = 277105.04921003775, dual = 0.053333333291922934 TAIL
+    Scenario 4: u = 0.00021411084320898093, dual = 5.726593501699972e-9 TAIL
+    Scenario 5: u = 1.0168065221196e6, dual = 0.05333333332277874 TAIL
+    Scenario 6: u = 1.0739310173233803e6, dual = 0.05333333332334107 TAIL
+    Scenario 7: u = 267722.79194811673, dual = 0.05333333329075122 TAIL
+    Scenario 8: u = 0.00019731653897992222, dual = 1.1280807006946785e-11 TAIL
+    Scenario 9: u = 1.0946800287724265e6, dual = 0.05333333332352506 TAIL
+Gen Wind: ζ = 3.3556154763e6, ū = 1.9944656378e6, ρ = -655.5827, Expected = 2.5299852836e6, CVaR = -633315.7993, Expected Term (δ * E[W - C]) = 505997.0567, CVaR Term ((1 - δ) * CVaR) = -506652.6395
+  Scenario breakdown for Gen Wind:
+    Scenario 10: u = 7.170096919351498e6, dual = 0.05333333333190919 TAIL
+    Scenario 11: u = 2.1944654388749744e6, dual = 0.05333333332864747 TAIL
+    Scenario 12: u = 0.00019730018696859693, dual = 2.2125273827135826e-12 TAIL
+    Scenario 13: u = 0.00019730079140886344, dual = 2.5809966078320103e-12 TAIL
+    Scenario 14: u = 0.00019734001669016211, dual = 1.796601136182968e-11 TAIL
+    Scenario 15: u = 0.00019730943848778222, dual = 7.118388180810422e-12 TAIL
+    Scenario 16: u = 0.00019730806709329553, dual = 6.48522022136651e-12 TAIL
+    Scenario 17: u = 0.0001973127047282192, dual = 8.864715434970544e-12 TAIL
+    Scenario 18: u = 3.8626944060381856e6, dual = 0.053333333330682985 TAIL
+    Scenario 19: u = 5.613076958160739e6, dual = 0.05333333333151257 TAIL
+    Scenario 1: u = 6.850174745284526e6, dual = 0.05333333333184232 TAIL
+    Scenario 20: u = 0.00019732351491622002, dual = 1.2590013197175333e-11 TAIL
+    Scenario 21: u = 0.00019730055025844566, dual = 2.42899722455816e-12 TAIL
+    Scenario 22: u = 0.00019730534114374308, dual = 5.0821575144643435e-12 TAIL
+    Scenario 23: u = 0.0001973046944789142, dual = 4.5969796335879566e-12 TAIL
+    Scenario 24: u = 167501.6264920226, dual = 0.0533333332578695 TAIL
+    Scenario 25: u = 0.00019730994399245203, dual = 7.13738616815883e-12 TAIL
+    Scenario 26: u = 5.2664900541459285e6, dual = 0.05333333333139236 TAIL
+    Scenario 27: u = 0.00019730142137460707, dual = 2.942645370718078e-12 TAIL
+    Scenario 28: u = 1.8615199689950224e6, dual = 0.053333333327788814 TAIL
+    Scenario 29: u = 1.0432786143148442e6, dual = 0.05333333332336092 TAIL
+    Scenario 2: u = 0.0001973162392258877, dual = 1.0277026906131556e-11 TAIL
+    Scenario 30: u = 0.00019743349351639648, dual = 4.032451923886665e-11 TAIL
+    Scenario 3: u = 1.4250994916319544e6, dual = 0.05333333332605913 TAIL
+    Scenario 4: u = 881434.3200517514, dual = 0.05333333332145736 TAIL
+    Scenario 5: u = 6.330147620161987e6, dual = 0.05333333333171967 TAIL
+    Scenario 6: u = 7.979030835012993e6, dual = 0.053333333332054235 TAIL
+    Scenario 7: u = 2.2932471328020524e6, dual = 0.05333333332885073 TAIL
+    Scenario 8: u = 0.00019730047775289635, dual = 2.392950005150312e-12 TAIL
+    Scenario 9: u = 6.895711000405129e6, dual = 0.053333333331852216 TAIL
+
+--- Storage ---
+Storage BESS: ζ = -1.0035, ū = 0.1128, ρ = -1.2063, Expected = -1.1148, CVaR = -1.2292, Expected Term (δ * E[W - C]) = -0.223, CVaR Term ((1 - δ) * CVaR) = -0.9833
+  Scenario breakdown for Storage BESS:
+    Scenario 10: u = 0.3817633395883604, dual = 0.05330859427577822 TAIL
+    Scenario 11: u = 0.00020760727970928075, dual = 0.002239653053582199 TAIL
+    Scenario 12: u = 0.00021465137018043508, dual = 0.0038761364648306385 TAIL
+    Scenario 13: u = 0.00022288184943908664, dual = 0.005696368070501817 TAIL
+    Scenario 14: u = 0.0002233045140724102, dual = 0.005898682889056888 TAIL
+    Scenario 15: u = 0.00027617044485402, dual = 0.015542666691594481 TAIL
+    Scenario 16: u = 0.07445776664172765, dual = 0.05321874890262353 TAIL
+    Scenario 17: u = 0.00020246606886655102, dual = 0.0010045324786787596 TAIL
+    Scenario 18: u = 0.14245461473408927, dual = 0.05326978019657996 TAIL
+    Scenario 19: u = 0.00023625285759445828, dual = 0.008823453880020826 TAIL
+    Scenario 1: u = 0.05113780224645337, dual = 0.05318722172961522 TAIL
+    Scenario 20: u = 0.08049508353687829, dual = 0.053228174293585305 TAIL
+    Scenario 21: u = 0.00030978573372233194, dual = 0.019716812547635822 TAIL
+    Scenario 22: u = 0.00026827995535124924, dual = 0.014151180937820057 TAIL
+    Scenario 23: u = 0.00023433463485520627, dual = 0.008039666384400838 TAIL
+    Scenario 24: u = 0.0002080039949543611, dual = 0.0023545157852807312 TAIL
+    Scenario 25: u = 0.0002023127321862891, dual = 0.0009230228771361185 TAIL
+    Scenario 26: u = 0.0006832200703458021, dual = 0.04103921884667625 TAIL
+    Scenario 27: u = 0.0002109016071782351, dual = 0.0029875375698806875 TAIL
+    Scenario 28: u = 0.4694068803287861, dual = 0.05331307558983179 TAIL
+    Scenario 29: u = 0.00021947497802630306, dual = 0.0049563111956707874 TAIL
+    Scenario 2: u = 0.1831035762644091, dual = 0.053283178746618025 TAIL
+    Scenario 30: u = 0.09328158060542213, dual = 0.05324068256815193 TAIL
+    Scenario 3: u = 0.9270487147320825, dual = 0.05332294112976237 TAIL
+    Scenario 4: u = 0.0002506902504464531, dual = 0.011324578559333397 TAIL
+    Scenario 5: u = 0.18859890661914758, dual = 0.053284907956839524 TAIL
+    Scenario 6: u = 0.3071830185327391, dual = 0.05330285306927408 TAIL
+    Scenario 7: u = 0.00022971197994019763, dual = 0.007220941050647111 TAIL
+    Scenario 8: u = 0.00021927691284259494, dual = 0.004931027655165564 TAIL
+    Scenario 9: u = 0.48119527109155946, dual = 0.05331353460223221 TAIL
+Storage LDES_PHS: ζ = 765589.0592, ū = 466412.6993, ρ = 266.1696, Expected = 670276.2054, CVaR = -167236.3393, Expected Term (δ * E[W - C]) = 134055.2411, CVaR Term ((1 - δ) * CVaR) = -133789.0715
+  Scenario breakdown for Storage LDES_PHS:
+    Scenario 10: u = 1.136391481919181e6, dual = 0.05333333332540564 TAIL
+    Scenario 11: u = 0.0001974095005377501, dual = 2.9100996081019615e-11 TAIL
+    Scenario 12: u = 0.0001973071252464446, dual = 6.452106771222182e-12 TAIL
+    Scenario 13: u = 0.00020430500414685875, dual = 2.345833281334188e-9 TAIL
+    Scenario 14: u = 0.00019768312329518454, dual = 1.0271076925432218e-10 TAIL
+    Scenario 15: u = 0.00019935433766488184, dual = 6.064782048909924e-10 TAIL
+    Scenario 16: u = 215303.11706182, dual = 0.05333333326365766 TAIL
+    Scenario 17: u = 0.00019730688286478124, dual = 6.536182520525505e-12 TAIL
+    Scenario 18: u = 1.1101627531634306e6, dual = 0.053333333325435855 TAIL
+    Scenario 19: u = 0.00019836517406524815, dual = 3.17700128319278e-10 TAIL
+    Scenario 1: u = 531102.4248787416, dual = 0.05333333331561461 TAIL
+    Scenario 20: u = 450998.1896827378, dual = 0.05333333331203431 TAIL
+    Scenario 21: u = 0.00026470125965472133, dual = 1.4080266036823223e-7 TAIL
+    Scenario 22: u = 45532.53443100491, dual = 0.05333331558082542 TAIL
+    Scenario 23: u = 0.00019744140661055384, dual = 3.5995089966460335e-11 TAIL
+    Scenario 24: u = 0.00019753815434480834, dual = 6.086652942828033e-11 TAIL
+    Scenario 25: u = 0.00019731392430851922, dual = 8.33276211533293e-12 TAIL
+    Scenario 26: u = 353082.06783747085, dual = 0.053333333305984776 TAIL
+    Scenario 27: u = 0.00019731146457723035, dual = 8.1084185138914e-12 TAIL
+    Scenario 28: u = 1.4256980578093799e6, dual = 0.05333333332706417 TAIL
+    Scenario 29: u = 0.00019731728294516927, dual = 9.617647278254285e-12 TAIL
+    Scenario 2: u = 937837.6884053238, dual = 0.05333333332371708 TAIL
+    Scenario 30: u = 577921.686646928, dual = 0.053333333317288595 TAIL
+    Scenario 3: u = 2.7266850139757385e6, dual = 0.053333333330115015 TAIL
+    Scenario 4: u = 0.00023924415496393492, dual = 1.6008580191096807e-8 TAIL
+    Scenario 5: u = 630144.7303701534, dual = 0.053333333318788236 TAIL
+    Scenario 6: u = 1.8032741781058353e6, dual = 0.053333333328486374 TAIL
+    Scenario 7: u = 6.542044862804161, dual = 0.05333319093762191 TAIL
+    Scenario 8: u = 0.00019731826224113607, dual = 9.93259236144521e-12 TAIL
+    Scenario 9: u = 2.048240508922119e6, dual = 0.05333333332905532 TAIL
+
+--- Consumer ---
+Consumer: ρ = 5.285412905381e8
+=============================================================================================
+=============================================================================================
+=============================================================================================
+δ=0.0, Ψ=0.5, Time= ,  iterations, 20sec/iter
+
+Total Installed Capacity:  MW
+
+Total Installed Energy:  MWh

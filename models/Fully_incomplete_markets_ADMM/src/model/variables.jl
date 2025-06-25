@@ -93,6 +93,6 @@ function define_variables!(model)
     @variable(m, ζ_g[g in G])  # VaR variable for generators
     @variable(m, u_s[s in S, o in O] >= 0)  # Loss relative to VaR for storage units
     @variable(m, ζ_s[s in S])  # VaR variable for storage units
-    @variable(m, ζ_d)  # VaR variable for consumers
-    @variable(m, u_d[o in O] >= 0)  # Loss relative to VaR for consumers
+    #@variable(m, ζ_d)  # VaR variable for consumers
+    #@variable(m, u_d[o in O] >= 0)  # Loss relative to VaR for consumers
 end
