@@ -1,4 +1,4 @@
-using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, CPLEX
+using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, CPLEX, RiskMeasures
 
 include("src/_init_.jl");
 
@@ -198,7 +198,7 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [0.0]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
         local_setup = copy(default_setup)
@@ -225,7 +225,8 @@ for delta in [0.0]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6
             Ψ = psi,
             objective = obj,
             PV = safeget(cap, :x_g, "PV"),
-            Wind = safeget(cap, :x_g, "Wind"),
+            Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
+            Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
             Gas = safeget(cap, :x_g, "Gas"),
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_P = safeget(cap, :x_P, "BESS"),

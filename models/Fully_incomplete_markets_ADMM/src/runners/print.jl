@@ -118,7 +118,8 @@ function print_central_summary(model, solve_time)
         rpad("Primal Conv.", conv_width),
         rpad("Dual Conv.", conv_width),
         rpad("PV", data_width),
-        rpad("Wind", data_width),
+        rpad("Wind Onshore", data_width),
+        rpad("Wind Offshore", data_width),
         rpad("Gas", data_width),
         rpad("Nuclear", data_width),
         rpad("BESS Pwr.", data_width),
@@ -363,7 +364,23 @@ function print_agents_objective_breakdown(m)
         u_vals = [value(m.model[:u_g][g, o]) for o in O]
         u_avg = sum(P[o] * u_vals[o] for o in O)
         ρ = value(m.model[:ρ_g][g])
-        expected = sum(P[o] * (value(m.model[:π_g][g, o]) - value(m.model[:gen_total_costs][g, o])) for o in O)
+        genrev = value(m.model[:π_g][g, o])
+        generators_total_costs = value(m.model[:gen_total_costs][g, o])
+        
+        gen_data = m.data["data"]["generation_data"]
+        gic = gen_data[g, "C_inv"] * gen_data[g, "CRF"] * value(m.model[:x_g][g])
+
+        expected = 0.0
+        for o in O
+            πg = sum(W[t, o] * λ[t, o] * value(m.model[:q][g, t, o]) for t in T)
+            gvc = sum(W[t, o] * gen_data[g, "C_v"] * value(m.model[:q][g, t, o]) for t in T)
+            gtc = gic + gvc
+
+            expected += P[o] * (πg - gtc)
+            println("For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4))")
+        end
+
+
         cvar = ζ - (1 / Ψ) * u_avg
         expected_term = δ * expected
         cvar_term = (1 - δ) * cvar
@@ -386,7 +403,27 @@ function print_agents_objective_breakdown(m)
         u_vals = [value(m.model[:u_s][s, o]) for o in O]
         u_avg = sum(P[o] * u_vals[o] for o in O)
         ρ = value(m.model[:ρ_s][s])
-        expected = sum(P[o] * (value(m.model[:π_s][s, o]) - value(m.model[:stor_total_costs][s, o])) for o in O)
+        storrev = value(m.model[:π_s][s, o])
+        storage_total_costs = value(m.model[:stor_total_costs][s, o])
+        
+        
+        stor_data = m.data["data"]["storage_data"]
+        svc = 0
+        sic = stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m.model[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m.model[:x_E][s])
+
+        expected = 0.0
+        for o in O
+            πs = sum(W[t, o] * λ[t, o] * (value(m.model[:q_dch][s, t, o]) - value(m.model[:q_ch][s, t, o])) for t in T)
+            stc = sic + svc
+
+            expected += P[o] * (πs - stc)
+
+            println("For scenario $o: π_s = $(round(storrev, digits=4)), TCS = $(round(storage_total_costs, digits=4))")
+        end
+        
+
+        
+        
         cvar = ζ - (1 / Ψ) * u_avg
         expected_term = δ * expected
         cvar_term = (1 - δ) * cvar
@@ -409,11 +446,27 @@ function print_agents_objective_breakdown(m)
     #u_avg = sum(P[o] * u_vals[o] for o in O)
     ρ = value(m.model[:ρ_d])
     #expected = compute_expected_consumer_welfare(m)
+
+    demand = m.data["data"]["demand"]                  # D[t,o]
+    B = m.data["data"]["additional_params"]["B"]
+    peak = m.data["data"]["additional_params"]["peak_demand"]
+    flex = m.setup["flexible_demand"]
+
+    expected = 0.0
+    for o in O
+        
+        dm = sum(W[t, o] * B * (value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o]) - value(m.model[:d_flex][t, o])^2 / (2 * ((flex-1) * demand[t, o] * peak))) for t in T)
+        ec = sum(W[t, o] * λ[t, o] * (value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o])) for t in T)
+            
+        expected += P[o] * (dm - ec)
+        println("For scenario $o: Demand value = $(round(dm, digits=4)), Energy costs = $(round(ec, digits=4))")
+    end
+
     #cvar = ζ - (1 / Ψ) * u_avg
     #expected_term = δ * expected
     #cvar_term = (1 - δ) * cvar
     #println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
-    println("Consumer: ρ = $(round(ρ, digits=4))")
+    println("Consumer: ρ = $(round(ρ, digits=4)),  Expected = $(round(expected, digits=4))")
 
     #println("  Scenario breakdown for Consumer:")
     #for o in O
@@ -425,5 +478,80 @@ function print_agents_objective_breakdown(m)
     #end
 
     println("=================================\n")
-end
 
+    println("\n--- Residual Summary (per Scenario) ---")
+    residual = value.(m.model[:residual])
+
+    manual_residual = Dict{Tuple{Any,Any}, Float64}()
+
+    for t in T, o in O
+        supply = sum(value(m.model[:q][g, t, o]) for g in G) +
+                sum(value(m.model[:q_dch][s, t, o]) - value(m.model[:q_ch][s, t, o]) for s in S)
+
+        demand = value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o])
+
+        manual_residual[(t, o)] = supply - demand
+    end
+
+    println("\n--- Residual Comparison (Model vs. Manual) ---")
+    for t in T, o in O
+        r_model = residual[t, o]
+        r_manual = manual_residual[(t, o)]
+        diff = abs(r_model - r_manual)
+        println("t=$t, o=$o → Model: $(round(r_model,4)), Manual: $(round(r_manual,4)), Diff: $(round(diff,6))")
+    end
+
+
+    for o in O
+        scenario_residuals = [residual[t, o] for t in T]
+        l2_norm = norm(scenario_residuals, 2)
+        max_residual = maximum(abs.(scenario_residuals))
+        avg_residual = mean(abs.(scenario_residuals))
+        println("Scenario $o: L2 Norm = $(round(l2_norm, 4)), Max = $(round(max_residual, 4)), Avg = $(round(avg_residual, 4))")
+    end
+    
+    filename = "residuals_detailed_delta_$(round(δ, digits=2))_psi_$(round(Ψ, digits=2)).csv"
+    rows = [(t, o, residual[t, o]) for t in T, o in O]
+    df = DataFrame(rows, [:Time, :Scenario, :Residual])
+    CSV.write(filename, df)
+    println("Full residuals saved to '$filename'")
+
+    println("\n--- Demand Value and Total Costs (per Scenario) ---")
+
+    demand_value = value.(m.model[:demand_value])
+    gen_total_costs = value.(m.model[:gen_total_costs])
+    stor_total_costs = value.(m.model[:stor_total_costs])
+    unserved_demand = value.(m.model[:unserved_demand_cost])
+    total_costs = sum(gen_total_costs[g, o] for g in G) + sum(stor_total_costs[s, o] for s in S) + unserved_demand
+
+    for o in O
+        dv = demand_value[o]
+        tc = total_costs[o]
+        net = dv - tc
+        println("Scenario $o: Demand Value = $(round(dv, digits=4)) [£], Total Cost = $(round(tc, digits=4)) [£], Net Welfare = $(round(net, digits=4)) [£]")
+    end
+    # Compute net welfare per scenario
+    net_values = [value(m.model[:demand_value][o]) -
+                sum(value(m.model[:gen_total_costs][g, o]) for g in G) -
+                sum(value(m.model[:stor_total_costs][s, o]) for s in S) - unserved_demand
+                for o in O]
+
+    # Extract and normalize scenario probabilities
+    p = [P[o] for o in O]
+
+    # Compute CVaR at level Ψ
+    cvar_val = CVaR(net_values, p, Ψ)
+
+    println("\n=== CVaR using RiskMeasures.jl ===")
+    println("CVaR at Ψ = $Ψ: $(round(cvar_val, digits=4))")
+
+    exp_term = sum(P[o] * (demand_value[o] - total_costs[o]) for o in O)
+    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_val  
+
+    println("\n===== Social Welfare Fully Incomplete Markets =====")
+    println("Expected Term:     ", exp_term)
+    println("CVaR Term:       ", cvar_val)
+    println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
+    println("===========================================")
+
+end

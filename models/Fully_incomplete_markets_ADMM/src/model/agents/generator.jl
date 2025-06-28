@@ -178,7 +178,15 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             @constraint(m, m[:x_g][g] ≤ nuclear_fraction * setup["peak_demand"])
         end
     end
+    
+    
+    gas_gen = 0.25
 
+    for g in G
+        if g == "Gas"
+            @constraint(m, m[:x_g][g] == gas_gen * setup["peak_demand"])
+        end
+    end
 end
 
 export define_generator!
