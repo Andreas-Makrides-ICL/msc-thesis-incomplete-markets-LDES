@@ -198,9 +198,10 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [0.2]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.0,0.8,0.6,0.4,0.2]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
+    
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
         local_setup["penalty"] = 1.1
@@ -243,6 +244,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672_d02.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672_d.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
