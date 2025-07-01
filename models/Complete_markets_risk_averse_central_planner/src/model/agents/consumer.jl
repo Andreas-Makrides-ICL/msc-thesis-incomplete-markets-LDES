@@ -122,7 +122,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     if demand_type == "QP"
         if !update_prices
             @constraint(m, d_fix_limit[t in T, o in O], 
-                m[:d_fix][t, o] <= D[t, o] * peak_demand
+                m[:d_fix][t, o] + m[:d_flex][t, o] <= D[t, o] * peak_demand
             )
             @constraint(m, d_flex_limit[t in T, o in O], 
                 m[:d_flex][t, o] <= (flexible_demand-1) * D[t, o] * peak_demand
