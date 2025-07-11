@@ -203,3 +203,35 @@ function extract_risk_adjusted_weights(model)
 
     return dual_vals, risk_weights
 end
+
+
+function extract_unserved_demand(model)
+    m = model.model
+    T = model.data["sets"]["T"]
+    O = model.data["sets"]["O"]
+    W = model.data["data"]["time_weights"]
+    
+    unserved_demand_fix = Dict(o => sum(W[t,o] *  value(m[:unserved_fixed][t,o]) for t in T) for o in O)
+    unserved_demand_flex = Dict(o => sum(W[t,o] *  value(m[:unserved_flex][t,o]) for t in T) for o in O)
+
+    total_unserved_demand_fix = sum(unserved_demand_fix[o] for o in O)
+    total_unserved_demand_flex = sum(unserved_demand_flex[o] for o in O) 
+    total = total_unserved_demand_fix + total_unserved_demand_flex
+    
+    # Print summary
+    println("\n===== Unserved demand per scenario =====")
+    for o in O
+        d1 = unserved_demand_fix[o]
+        d2 = unserved_demand_flex[o]
+        d3 = d1 + d2
+        println("  Scenario $o → Unserved Demand Fix = $d1, Unserved Demand Flex = $d2, Total Unserved Demand = $d3")
+    end
+
+    println("\nTotal Unserved Demand across all scenarios:")
+    println(" Total Unserved Demand Fix = $total_unserved_demand_fix, Total Unserved Demand Flex = $total_unserved_demand_flex, Total Unserved Demand = $total")
+    println("====================================\n")
+
+    co2 = value(m[:co2])
+    println("\nTotal MWh of gas = $co2")
+    println("====================================\n")
+end

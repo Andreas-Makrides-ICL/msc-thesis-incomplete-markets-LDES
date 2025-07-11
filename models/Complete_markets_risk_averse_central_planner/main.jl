@@ -37,7 +37,7 @@ function run_central_planner(data, setup, solver)
     define_balances!(m)
     add_residual!(m)
 
-    #Start time of the model\
+    #Start time of the model\ 
     start_time = time()
 
     # Solve the base model
@@ -103,8 +103,8 @@ m = run_central_planner(data, setup, solver);
 """
 
 results = []
-for delta in [1.0, 0.8, 0.6, 0.4, 0.2] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
-    for psi in [0.75, 0.5, 0.25] #[0.5, 0.2, 0.1]
+for delta in [1.0, 0.75, 0.5, 0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+    for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
 
@@ -113,6 +113,7 @@ for delta in [1.0, 0.8, 0.6, 0.4, 0.2] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.
         m = run_central_planner(data, setup, solver);
 
         res = m.results["base"]["base_results"]
+        price = m.results["base"]["base_results"]["price"]
         cap = res["capacities"]
         obj = objective_value(m.model)
         ζ = value(m.model[:ζ_total])
@@ -120,7 +121,7 @@ for delta in [1.0, 0.8, 0.6, 0.4, 0.2] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.
         
         # Extract CVaR tail duals and risk weights
         duals, risk_weights = extract_risk_adjusted_weights(m)
-
+        extract_unserved_demand(m)
         # Sort tail scenarios by descending weight
         sorted_tail = sort(collect(duals), by = x -> -x[2])
         # Format as (scenario, raw dual) for display
@@ -130,13 +131,16 @@ for delta in [1.0, 0.8, 0.6, 0.4, 0.2] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.
         inspect_cvar_constraint_tightness(m)
 
         push!(results, (
-            δ = delta,
-            Ψ = psi,
+            delta = delta,
+            psi = psi,
             objective = obj,
-            ζ_total = ζ,
+            z_total = ζ,
             max_u = maximum(u),
             max_dual = !isempty(duals) ? maximum(values(duals)) : 0.0,
             tail_scenarios = tail_scenarios,
+            Price_max = maximum(price),
+            Price_min = minimum(price),
+            Price_avg = mean(price),
             PV = safeget(cap, :x_g, "PV"),
             Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
@@ -149,14 +153,13 @@ for delta in [1.0, 0.8, 0.6, 0.4, 0.2] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.
             LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
             Duration_PHS = safe_div(safeget(cap, :x_E, "LDES_PHS"), safeget(cap, :x_P, "LDES_PHS"))
         ))
-
     end
 end
 
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T672_new_final_diff_psi.csv", df)
+CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 

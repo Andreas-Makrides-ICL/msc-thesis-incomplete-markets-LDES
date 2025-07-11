@@ -150,15 +150,24 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     # --- Nuclear Ramp Rate Constraints ---
     # Define ramp rate as a fraction of installed capacity (e.g., 10% per hour)
-    ramp_rate = 1  # 100% of capacity per hour
+    ramp_rate_n = 0.1  # 100% of capacity per hour
+    ramp_rate_g = 0.6  # 100% of capacity per hour
 
     for g in G
         if g == "Nuclear"
             @constraint(m, [t in T[2:end], o in O], 
-                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate * m[:x_g][g]
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate_n * m[:x_g][g]
             )
             @constraint(m, [t in T[2:end], o in O], 
-                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate * m[:x_g][g]
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_n * m[:x_g][g]
+            )
+        end
+        if g == "Gas"
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate_g * m[:x_g][g]
+            )
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_g * m[:x_g][g]
             )
         end
     end
@@ -176,6 +185,9 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         end
     end
 
+    @constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
+    @constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
+"""
     gas_gen = 0.25
 
     for g in G
@@ -183,6 +195,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             @constraint(m, m[:x_g][g] == gas_gen * setup["peak_demand"])
         end
     end
+"""
 end
 
 export define_generator!

@@ -44,8 +44,10 @@ function define_objective!(model; expected_value::Bool=false)
     G = data["sets"]["G"]
     S = data["sets"]["S"]
     O = data["sets"]["O"]
+    T = data["sets"]["T"]
 
-    # Extract data arrays and additional parameters
+    # Extract data arrays and additional 
+    W = data["data"]["time_weights"]
     P = data["data"]["additional_params"]["P"]  # Scenario probabilities (Dict)
     δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
@@ -69,11 +71,16 @@ function define_objective!(model; expected_value::Bool=false)
 
     if objective_type == "central"
         # Define Total Costs Expression (per scenario)
-        @expression(m, total_costs[o in O], 
-             m[:unserved_demand_cost][o]  +
+        @expression(m, total_costs[o in O],
             sum(m[:gen_total_costs][g, o] for g in G) +
             sum(m[:stor_total_costs][s, o] for s in S)
         )
+        
+        #@expression(m, total_costs[o in O], 
+        #    m[:unserved_fixed_cost][o] + m[:unserved_flex_cost][o] +
+        #    sum(m[:gen_total_costs][g, o] for g in G) +
+        #    sum(m[:stor_total_costs][s, o] for s in S)
+        #) no price for unserved flex cost, in fully incomplete we have this
 
         if !expected_value
             # Define Risk-Averse Variables (only if they don't already exist)
@@ -88,7 +95,9 @@ function define_objective!(model; expected_value::Bool=false)
             @constraint(m, cvar_tail_total[o in O], 
                  ζ_total - (m[:demand_value][o] - total_costs[o]) <= u_total[o]
             )
-            
+            @expression(m, co2,
+                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+            )
             if δ==1.0
                 @expression(m, objective_expr, sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O)
                 )
@@ -99,7 +108,7 @@ function define_objective!(model; expected_value::Bool=false)
                 # Define Objective Function Expression: Demand value minus total costs, adjusted for risk aversion
                 @expression(m, objective_expr, 
                     δ * sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O) + 
-                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O))
+                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) - (1 - δ) * 128 * 0.3294 * co2 * 10
                 )
             end
 
