@@ -43,8 +43,8 @@ const default_setup = Dict(
 
     # Demand and Load Shedding Options
     "peak_demand" => 100,
-    "flexible_demand" => 1.1,  # Fraction of demand that can be flexible, 10% demand flexibility, This value means that the demand at each time step can vary up to +10% around its nominal (reference) value.
-    "B" => 1000,
+    "flexible_demand" => 1.05,  # Fraction of demand that can be flexible, 10% demand flexibility, This value means that the demand at each time step can vary up to +10% around its nominal (reference) value.
+    "B" => 8000,
     "demand_type" => "QP",  # Options: :QP or :linear, QP= Quadratic Programming — demand deviation penalized quadratically (e.g., (Δdemand)²)
 
     # Risk Aversion Options
