@@ -205,6 +205,8 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         "B" => get(setup, "B", 1000),  # Penalty for unserved energy
         "δ" => get(setup, "δ", 0.5),   # Risk aversion coefficient
         "Ψ" => get(setup, "Ψ", 0.5),   # CVaR parameter
+        "gas_price" => get(setup, "gas_price", 128),   # CVaR parameter
+        "factor_gas_price" => get(setup, "factor_gas_price", 10),   # CVaR parameter
         "N_cvar" => N_cvar,            # Number of CVaR scenarios
         "P" => P,                       # Scenario probabilities
         "flexible_demand" => get(setup, "flexible_demand", 2),

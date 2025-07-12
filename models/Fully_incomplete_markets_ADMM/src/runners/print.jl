@@ -519,6 +519,8 @@ function print_agents_objective_breakdown(m)
     CSV.write(filename, df)
     println("Full residuals saved to '$filename'")
 
+    
+
     println("\n--- Demand Value and Total Costs (per Scenario) ---")
 
     demand_value = value.(m.model[:demand_value])

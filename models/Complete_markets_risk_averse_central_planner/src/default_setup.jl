@@ -50,6 +50,8 @@ const default_setup = Dict(
     # Risk Aversion Options
     "δ" => 1,
     "Ψ" => 0.5,
+    "gas_price" => 0,
+    "factor_gas_price" => 10,
 
     # ADMM Options
     "penalty" => 2,  # Penalty parameter for ADMM

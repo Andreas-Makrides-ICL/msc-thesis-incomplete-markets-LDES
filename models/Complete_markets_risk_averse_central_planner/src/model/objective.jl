@@ -52,6 +52,9 @@ function define_objective!(model; expected_value::Bool=false)
     δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
 
+    gas_price = data["data"]["additional_params"]["gas_price"]
+    factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]
+
     # Extract objective type from settings
     objective_type = settings["objective"]  # "central" or "individual"
 
@@ -108,7 +111,7 @@ function define_objective!(model; expected_value::Bool=false)
                 # Define Objective Function Expression: Demand value minus total costs, adjusted for risk aversion
                 @expression(m, objective_expr, 
                     δ * sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O) + 
-                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) - (1 - δ) * 128 * 0.3294 * co2 * 10
+                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) - (1 - δ) * gas_price * 0.3294 * co2 * factor_gas_price
                 )
             end
 

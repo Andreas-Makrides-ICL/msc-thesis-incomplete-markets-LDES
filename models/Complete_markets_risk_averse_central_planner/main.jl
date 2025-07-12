@@ -64,12 +64,28 @@ function run_central_planner(data, setup, solver)
         "op_results" => op_results
     )
 
-    # ============================
-    # Print summary of the central planner code
-    print_central_summary(m, solve_time)
+   
+    delta = data["data"]["additional_params"]["δ"]
+    psi = data["data"]["additional_params"]["Ψ"]
+    if termination_status(m.model) == MOI.OPTIMAL
+        # Then call the function with output redirected
+        filename = "centralplanner_delta_$(round(delta, digits=2))_$(round(psi, digits=2)).txt"
+        open(filename, "w") do io
+            redirect_stdout(io) do
+                print_central_summary(m, solve_time)
+                print_objective_breakdown(m)
+                recalculate_and_print_individual_risks(m)
+                extract_unserved_demand(m)
+                extract_risk_adjusted_weights(m)
+                #rhs and lhs on cvar tail constraint
+                inspect_cvar_constraint_tightness(m)
+                residual_print(m)
+            end
+        end
+    else
+        println("Model did not solve to optimality — skipping breakdown.")
+    end
 
-    print_objective_breakdown(m)
-    recalculate_and_print_individual_risks(m)
 
     return m
 end
@@ -103,7 +119,7 @@ m = run_central_planner(data, setup, solver);
 """
 
 results = []
-for delta in [1.0, 0.75, 0.5, 0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.00, 0.75, 0.50, 0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
@@ -121,14 +137,12 @@ for delta in [1.0, 0.75, 0.5, 0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 
         
         # Extract CVaR tail duals and risk weights
         duals, risk_weights = extract_risk_adjusted_weights(m)
-        extract_unserved_demand(m)
+        
         # Sort tail scenarios by descending weight
         sorted_tail = sort(collect(duals), by = x -> -x[2])
         # Format as (scenario, raw dual) for display
         tail_scenarios = [(o, round(d, digits=8)) for (o, d) in sorted_tail if d > 1e-8]
 
-        #rhs and lhs on cvar tail constraint
-        inspect_cvar_constraint_tightness(m)
 
         push!(results, (
             delta = delta,
@@ -159,7 +173,7 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex.csv", df)
+CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
 

@@ -105,6 +105,20 @@ function print_central_summary(model, solve_time)
     capacities = base["capacities"]
     obj = objective_value(m)
 
+    println("Checking solver status before result extraction...")
+    println("Status: ", termination_status(m))
+    println("Primal status: ", primal_status(m))
+
+    G, S, O, T = model.data["sets"]["G"], model.data["sets"]["S"], model.data["sets"]["O"], model.data["sets"]["T"]
+    W = model.data["data"]["time_weights"]
+    P = model.data["data"]["additional_params"]["P"]
+    δ = model.data["data"]["additional_params"]["δ"]
+    Ψ = model.data["data"]["additional_params"]["Ψ"]
+
+    price = model.results["base"]["base_results"]["price"]
+
+    println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
+
     println()
     println("------------------------------------------------------------------------------------------------------------------")
     println(rpad("Iter", iter_width),
@@ -155,14 +169,25 @@ function print_central_summary(model, solve_time)
     println("\nTotal Installed Capacity: ", round(total_cap, digits=2), " MW")
     println("\nTotal Installed Energy: ", round(total_energy, digits=2), " MWh")
 
+    for o in O
+        avg_price = sum(W[t, o] * price[t, o] for t in T) / sum(W[t, o] for t in T)
+        println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
+    end
+
 end
 
 function print_objective_breakdown(m::OptimizationModel)
     # Extract sets and parameters
     O = m.data["sets"]["O"]
+    G = m.data["sets"]["G"]
+    S = m.data["sets"]["S"]
+    T = m.data["sets"]["T"]
+    W = m.data["data"]["time_weights"]
     P = m.data["data"]["additional_params"]["P"]
     δ = m.data["data"]["additional_params"]["δ"]
     Ψ = m.data["data"]["additional_params"]["Ψ"]
+    gas_price = m.data["data"]["additional_params"]["gas_price"]
+    factor_gas_price = m.data["data"]["additional_params"]["factor_gas_price"]
     jm = m.model
 
     # Compute expected welfare minus cost
@@ -174,19 +199,63 @@ function print_objective_breakdown(m::OptimizationModel)
     #cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[o] for o in O)
     cvar_term = ζ - (1 / Ψ) * sum(P[o] * u[i] for (i, o) in enumerate(O))
 
+    co2term = gas_price * 0.3294 * value(jm[:co2]) * factor_gas_price
 
-    # Final blended objective
-    objective = δ * expected_term + (1 - δ) * cvar_term
+    objective = value(jm[:objective_expr])
 
     # Print nicely
-    println("\n===== Risk-Averse Objective Breakdown =====")
+    println("\n===== Risk-Averse Objective Breakdown from model =====")
     println("Expected Term (E[W - C]):     ", expected_term)
     println("CVaR Term :       ", cvar_term)
+    println("CO2 Term :       ", co2term)
     println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=4))
     println("CVaR Term ((1 - δ) * CVaR) :       ", round((1 - δ) * cvar_term, digits=4))
+    println("CO2 Term (-(1 - δ) * CO2) :       ", -(1 - δ) * co2term)
     println("  ↳ ζ_total:                       ", round(ζ, digits=2))
     println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
-    println("Full Objective Value:             ", round(objective, digits=2))
+    println("Full Objective Value:             ", objective)
+    println("===========================================")
+
+    demand = m.data["data"]["demand"]                  # D[t,o]
+    B = m.data["data"]["additional_params"]["B"]
+    peak = m.data["data"]["additional_params"]["peak_demand"]
+    flex = m.setup["flexible_demand"]
+
+    gen_data = m.data["data"]["generation_data"]
+    gic = sum(gen_data[g, "C_inv"] * gen_data[g, "CRF"] * value(m.model[:x_g][g]) for g in G)
+
+    stor_data = m.data["data"]["storage_data"]
+    svc = 0
+    sic = sum(stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m.model[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m.model[:x_E][s]) for s in S)
+
+    expected = 0.0
+    for o in O
+        
+        dm = sum(W[t, o] * B * (value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o]) - value(m.model[:d_flex][t, o])^2 / (2 * ((flex-1) * demand[t, o] * peak))) for t in T)
+        gvc = sum(sum(W[t, o] * gen_data[g, "C_v"] * value(m.model[:q][g, t, o]) for t in T) for g in G)
+        tc = gic + gvc + svc + sic
+            
+        expected += P[o] * (dm - tc)
+        println("For scenario $o: Demand value = $(round(dm, digits=4)), Total costs = $(round(tc, digits=4))")
+    end
+
+    k = sum(P[o] * W[t,o] * value(m.model[:q]["Gas", t, o]) for t in T, o in O)
+    co2 = gas_price * 0.3294 * factor_gas_price * k
+
+    # Final blended objective
+    obj = δ * expected + (1 - δ) * cvar_term - (1 - δ) * co2
+
+    # Print nicely
+    println("\n===== Risk-Averse Objective Breakdown Manual Calculation =====")
+    println("Expected Term (E[W - C]):     ", expected)
+    println("CVaR Term :       ", cvar_term)
+    println("CO2 Term :       ", co2)
+    println("Expected Term (δ * E[W - C]):     ", round(δ * expected, digits=4))
+    println("CVaR Term ((1 - δ) * CVaR) :       ", round((1 - δ) * cvar_term, digits=4))
+    println("CO2 Term (-(1 - δ) * CO2) :       ", -(1 - δ) * co2)
+    println("  ↳ ζ_total:                       ", round(ζ, digits=2))
+    println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
+    println("Full Objective Value:             ", obj)
     println("===========================================")
 end
 
@@ -240,22 +309,31 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     # === Extract solved λ from dual of balance constraint
     λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(P[o] * W[t,o]) for t in T, o in O)
 
+    gen_data = data["data"]["generation_data"]
+    
+
     # === Generators
     risk_g = Dict{String, Float64}()
     for g in G
         π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * abs(λ[(t, o)]) for t in T) for o in O)
-        expected = sum(P[o] * (π[o] - value(m[:gen_total_costs][g, o])) for o in O)
+        gic = gen_data[g, "C_inv"] * gen_data[g, "CRF"] * value(m[:x_g][g])
+        gvc = Dict(o => sum(W[t, o] * gen_data[g, "C_v"] * value(m[:q][g, t, o]) for t in T) for o in O)
+        expected = sum(P[o] * (π[o] - gic - gvc[o]) for o in O)
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
         risk_g[g] = δ * expected + (1 - δ) * cvar
     end
 
+    stor_data = data["data"]["storage_data"]
+    svc = 0
+    
     # === Storage
     risk_s = Dict{String, Float64}()
     for s in S
         π = Dict(o =>
             sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * abs(λ[(t, o)]) for t in T)
             for o in O)
-        expected = sum(P[o] * (π[o] - value(m[:stor_total_costs][s, o])) for o in O)
+        sic = stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
+        expected = sum(P[o] * (π[o] - svc - sic) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
         risk_s[s] = δ * expected + (1 - δ) * cvar
     end
@@ -288,6 +366,54 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     println("==============================================================\n")
 
     return Dict("generators" => risk_g, "storage" => risk_s, "consumer" => risk_d)
+end
+
+function residual_print(m)
+    G, S, O, T = m.data["sets"]["G"], m.data["sets"]["S"], m.data["sets"]["O"], m.data["sets"]["T"]
+    W = m.data["data"]["time_weights"]
+    P = m.data["data"]["additional_params"]["P"]
+    δ = m.data["data"]["additional_params"]["δ"]
+    Ψ = m.data["data"]["additional_params"]["Ψ"]
+
+
+    println("=================================\n")
+    println("\n--- Residual Summary (per Scenario) ---")
+    residual = value.(m.model[:residual])
+
+    manual_residual = Dict{Tuple{Any,Any}, Float64}()
+
+    for t in T, o in O
+        supply = sum(value(m.model[:q][g, t, o]) for g in G) +
+                sum(value(m.model[:q_dch][s, t, o]) - value(m.model[:q_ch][s, t, o]) for s in S)
+
+        demand = value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o])
+
+        manual_residual[(t, o)] = supply - demand
+    end
+
+    println("\n--- Residual Comparison (Model vs. Manual) ---")
+    for t in T, o in O
+        r_model = residual[t, o]
+        r_manual = manual_residual[(t, o)]
+        diff = abs(r_model - r_manual)
+        println("t=$t, o=$o → Model: $(round(r_model, digits=4)), Manual: $(round(r_manual, digits=4)), Diff: $(round(diff, digits=6))")
+    end
+
+
+    for o in O
+        scenario_residuals = [residual[t, o] for t in T]
+        l2_norm = norm(scenario_residuals, 2)
+        max_residual = maximum(abs.(scenario_residuals))
+        avg_residual = mean(abs.(scenario_residuals))
+        println("Scenario $o: L2 Norm = $(round(l2_norm, digits=4)), Max = $(round(max_residual, digits=4)), Avg = $(round(avg_residual, digits=4))")
+    end
+    
+    filename = "residuals_detailed_delta_$(round(δ, digits=2))_psi_$(round(Ψ, digits=2)).csv"
+    rows = [(t, o, residual[t, o]) for t in T for o in O]
+    df = DataFrame(rows, [:Time, :Scenario, :Residual])
+    CSV.write(filename, df)
+    println("Full residuals saved to '$filename'")
+
 end
 
 
