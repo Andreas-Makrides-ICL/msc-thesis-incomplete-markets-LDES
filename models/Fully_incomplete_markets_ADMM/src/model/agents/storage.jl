@@ -188,7 +188,7 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         @constraint(m, storage_duration1, m[:x_E]["BESS"] <= 4 * m[:x_P]["BESS"])
         @constraint(m, storage_duration2, m[:x_E]["BESS"] >= 1 * m[:x_P]["BESS"])
         #@constraint(m, storage_duration_8h, m[:x_E]["BESS_8h"] == 8 * m[:x_P]["BESS_8h"])
-        @constraint(m, LDES_PHS_morethan10h, m[:x_E]["LDES_PHS"] >= 8.5 * m[:x_P]["LDES_PHS"])
+        @constraint(m, LDES_PHS_morethan10h, m[:x_E]["LDES_PHS"] >= 8 * m[:x_P]["LDES_PHS"])
         #@constraint(m, LDES_PHS_lessthan15h, m[:x_E]["LDES_PHS"] <= 15 * m[:x_P]["LDES_PHS"])
 
 

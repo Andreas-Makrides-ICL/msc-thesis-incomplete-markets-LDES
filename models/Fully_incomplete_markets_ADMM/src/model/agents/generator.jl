@@ -56,6 +56,10 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
         data["data"]["additional_params"]["λ"] : nothing  # Lagrange multipliers (Dict or nothing)
 
+    gas_price = data["data"]["additional_params"]["gas_price"]
+    factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]
+
+
     G_VRE = [g for g in G if gen_data[g, "VRE"] >= 1]  # Variable Renewable Energy generators
     # Set price_available flag based on whether λ is provided
     price_available = !isnothing(λ)
@@ -66,7 +70,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     end
 
     # Remove existing expressions at the beginning
-    for sym in [:π_g, :ρ_g]
+    for sym in [:π_g, :ρ_g, :co2]
         maybe_remove_expression(m, sym)
     end
 
@@ -85,6 +89,9 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             m[:gen_variable_costs][g, o] + m[:gen_investment_costs][g]
         )
     end
+
+    @expression(m, co2, sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+    )
 
     # Define Revenue Expression (excluding costs)
     # Generation revenue per scenario: Use λ if available, otherwise set to 0
@@ -106,8 +113,9 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], 
             δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
-        )   
+            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) - (1 - δ) * (g == "gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
+        ) 
+        
     end
 
 
@@ -153,15 +161,24 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     # --- Nuclear Ramp Rate Constraints ---
     # Define ramp rate as a fraction of installed capacity (e.g., 10% per hour)
-    ramp_rate = 1  # 100% of capacity per hour
+    ramp_rate_n = 0.1  # 100% of capacity per hour
+    ramp_rate_g = 0.6  # 100% of capacity per hour
 
     for g in G
         if g == "Nuclear"
             @constraint(m, [t in T[2:end], o in O], 
-                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate * m[:x_g][g]
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate_n * m[:x_g][g]
             )
             @constraint(m, [t in T[2:end], o in O], 
-                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate * m[:x_g][g]
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_n * m[:x_g][g]
+            )
+        end
+        if g == "Gas"
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate_g * m[:x_g][g]
+            )
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_g * m[:x_g][g]
             )
         end
     end
@@ -178,8 +195,10 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             @constraint(m, m[:x_g][g] ≤ nuclear_fraction * setup["peak_demand"])
         end
     end
-    
-    
+
+    @constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
+    @constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
+"""
     gas_gen = 0.25
 
     for g in G
@@ -187,6 +206,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             @constraint(m, m[:x_g][g] == gas_gen * setup["peak_demand"])
         end
     end
+"""
 end
 
 export define_generator!

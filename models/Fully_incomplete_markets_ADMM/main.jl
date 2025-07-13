@@ -198,14 +198,14 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [1.0,0.8,0.6,0.4,0.2]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.00]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
     
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
         local_setup["penalty"] = 1.1
-        local_setup["tolerance"] = 0.01
+        local_setup["tolerance"] = 0.001 #total=0.375
         local_setup["use_hierarchical_clustering"] = true
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
@@ -217,14 +217,19 @@ for delta in [1.0,0.8,0.6,0.4,0.2]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver, delta);
 
+        price = m.data["data"]["additional_params"]["λ"]
+
         res = m.results["final"]
         cap = res[:capacities]
         obj = res[:of]
 
         push!(results, (
-            δ = delta,
-            Ψ = psi,
+            delta = delta,
+            psi = psi,
             objective = obj,
+            Price_max = maximum(price),
+            Price_min = minimum(price),
+            Price_avg = mean(price),
             PV = safeget(cap, :x_g, "PV"),
             Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
@@ -244,6 +249,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672_d.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

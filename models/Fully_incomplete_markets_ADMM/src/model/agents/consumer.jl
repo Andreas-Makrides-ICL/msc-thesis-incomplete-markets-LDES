@@ -73,7 +73,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     end
 
     # Remove existing expressions at the beginning
-    for sym in [:demand_value, :energy_cost, :ρ_d, :unserved_demand_cost]
+    for sym in [:demand_value, :energy_cost, :ρ_d, :unserved_demand_cost, :unserved_fixed, :unserved_fixed_cost, :unserved_flex, :unserved_flex_cost, :unserved_demand, :unserved_demand_cost_fix_and_flex]
         maybe_remove_expression(m, sym)
     end
 
@@ -86,6 +86,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
         has_cvar_tail_d = false
     end
     
+    minWTP = 0
     # Define Welfare Value of Demand (per scenario)
     if demand_type == "QP"
         @expression(m, demand_value[o in O], 
@@ -96,6 +97,26 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
         @expression(m, unserved_demand_cost[o in O], 
             0
         )
+        @expression(m, unserved_fixed[t in T, o in O], 
+            D[t,o]* peak_demand - ((flexible_demand-1) * D[t, o] * peak_demand) - m[:d_fix][t, o]
+        )
+        @expression(m, unserved_fixed_cost[o in O], 
+            sum(W[t,o] * (B) * unserved_fixed[t,o] for t in T)
+        )
+        @expression(m, unserved_flex[t in T, o in O], 
+            ((flexible_demand-1) * D[t, o] * peak_demand) - m[:d_flex][t, o]
+        )
+         
+        @expression(m, unserved_flex_cost[o in O], 
+            sum(W[t,o] * 0.5 * unserved_flex[t,o] * ((price_available ? λ[t, o] : 50) - minWTP) for t in T) 
+        )
+        @expression(m, unserved_demand[t in T, o in O], 
+            D[t,o] - m[:d_fix][t, o] - m[:d_flex][t, o]
+        )
+        @expression(m, unserved_demand_cost_fix_and_flex[o in O], 
+            unserved_fixed_cost[o] + unserved_flex_cost[o]
+        )
+
     elseif demand_type == "linear"
         @expression(m, demand_value[o in O], 
             sum(W[t, o] * B * (D[t, o] * peak_demand) for t in T)
@@ -127,6 +148,10 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
             @constraint(m, d_flex_limit[t in T, o in O], 
                 m[:d_flex][t, o] <= (flexible_demand-1) * D[t, o] * peak_demand
             )
+            @constraint(m, d_fix_limit_extra[t in T, o in O], 
+                m[:d_fix][t, o] <= D[t, o] * peak_demand - (flexible_demand-1) * D[t, o] * peak_demand
+            )
+            #dfixmax=D-Dflex
         end
     end
 
