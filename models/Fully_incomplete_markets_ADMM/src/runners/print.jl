@@ -390,10 +390,13 @@ function print_agents_objective_breakdown(m)
 
             #check with expressions
             genrev = value(m.model[:π_g][g, o])
+            genvar = value(m.model[:gen_variable_costs][g, o])
+            ginvestment = (m.model[:gen_investment_costs][g])
             generators_total_costs = value(m.model[:gen_total_costs][g, o])
-
-            println("(Manual Calculation) For scenario $o: π_g = $(round(πg, digits=4)), TCG = $(round(gtc, digits=4))")
-            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4))")
+            netrev= πg - gvc
+            println("Net revenue for scenario $o: net rev = $netrev")
+            println("(Manual Calculation) For scenario $o: π_g = $(round(πg, digits=4)), TCG = $(round(gtc, digits=4)), IGC = $(round(gic, digits=4)), VGC = $(round(gvc, digits=4))")
+            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $(round(ginvestment, digits=4)), VGC = $(round(genvar, digits=4))")
         end
 
 
@@ -439,8 +442,13 @@ function print_agents_objective_breakdown(m)
             #check with expressions
             storrev = value(m.model[:π_s][s, o])
             storage_total_costs = value(m.model[:stor_total_costs][s, o])
-            println("(Manual Calculation) For scenario $o: π_s = $(round(πs, digits=4)), TCS = $(round(stc, digits=4))")
-            println("(From model expression) For scenario $o: π_s = $(round(storrev, digits=4)), TCS = $(round(storage_total_costs, digits=4))")
+            storvar=value(m.model[:stor_variable_costs][s, o])
+            storinv=value(m.model[:stor_investment_costs][s])
+
+            netrevstorage= πs - svc
+            println("Net revenue for scenario $o: net rev = $netrevstorage")
+            println("(Manual Calculation) For scenario $o: π_s = $(round(πs, digits=4)), TCS = $(round(stc, digits=4)), VCS = $(round(svc, digits=4)), ICS = $(round(sic, digits=4))")
+            println("(From model expression) For scenario $o: π_s = $(round(storrev, digits=4)), TCS = $(round(storage_total_costs, digits=4)), VCS = $(round(storvar, digits=4)), ICS = $(round(storinv, digits=4))")
         end
         
         cvar = ζ - (1 / Ψ) * u_avg
@@ -473,7 +481,7 @@ function print_agents_objective_breakdown(m)
 
     expected = 0.0
     for o in O
-        
+    
         dm = sum(W[t, o] * B * (value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o]) - value(m.model[:d_flex][t, o])^2 / (2 * ((flex-1) * demand[t, o] * peak))) for t in T)
         ec = sum(W[t, o] * λ[t, o] * (value(m.model[:d_fix][t, o]) + value(m.model[:d_flex][t, o])) for t in T)
             
@@ -518,8 +526,8 @@ function print_agents_objective_breakdown(m)
     println(" Total Unserved Demand Fix = $total_unserved_demand_fix, Total Unserved Demand Flex = $total_unserved_demand_flex, Total Unserved Demand = $total")
     println("====================================\n")
 
-    co2 = value(m.model[:co2])
-    println("\nTotal MWh of gas = $co2")
+    co2mwh = value(m.model[:co2])
+    println("\nTotal MWh of gas = $co2mwh")
     println("====================================\n")
 
 
