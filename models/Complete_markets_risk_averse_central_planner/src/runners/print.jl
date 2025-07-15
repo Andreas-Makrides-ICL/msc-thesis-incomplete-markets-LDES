@@ -305,7 +305,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     Ψ = data["data"]["additional_params"]["Ψ"]
     B = data["data"]["additional_params"]["B"]
     flexible_demand = data["data"]["additional_params"]["flexible_demand"]
-
+    D = data["data"]["demand"] 
+    peak_demand = data["data"]["additional_params"]["peak_demand"]
     # === Extract solved λ from dual of balance constraint
     λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(P[o] * W[t,o]) for t in T, o in O)
 
@@ -313,6 +314,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     
 
     # === Generators
+    ex_g = Dict{String, Float64}()
+    cvar_g = Dict{String, Float64}()
     risk_g = Dict{String, Float64}()
     for g in G
         π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * abs(λ[(t, o)]) for t in T) for o in O)
@@ -320,6 +323,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         gvc = Dict(o => sum(W[t, o] * gen_data[g, "C_v"] * value(m[:q][g, t, o]) for t in T) for o in O)
         expected = sum(P[o] * (π[o] - gic - gvc[o]) for o in O)
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
+        ex_g[g] = expected
+        cvar_g[g] = cvar
         risk_g[g] = δ * expected + (1 - δ) * cvar
     end
 
@@ -327,6 +332,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     svc = 0
     
     # === Storage
+    ex_s = Dict{String, Float64}()
+    cvar_s = Dict{String, Float64}()
     risk_s = Dict{String, Float64}()
     for s in S
         π = Dict(o =>
@@ -335,6 +342,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         sic = stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
         expected = sum(P[o] * (π[o] - svc - sic) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
+        ex_s[s] = expected
+        cvar_s[s] = cvar
         risk_s[s] = δ * expected + (1 - δ) * cvar
     end
 
@@ -345,7 +354,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         π[o] = sum(W[t, o] * abs(λ[(t, o)]) * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
         val[o] = sum(W[t, o] * B * (
             value(m[:d_fix][t, o]) + value(m[:d_flex][t, o]) -
-            value(m[:d_flex][t, o])^2 / (2 * flexible_demand)) for t in T)
+            value(m[:d_flex][t, o])^2 / (2 * ((flexible_demand-1) * D[t, o] * peak_demand))) for t in T)
     end
     expected = sum(P[o] * (val[o] - π[o]) for o in O)
     cvar = value(m[:ζ_d]) - (1 / Ψ) * sum(P[o] * value(m[:u_d][o]) for o in O)
@@ -357,12 +366,26 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     for (g, ρ) in sort(collect(risk_g), by = x -> x[1])
         println("  $g → ", round(ρ, digits=2))
     end
+    for (g, e) in sort(collect(ex_g), by = x -> x[1])
+        println("  $g → ", round(e, digits=2))
+    end
+    for (g, c) in sort(collect(cvar_g), by = x -> x[1])
+        println("  $g → ", round(c, digits=2))
+    end
     println("Storage:")
     for (s, ρ) in sort(collect(risk_s), by = x -> x[1])
         println("  $s → ", round(ρ, digits=2))
     end
+    for (s, e) in sort(collect(ex_s), by = x -> x[1])
+        println("  $s → ", round(e, digits=2))
+    end
+    for (s, c) in sort(collect(cvar_s), by = x -> x[1])
+        println("  $s → ", round(c, digits=2))
+    end
     println("Consumer:")
     println("  ρ_d → ", round(risk_d, digits=2))
+    println("  expected → ", round(expected, digits=2))
+    println("  cvar → ", round(cvar, digits=2))
     println("==============================================================\n")
 
     return Dict("generators" => risk_g, "storage" => risk_s, "consumer" => risk_d)
