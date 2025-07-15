@@ -171,9 +171,10 @@ function print_central_summary(model, solve_time)
 
     for o in O
         avg_price = sum(W[t, o] * price[t, o] for t in T) / sum(W[t, o] for t in T)
-        println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
+        println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]") 
     end
-
+    average_price = sum(W[t, o] * price[t, o] for t in T, o in O) / sum(W[t, o] for t in T, o in O)
+    println("Average price = $(round(average_price, digits=4)) [£/MWh]") 
 end
 
 function print_objective_breakdown(m::OptimizationModel)

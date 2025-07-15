@@ -154,7 +154,6 @@ for delta in [1.00, 0.75, 0.50, 0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0
             tail_scenarios = tail_scenarios,
             Price_max = maximum(price),
             Price_min = minimum(price),
-            Price_avg = mean(price),
             PV = safeget(cap, :x_g, "PV"),
             Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
