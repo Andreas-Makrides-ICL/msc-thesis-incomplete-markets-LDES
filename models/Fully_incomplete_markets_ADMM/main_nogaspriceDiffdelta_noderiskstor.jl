@@ -156,8 +156,8 @@ function run_ADMM(data, setup, solver, delta)
 
     if termination_status(m.model) == MOI.OPTIMAL
         # Then call the function with output redirected
-        filename = "gasscaled1_75_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
-        str = "gasscaled1_75"
+        filename = "nogasprice1_75_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
+        str = "nogasprice1_75"
         open(filename, "w") do io
             redirect_stdout(io) do
                 print_agents_objective_breakdown(m, str)
@@ -209,10 +209,10 @@ for delta in [1.00, 0.75]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0
         local_setup["penalty"] = 1.1
         local_setup["tolerance"] = 0.008
         local_setup["use_hierarchical_clustering"] = true
-        local_setup["factor_gas_price"] = 10
+        local_setup["factor_gas_price"] = 0
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
-        solver = "CPLEX"
+        solver = "Gurobi"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
@@ -252,6 +252,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("gasscaled1_75_ADMM_risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
+CSV.write("nogasprice1_75_ADMM_risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

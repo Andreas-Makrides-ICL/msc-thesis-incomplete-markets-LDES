@@ -203,6 +203,13 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         "peak_demand" => get(setup, "peak_demand", 100),  # Default peak demand
         "B" => get(setup, "B", 1000),  # Penalty for unserved energy
         "δ" => get(setup, "δ", 0.5),   # Risk aversion coefficient
+        "δ_PV" => get(setup, "δ_PV", 0.5),
+        "δ_Gas" => get(setup, "δ_Gas", 0.5),
+        "δ_Wind_On" => get(setup, "δ_Wind_On", 0.5),
+        "δ_Wind_Off" => get(setup, "δ_Wind_Off", 0.5),
+        "δ_Nuclear" => get(setup, "δ_Nuclear", 0.5),
+        "δ_BESS" => get(setup, "δ_BESS", 0.5),
+        "δ_LDES" => get(setup, "δ_LDES", 0.5),
         "Ψ" => get(setup, "Ψ", 0.5),   # CVaR parameter
         "gas_price" => get(setup, "gas_price", 128),   # CVaR parameter
         "factor_gas_price" => get(setup, "factor_gas_price", 10),

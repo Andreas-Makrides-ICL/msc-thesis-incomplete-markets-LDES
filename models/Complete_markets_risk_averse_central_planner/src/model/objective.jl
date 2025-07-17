@@ -66,13 +66,13 @@ function define_objective!(model; expected_value::Bool=false)
         y=0
     elseif δ==0.75
         j=0.15
-        y=1
+        y=0
     elseif δ==0.50
         j=0.130
-        y=1
+        y=0
     elseif δ==0.25
         j=0.101
-        y=1
+        y=0
     end
     # Remove existing variables and constraints (only if they exist)
     for sym in [:u_total, :ζ_total]

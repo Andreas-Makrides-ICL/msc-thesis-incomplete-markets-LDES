@@ -367,7 +367,7 @@ function print_agents_objective_breakdown(m, str::String)
         println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
     end
     averagetotalprice =sum(W[t, o] * λ[t, o] for t in T, o in O) / sum(W[t, o] for t in T, o in O)
-    println("Average price = $(round(avaveragetotalpriceg_price, digits=4)) [£/MWh]")
+    println("Average price = $(round(averagetotalprice, digits=4)) [£/MWh]")
     
     println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
 
@@ -401,7 +401,7 @@ function print_agents_objective_breakdown(m, str::String)
             netrev= πg - gvc
             println("Net revenue for scenario $o: net rev = $netrev")
             println("(Manual Calculation) For scenario $o: π_g = $(round(πg, digits=4)), TCG = $(round(gtc, digits=4)), IGC = $(round(gic, digits=4)), VGC = $(round(gvc, digits=4))")
-            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $(round(ginvestment, digits=4)), VGC = $(round(genvar, digits=4))")
+            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $ginvestment, VGC = $genvar")
         end
 
 

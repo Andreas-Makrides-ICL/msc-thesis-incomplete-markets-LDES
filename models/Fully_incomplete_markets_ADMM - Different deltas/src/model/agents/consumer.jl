@@ -54,8 +54,8 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     D = data["data"]["demand"]        # Demand profiles (DenseAxisArray)
     W = data["data"]["time_weights"]  # Time weights (DenseAxisArray)
     P = data["data"]["additional_params"]["P"]  # Scenario probabilities (Dict)
-    δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
-    Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
+    #δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    #Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
     B = data["data"]["additional_params"]["B"]  # Penalty for unserved energy
     peak_demand = data["data"]["additional_params"]["peak_demand"]  # Peak demand
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 

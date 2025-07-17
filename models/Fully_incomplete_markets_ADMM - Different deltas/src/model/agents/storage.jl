@@ -57,7 +57,15 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
     # Extract data arrays and additional parameters
     W = data["data"]["time_weights"]  # Time weights (DenseAxisArray)
     P = data["data"]["additional_params"]["P"]  # Scenario probabilities (Dict)
-    δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    #δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    δ_BESS = data["data"]["additional_params"]["δ_BESS"]
+    δ_LDES = data["data"]["additional_params"]["δ_LDES"]
+
+    δ_s = Dict(
+    "BESS" => δ_BESS,
+    "LDES_PHS" => δ_LDES,
+    )
+
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
     stor_data = data["data"]["storage_data"]    # Storage data (DenseAxisArray)
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
@@ -100,24 +108,11 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         sum(W[t, o] * (m[:q_dch][s, t, o] - m[:q_ch][s, t, o]) * (price_available ? λ[t, o] : 0) for t in T)
     )
 
-    if δ==1.0
-        # Define Risk-Adjusted Profit Expression
-        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_s[s in S], sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O)
-        )
-    elseif δ==0.0
-        # Define Risk-Adjusted Profit Expression
-        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_s[s in S], (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
-        )
-    else
-        # Define Risk-Adjusted Profit Expression
-        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_s[s in S], 
-            δ * sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
-        )
-    end
+    
+    @expression(m, ρ_s[s in S], 
+        δ_s[s] * sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O) + 
+        (1 - δ_s[s]) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
+    )
 
     # Energy Cost Expression (using λ values if available)
     if price_available

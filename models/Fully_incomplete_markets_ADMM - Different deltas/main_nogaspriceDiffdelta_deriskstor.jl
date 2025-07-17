@@ -7,7 +7,7 @@ include("src/_init_.jl");
 
 Runs the ADMM optimization workflow on the provided data and setup.
 """
-function run_ADMM(data, setup, solver, delta)
+function run_ADMM(data, setup, solver)
     # ============================
     # Create Base Optimization Model
     # ============================
@@ -23,6 +23,7 @@ function run_ADMM(data, setup, solver, delta)
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
         #set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
         #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
+        set_optimizer_attribute(m.model, "Threads", 6)
     else
         error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")
     end
@@ -156,8 +157,8 @@ function run_ADMM(data, setup, solver, delta)
 
     if termination_status(m.model) == MOI.OPTIMAL
         # Then call the function with output redirected
-        filename = "nogasprice1_75_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
-        str = "nogasprice1_75"
+        filename = "different_delta_nogasprice_derisk_storage.txt"
+        str = "different_delta_nogasprice_derisk_storage"
         open(filename, "w") do io
             redirect_stdout(io) do
                 print_agents_objective_breakdown(m, str)
@@ -200,58 +201,62 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [1.00, 0.75]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
-    for psi in [0.5] #[0.5, 0.2, 0.1]
+for psi in [0.5] #[0.5, 0.2, 0.1]
         
-    
-        local_setup = copy(default_setup)
-        local_setup["max_iterations"] = 10000
-        local_setup["penalty"] = 1.1
-        local_setup["tolerance"] = 0.008
-        local_setup["use_hierarchical_clustering"] = true
-        local_setup["factor_gas_price"] = 0
-        local_setup["δ"] = delta
-        local_setup["Ψ"] = psi
-        solver = "CPLEX"
-        #setup["δ"] = delta
-        #setup["Ψ"] = psi
+    local_setup = copy(default_setup)
+    local_setup["max_iterations"] = 10000
+    local_setup["penalty"] = 1.1
+    local_setup["tolerance"] = 0.008
+    local_setup["use_hierarchical_clustering"] = true
+    local_setup["factor_gas_price"] = 0
+    local_setup["δ_PV"] =
+    local_setup["δ_Gas"] =
+    local_setup["δ_Wind_On"] =
+    local_setup["δ_Wind_Off"] =
+    local_setup["δ_Nuclear"] =
+    local_setup["δ_BESS"] =
+    local_setup["δ_LDES"] =derisk storage how many scenarios
+    local_setup["Ψ"] = psi
+    solver = "Gurobi"
+    #setup["δ"] = delta
+    #setup["Ψ"] = psi
 
-        data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
-        #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
-        m = run_ADMM(data, local_setup, solver, delta);
+    data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
+    #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
+    m = run_ADMM(data, local_setup, solver);
 
-        price = m.data["data"]["additional_params"]["λ"]
+    price = m.data["data"]["additional_params"]["λ"]
 
-        res = m.results["final"]
-        cap = res[:capacities]
-        obj = res[:of]
+    res = m.results["final"]
+    cap = res[:capacities]
+    obj = res[:of]
 
-        push!(results, (
-            delta = delta,
-            psi = psi,
-            objective = obj,
-            Price_max = maximum(price),
-            Price_min = minimum(price),
-            Price_avg = mean(price),
-            PV = safeget(cap, :x_g, "PV"),
-            Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
-            Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
-            Gas = safeget(cap, :x_g, "Gas"),
-            Nuclear = safeget(cap, :x_g, "Nuclear"),
-            BESS_P = safeget(cap, :x_P, "BESS"),
-            BESS_E = safeget(cap, :x_E, "BESS"),
-            Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
-            LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
-            LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
-            Duration_PHS = safe_div(safeget(cap, :x_E, "LDES_PHS"), safeget(cap, :x_P, "LDES_PHS"))
-        ))
+    push!(results, (
+        delta = delta,
+        psi = psi,
+        objective = obj,
+        Price_max = maximum(price),
+        Price_min = minimum(price),
+        Price_avg = mean(price),
+        PV = safeget(cap, :x_g, "PV"),
+        Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
+        Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
+        Gas = safeget(cap, :x_g, "Gas"),
+        Nuclear = safeget(cap, :x_g, "Nuclear"),
+        BESS_P = safeget(cap, :x_P, "BESS"),
+        BESS_E = safeget(cap, :x_E, "BESS"),
+        Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
+        LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
+        LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
+        Duration_PHS = safe_div(safeget(cap, :x_E, "LDES_PHS"), safeget(cap, :x_P, "LDES_PHS"))
+    ))
 
-    end
 end
+
 
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("nogasprice1_75_ADMM_risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
+CSV.write("different_delta_nogasprice_derisk_storage_ADMM_risk_aversion_results_O30_T672_cinvEldescheap_conwind.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

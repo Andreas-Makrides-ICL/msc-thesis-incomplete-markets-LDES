@@ -48,7 +48,13 @@ const default_setup = Dict(
     "demand_type" => "QP",  # Options: :QP or :linear, QP= Quadratic Programming — demand deviation penalized quadratically (e.g., (Δdemand)²)
 
     # Risk Aversion Options
-    "δ" => 1,
+    "δ_PV" => 1,
+    "δ_Gas" => 1,
+    "δ_Wind_On" => 1,
+    "δ_Wind_Off" => 1,
+    "δ_Nuclear" => 1,
+    "δ_BESS" => 1,
+    "δ_LDES" => 1,
     "Ψ" => 0.5,
     "gas_price" => 128, #128
     "factor_gas_price" => 10,

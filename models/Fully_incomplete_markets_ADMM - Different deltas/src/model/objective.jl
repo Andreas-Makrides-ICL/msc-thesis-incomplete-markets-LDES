@@ -49,8 +49,9 @@ function define_objective!(model; expected_value::Bool=false)
     # Extract data arrays and additional parameters
     W = data["data"]["time_weights"]
     P = data["data"]["additional_params"]["P"]  # Scenario probabilities (Dict)
-    δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    #δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
+    δ = 0.5
 
     gas_price = data["data"]["additional_params"]["gas_price"]
     factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]

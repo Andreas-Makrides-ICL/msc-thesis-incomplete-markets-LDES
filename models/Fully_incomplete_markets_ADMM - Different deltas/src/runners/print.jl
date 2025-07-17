@@ -355,7 +355,28 @@ function print_agents_objective_breakdown(m, str::String)
     G, S, O, T = m.data["sets"]["G"], m.data["sets"]["S"], m.data["sets"]["O"], m.data["sets"]["T"]
     W = m.data["data"]["time_weights"]
     P = m.data["data"]["additional_params"]["P"]
-    δ = m.data["data"]["additional_params"]["δ"]
+    #δ = m.data["data"]["additional_params"]["δ"]
+    δ_PV = m.data["data"]["additional_params"]["δ_PV"]
+    δ_Gas = m.data["data"]["additional_params"]["δ_Gas"]
+    δ_Wind_On = m.data["data"]["additional_params"]["δ_Wind_On"]
+    δ_Wind_Off = m.data["data"]["additional_params"]["δ_Wind_Off"]
+    δ_Nuclear = m.data["data"]["additional_params"]["δ_Nuclear"]
+    δ_BESS = m.data["data"]["additional_params"]["δ_BESS"]
+    δ_LDES = m.data["data"]["additional_params"]["δ_LDES"]
+
+    δ_g = Dict(
+    "PV" => δ_PV,
+    "Gas" => δ_Gas,
+    "Wind_Onshore" => δ_Wind_On,
+    "Wind_Offshore" => δ_Wind_Off,
+    "Nuclear" => δ_Nuclear,
+    )
+
+    δ_s = Dict(
+    "BESS" => δ_BESS,
+    "LDES_PHS" => δ_LDES,
+    )
+
     Ψ = m.data["data"]["additional_params"]["Ψ"]
     λ = m.data["data"]["additional_params"]["λ"]
     gas_price = m.data["data"]["additional_params"]["gas_price"]
@@ -367,9 +388,9 @@ function print_agents_objective_breakdown(m, str::String)
         println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
     end
     averagetotalprice =sum(W[t, o] * λ[t, o] for t in T, o in O) / sum(W[t, o] for t in T, o in O)
-    println("Average price = $(round(avaveragetotalpriceg_price, digits=4)) [£/MWh]")
+    println("Average price = $(round(averagetotalprice, digits=4)) [£/MWh]")
     
-    println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
+    println("Risk aversion: δ_PV= $δ_PV, δ_Gas: $δ_Gas, δ_Wind_On: $δ_Wind_On, δ_Wind_Off: $δ_Wind_Off, δ_Nuclear: $δ_Nuclear, δ_BESS: $δ_BESS, δ_LDES: $δ_LDES, CVaR confidence (Ψ): $Ψ")
 
     # Generators
     k = sum(P[o] * W[t,o] * value(m.model[:q]["Gas", t, o]) for t in T, o in O)
@@ -401,17 +422,17 @@ function print_agents_objective_breakdown(m, str::String)
             netrev= πg - gvc
             println("Net revenue for scenario $o: net rev = $netrev")
             println("(Manual Calculation) For scenario $o: π_g = $(round(πg, digits=4)), TCG = $(round(gtc, digits=4)), IGC = $(round(gic, digits=4)), VGC = $(round(gvc, digits=4))")
-            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $(round(ginvestment, digits=4)), VGC = $(round(genvar, digits=4))")
+            println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $ginvestment, VGC = $genvar")
         end
 
 
         cvar = ζ - (1 / Ψ) * u_avg
-        expected_term = δ * expected
-        cvar_term = (1 - δ) * cvar
+        expected_term = δ_g[g] * expected
+        cvar_term = (1 - δ_g[g]) * cvar
 
         
 
-        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)), CO2 Term (-(1 - δ) * CO2) = $(-(1 - δ) * co2)")
+        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)), CO2 Term (-(1 - δ) * CO2) = $(-(1 - δ_g["Gas"]) * co2)")
         
         println("  Scenario breakdown for Gen $g:")
         for o in O
@@ -456,8 +477,8 @@ function print_agents_objective_breakdown(m, str::String)
         end
         
         cvar = ζ - (1 / Ψ) * u_avg
-        expected_term = δ * expected
-        cvar_term = (1 - δ) * cvar
+        expected_term = δ_s[s] * expected
+        cvar_term = (1 - δ_s[s]) * cvar
         println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
         
         println("  Scenario breakdown for Storage $s:")
@@ -566,7 +587,7 @@ function print_agents_objective_breakdown(m, str::String)
         println("Scenario $o: L2 Norm = $(round(l2_norm, digits=4)), Max = $(round(max_residual, digits=4)), Avg = $(round(avg_residual, digits=4))")
     end
     
-    filename = "residuals_detailed_delta_$(round(δ, digits=2))_psi_$(round(Ψ, digits=2))_$(str).csv"
+    filename = "residuals_psi_$(round(Ψ, digits=2))_$(str).csv"
     rows = [(t, o, residual[t, o]) for t in T for o in O]
     df = DataFrame(rows, [:Time, :Scenario, :Residual])
     CSV.write(filename, df)
@@ -600,13 +621,13 @@ function print_agents_objective_breakdown(m, str::String)
 
     exp_term = sum(P[o] * (value(m.model[:demand_value][o]) - sum(value(m.model[:gen_total_costs][g, o]) for g in G) - sum(value(m.model[:stor_total_costs][s, o]) for s in S)) for o in O)
 
-    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_value - (1 - δ) * co2
+    #social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_value - (1 - δ) * co2
 
     println("\n===== Social Welfare Fully Incomplete Markets =====")
     println("Expected Term:     ", exp_term)
     println("CVaR Term:       ", cvar_value)
     println("CO2 Term:       ", co2)
-    println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
+    #println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
     println("===========================================")
 
 end

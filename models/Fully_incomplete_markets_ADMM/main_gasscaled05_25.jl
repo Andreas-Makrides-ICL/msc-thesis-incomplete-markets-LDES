@@ -212,7 +212,7 @@ for delta in [0.50, 0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0
         local_setup["factor_gas_price"] = 10
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
-        solver = "CPLEX"
+        solver = "Gurobi"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 

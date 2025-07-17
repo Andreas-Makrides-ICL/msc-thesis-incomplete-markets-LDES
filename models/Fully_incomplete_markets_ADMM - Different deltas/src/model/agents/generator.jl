@@ -50,7 +50,20 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     A = data["data"]["availability"]  # Availability factors (DenseAxisArray)
     W = data["data"]["time_weights"]  # Time weights (DenseAxisArray)
     P = data["data"]["additional_params"]["P"]  # Scenario probabilities (Dict)
-    δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    #δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
+    δ_PV = data["data"]["additional_params"]["δ_PV"]
+    δ_Gas = data["data"]["additional_params"]["δ_Gas"]
+    δ_Wind_On = data["data"]["additional_params"]["δ_Wind_On"]
+    δ_Wind_Off = data["data"]["additional_params"]["δ_Wind_Off"]
+    δ_Nuclear = data["data"]["additional_params"]["δ_Nuclear"]
+    δ_g = Dict(
+    "PV" => δ_PV,
+    "Gas" => δ_Gas,
+    "Wind_Onshore" => δ_Wind_On,
+    "Wind_Offshore" => δ_Wind_Off,
+    "Nuclear" => δ_Nuclear,
+    )
+
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
     gen_data = data["data"]["generation_data"]  # Generation data (DenseAxisArray)
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
@@ -100,23 +113,11 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     )
 
 
-    if δ==1.0
-        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_g[g in G], sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O)
-        ) 
-    elseif δ==0.0
-        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_g[g in G], (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
-        )
-    else
-        # Define Risk-Adjusted Profit Expression
-        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_g[g in G], 
-            δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) - (1 - δ) * (g == "gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
-        ) 
-        
-    end
+    
+    @expression(m, ρ_g[g in G], 
+        δ_g[g] * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
+        (1 - δ_g[g]) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) - (1 - δ_g[g]) * (g == "gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
+    )
 
 
     if !update_prices
