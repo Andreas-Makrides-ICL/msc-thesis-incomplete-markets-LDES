@@ -160,8 +160,8 @@ Consumer:
   Scenario 8 → Unserved Demand Fix = 2.3877926083838545, Unserved Demand Flex = 1175.2293370143793, Total Unserved Demand = 1177.6171296227633
   Scenario 9 → Unserved Demand Fix = 2.2815877079065743, Unserved Demand Flex = 317.16217249062225, Total Unserved Demand = 319.4437601985288
 
-Total Unserved Demand across all scenarios:
- Total Unserved Demand Fix = 327.62815448833555, Total Unserved Demand Flex = 19848.587160669897, Total Unserved Demand = 20176.21531515823
+Total Unserved Energy across all scenarios:
+ Total Unserved Energy Fix = 10.92093848, Total Unserved Energy Flex = 661.619572, Total Unserved Energy = 672.5405105
 ====================================
 
 
