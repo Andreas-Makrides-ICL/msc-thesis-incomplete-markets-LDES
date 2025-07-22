@@ -411,7 +411,7 @@ function print_agents_objective_breakdown(m, str::String)
 
         
 
-        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)), CO2 Term (-(1 - δ) * CO2) = $(-(1 - δ) * co2)")
+        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)), CO2 Term (-(δ) * CO2) = $(-(δ) * co2)")
         
         println("  Scenario breakdown for Gen $g:")
         for o in O
@@ -513,8 +513,8 @@ function print_agents_objective_breakdown(m, str::String)
     unserved_demand_fix = Dict(o => sum(W[t,o] *  value(m.model[:unserved_fixed][t,o]) for t in T) for o in O)
     unserved_demand_flex = Dict(o => sum(W[t,o] *  value(m.model[:unserved_flex][t,o]) for t in T) for o in O)
 
-    total_unserved_demand_fix = sum(unserved_demand_fix[o] for o in O)
-    total_unserved_demand_flex = sum(unserved_demand_flex[o] for o in O) 
+    total_unserved_demand_fix = sum(P[o]*unserved_demand_fix[o] for o in O)
+    total_unserved_demand_flex = sum(P[o]*unserved_demand_flex[o] for o in O) 
     total = total_unserved_demand_fix + total_unserved_demand_flex
     
     # Print summary
@@ -593,14 +593,16 @@ function print_agents_objective_breakdown(m, str::String)
     p = [P[o] for o in O]
 
     # Compute CVaR at level Ψ
-    cvar_val = CVaR(net_values, p, Ψ)
-    cvar_value=cvar_val.value
+    #cvar_val = CVaR(net_values, p, Ψ)
+    #cvar_value=cvar_val.value
+    dist = DiscreteNonParametric(net_values, p)
+    cvar_val = CVaR(dist, Ψ)
     println("\n=== CVaR using RiskMeasures.jl ===")
     println("CVaR at Ψ = $Ψ: $cvar_val")
 
     exp_term = sum(P[o] * (value(m.model[:demand_value][o]) - sum(value(m.model[:gen_total_costs][g, o]) for g in G) - sum(value(m.model[:stor_total_costs][s, o]) for s in S)) for o in O)
 
-    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_value - (1 - δ) * co2
+    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_value - (δ) * co2
 
     println("\n===== Social Welfare Fully Incomplete Markets =====")
     println("Expected Term:     ", exp_term)

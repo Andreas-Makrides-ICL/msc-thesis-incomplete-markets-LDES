@@ -107,7 +107,7 @@ function define_objective!(model; expected_value::Bool=false)
                 # Define Objective Function Expression: Demand value minus total costs, adjusted for risk aversion
                 @expression(m, objective_expr, 
                     δ * sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O) + 
-                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) - (1 - δ) * gas_price * 0.3294 * co2 * factor_gas_price
+                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) - (δ) * gas_price * 0.3294 * co2 * factor_gas_price
                 )  
             end          
 
