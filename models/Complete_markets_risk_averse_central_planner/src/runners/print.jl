@@ -173,8 +173,27 @@ function print_central_summary(model, solve_time)
         avg_price = sum(W[t, o] * price[t, o] for t in T) / sum(W[t, o] for t in T)
         println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]") 
     end
-    average_price = sum(W[t, o] * price[t, o] for t in T, o in O) / sum(W[t, o] for t in T, o in O)
-    println("Average price = $(round(average_price, digits=4)) [£/MWh]") 
+    
+    # Step 1: Compute average price per scenario
+    avg_price_per_scenario = Dict{Int, Float64}()
+
+    for o in O
+        num = sum(W[t, o] * price[t, o] for t in T)
+        den = sum(W[t, o] for t in T)
+        avg_price_per_scenario[o] = num / den
+    end
+
+    # Step 2: Compute total average price
+    total_avg_price_caseB = sum(P[o] * avg_price_per_scenario[o] for o in O)
+    println("Total Average price Case B = $(round(total_avg_price_caseB, digits=4)) [£/MWh]")
+
+
+    # Assume T and O are the sets of time steps and scenarios
+    numerator = sum(P[o] * W[t, o] * price[t, o] for o in O, t in T)
+    denominator = sum(P[o] * W[t, o] for o in O, t in T)
+    total_avg_price_caseA = numerator / denominator
+    println("Total Average price Case A = $(round(total_avg_price_caseA, digits=4)) [£/MWh]")
+
 end
 
 function print_objective_breakdown(m::OptimizationModel)
@@ -309,7 +328,10 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     D = data["data"]["demand"] 
     peak_demand = data["data"]["additional_params"]["peak_demand"]
     # === Extract solved λ from dual of balance constraint
-    λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(P[o] * W[t,o]) for t in T, o in O)
+    dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
+
+
+    λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(W[t,o]*(P[o]*δ + dual_vals[o])) for t in T, o in O)
 
     gen_data = data["data"]["generation_data"]
     

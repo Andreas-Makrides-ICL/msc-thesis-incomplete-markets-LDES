@@ -366,8 +366,8 @@ function print_agents_objective_breakdown(m, str::String)
         avg_price = sum(W[t, o] * λ[t, o] for t in T) / sum(W[t, o] for t in T)
         println("Average price in scenario $o = $(round(avg_price, digits=4)) [£/MWh]")
     end
-    averagetotalprice =sum(W[t, o] * λ[t, o] for t in T, o in O) / sum(W[t, o] for t in T, o in O)
-    println("Average price = $(round(averagetotalprice, digits=4)) [£/MWh]")
+    averagetotalprice =sum(P[o] * W[t, o] * λ[t, o] for t in T, o in O) / sum(P[o] * W[t, o] for t in T, o in O)
+    println("Total Average price = $(round(averagetotalprice, digits=4)) [£/MWh]")
     
     println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
 
