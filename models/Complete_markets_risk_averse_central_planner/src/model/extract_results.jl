@@ -57,14 +57,17 @@ function extract_price!(model; verbose = false)
     m = model.model
     data = model.data
     δ = data["data"]["additional_params"]["δ"]
+
+    O = data["sets"]["O"]
+    T = data["sets"]["T"]
+
     # Check if the demand_balance constraint exists in the model
     if haskey(m, :demand_balance)
         # Extract shadow prices (dual values) from the demand balance constraint
         price = dual.(m[:demand_balance])
         dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
         
-        O = data["sets"]["O"]
-        T = data["sets"]["T"]
+        
         # Adjust prices by weights and probabilities if specified
         for t in T, o in O
             price[t, o] /= data["data"]["time_weights"][t,o] * (data["data"]["additional_params"]["P"][o] * δ + dual_vals[o]) #This step is needed because your model likely multiplies constraints and objectives by weights during optimization.
