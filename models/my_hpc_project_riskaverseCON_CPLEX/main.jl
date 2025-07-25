@@ -27,9 +27,9 @@ function run_ADMM(data, setup, solver, delta)
     m.setup["objective"] = "individual"
 
     # Load CSV with prices
-    price_df = CSV.read("C:\\Users\\user\\Desktop\\msc-thesis-incomplete-markets-LDES\\models\\my_hpc_project_riskaverseCON_CPLEX\\fix_prices.csv", DataFrame)
+    price_df = CSV.read("C:\\Users\\user\\Desktop\\msc-thesis-incomplete-markets-LDES\\models\\my_hpc_project_riskaverseCON_CPLEX\\prices_delta_0.5.csv", DataFrame)
     # Create Dict{(T, O) => price}
-    prices = Dict((row.T, row.O) => row.price_2 for row in eachrow(price_df))
+    prices = Dict((row.T, row.O) => row.price for row in eachrow(price_df))
     # Inject into model data
     data["data"]["additional_params"]["λ"] = prices
 
@@ -56,6 +56,7 @@ function run_ADMM(data, setup, solver, delta)
 
     if termination_status(m.model) == MOI.OPTIMAL
         print_agents_objective_breakdown(m)
+        extract_risk_adjusted_weights(m)
     else
         println("Model did not solve to optimality — skipping breakdown.")
 
@@ -77,14 +78,14 @@ for delta in [1,0.50]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 
         
     
         local_setup = copy(default_setup)
-        local_setup["use_hierarchical_clustering"] = false
+        local_setup["use_hierarchical_clustering"] = true
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
         solver = "CPLEX"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
-        data = load_data(local_setup, user_sets = Dict("O" => 1:3, "T" => 1:100));
+        data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver, delta);
         

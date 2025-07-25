@@ -182,7 +182,7 @@ function extract_risk_adjusted_weights(model)
     O = model.data["sets"]["O"]
 
     # Get raw dual values of CVaR tail constraints
-    dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
+    dual_vals = Dict(o => dual(m[:cvar_tail_d][o]) for o in O)
 
     # Total dual weight for normalization
     total_dual = sum(dual_vals[o] for o in O)
