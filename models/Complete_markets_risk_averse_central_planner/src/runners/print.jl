@@ -117,6 +117,12 @@ function print_central_summary(model, solve_time)
 
     price = model.results["base"]["base_results"]["price"]
 
+    filename = "prices_delta_$(round(δ, digits=2)).csv"
+    rows = [(t, o, price[t, o]) for t in T for o in O]
+    df = DataFrame(rows, [:Time, :Scenario, :price_model])
+    CSV.write(filename, df)
+
+
     println("Risk aversion (δ): $δ, CVaR confidence (Ψ): $Ψ")
 
     println()
@@ -132,8 +138,8 @@ function print_central_summary(model, solve_time)
         rpad("BESS Pwr.", data_width),
         rpad("BESS En.", data_width),
         rpad("Duration", data_width),
-        rpad("LDES_PHS Pwr.", data_width),
-        rpad("LDES_PHS En.", data_width),
+        rpad("H2 Pwr.", data_width),
+        rpad("H2 En.", data_width),
         rpad("Dur_PHS", data_width),
         rpad("Time", time_width),
         rpad("Total Time", time_width))
@@ -227,10 +233,9 @@ function print_objective_breakdown(m::OptimizationModel)
     println("\n===== Risk-Averse Objective Breakdown from model =====")
     println("Expected Term (E[W - C]):     ", expected_term)
     println("CVaR Term :       ", cvar_term)
-    println("CO2 Term :       ", co2term)
+    println("CO2 price :       ", co2term)
     println("Expected Term (δ * E[W - C]):     ", round(δ * expected_term, digits=4))
     println("CVaR Term ((1 - δ) * CVaR) :       ", round((1 - δ) * cvar_term, digits=4))
-    println("CO2 Term (-(1 - δ) * CO2) :       ", -(1 - δ) * co2term)
     println("  ↳ ζ_total:                       ", round(ζ, digits=2))
     println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
     println("Full Objective Value:             ", objective)
@@ -242,11 +247,11 @@ function print_objective_breakdown(m::OptimizationModel)
     flex = m.setup["flexible_demand"]
 
     gen_data = m.data["data"]["generation_data"]
-    gic = sum(gen_data[g, "C_inv"] * gen_data[g, "CRF"] * value(m.model[:x_g][g]) for g in G)
+    gic = sum((gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"] )* value(m.model[:x_g][g]) for g in G)
 
     stor_data = m.data["data"]["storage_data"]
     svc = 0
-    sic = sum(stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m.model[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m.model[:x_E][s]) for s in S)
+    sic = sum((stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"] )* value(m.model[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m.model[:x_E][s]) for s in S)
 
     expected = 0.0
     for o in O
@@ -263,16 +268,15 @@ function print_objective_breakdown(m::OptimizationModel)
     co2 = gas_price * 0.3294 * factor_gas_price * k
 
     # Final blended objective
-    obj = δ * expected + (1 - δ) * cvar_term - (1 - δ) * co2
+    obj = δ * expected + (1 - δ) * cvar_term
 
     # Print nicely
     println("\n===== Risk-Averse Objective Breakdown Manual Calculation =====")
     println("Expected Term (E[W - C]):     ", expected)
     println("CVaR Term :       ", cvar_term)
-    println("CO2 Term :       ", co2)
+    println("CO2 Price :       ", co2)
     println("Expected Term (δ * E[W - C]):     ", round(δ * expected, digits=4))
     println("CVaR Term ((1 - δ) * CVaR) :       ", round((1 - δ) * cvar_term, digits=4))
-    println("CO2 Term (-(1 - δ) * CO2) :       ", -(1 - δ) * co2)
     println("  ↳ ζ_total:                       ", round(ζ, digits=2))
     println("  ↳ u_total[o]:                    ", Dict(o => round(u[i], digits=4) for (i, o) in enumerate(O)))
     println("Full Objective Value:             ", obj)
@@ -330,8 +334,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     # === Extract solved λ from dual of balance constraint
     dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
 
-
-    λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(W[t,o]*(P[o]*δ + dual_vals[o])) for t in T, o in O)
+    λ = model.results["base"]["base_results"]["price"]
+    #λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(W[t,o]*(P[o]*δ + dual_vals[o])) for t in T, o in O)
 
     gen_data = data["data"]["generation_data"]
     
@@ -341,14 +345,15 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     cvar_g = Dict{String, Float64}()
     risk_g = Dict{String, Float64}()
     for g in G
-        π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * abs(λ[(t, o)]) for t in T) for o in O)
-        gic = gen_data[g, "C_inv"] * gen_data[g, "CRF"] * value(m[:x_g][g])
+        π = Dict(o => sum(W[t, o] * value(m[:q][g, t, o]) * λ[t, o] for t in T) for o in O)
+        gic = (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"])* value(m[:x_g][g])
         gvc = Dict(o => sum(W[t, o] * gen_data[g, "C_v"] * value(m[:q][g, t, o]) for t in T) for o in O)
         expected = sum(P[o] * (π[o] - gic - gvc[o]) for o in O)
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
         ex_g[g] = expected
         cvar_g[g] = cvar
         risk_g[g] = δ * expected + (1 - δ) * cvar
+        println("Generator $(g) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar)")
     end
 
     stor_data = data["data"]["storage_data"]
@@ -360,21 +365,22 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     risk_s = Dict{String, Float64}()
     for s in S
         π = Dict(o =>
-            sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * abs(λ[(t, o)]) for t in T)
+            sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * λ[t, o] for t in T)
             for o in O)
-        sic = stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
+        sic = (stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"])* value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
         expected = sum(P[o] * (π[o] - svc - sic) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
         ex_s[s] = expected
         cvar_s[s] = cvar
         risk_s[s] = δ * expected + (1 - δ) * cvar
+        println("Storage $(s) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar)")
     end
 
     # === Consumer
     π = Dict{Int, Float64}()
     val = Dict{Int, Float64}()
     for o in O
-        π[o] = sum(W[t, o] * abs(λ[(t, o)]) * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
+        π[o] = sum(W[t, o] * λ[t, o] * (value(m[:d_fix][t, o]) + value(m[:d_flex][t, o])) for t in T)
         val[o] = sum(W[t, o] * B * (
             value(m[:d_fix][t, o]) + value(m[:d_flex][t, o]) -
             value(m[:d_flex][t, o])^2 / (2 * ((flexible_demand-1) * D[t, o] * peak_demand))) for t in T)
@@ -382,34 +388,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     expected = sum(P[o] * (val[o] - π[o]) for o in O)
     cvar = value(m[:ζ_d]) - (1 / Ψ) * sum(P[o] * value(m[:u_d][o]) for o in O)
     risk_d = δ * expected + (1 - δ) * cvar
-
-    # === Print
-    println("\n===== Recalculated Individual Risk Measures with Dual Prices =====")
-    println("Generators:")
-    for (g, ρ) in sort(collect(risk_g), by = x -> x[1])
-        println("  $g → ", round(ρ, digits=2))
-    end
-    for (g, e) in sort(collect(ex_g), by = x -> x[1])
-        println("  $g → ", round(e, digits=2))
-    end
-    for (g, c) in sort(collect(cvar_g), by = x -> x[1])
-        println("  $g → ", round(c, digits=2))
-    end
-    println("Storage:")
-    for (s, ρ) in sort(collect(risk_s), by = x -> x[1])
-        println("  $s → ", round(ρ, digits=2))
-    end
-    for (s, e) in sort(collect(ex_s), by = x -> x[1])
-        println("  $s → ", round(e, digits=2))
-    end
-    for (s, c) in sort(collect(cvar_s), by = x -> x[1])
-        println("  $s → ", round(c, digits=2))
-    end
-    println("Consumer:")
-    println("  ρ_d → ", round(risk_d, digits=2))
-    println("  expected → ", round(expected, digits=2))
-    println("  cvar → ", round(cvar, digits=2))
-    println("==============================================================\n")
+    println("Consumer: expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar)")
 
     return Dict("generators" => risk_g, "storage" => risk_s, "consumer" => risk_d)
 end
@@ -459,6 +438,18 @@ function residual_print(m)
     df = DataFrame(rows, [:Time, :Scenario, :Residual])
     CSV.write(filename, df)
     println("Full residuals saved to '$filename'")
+
+    
+
+    filename = "gas_dispatch_delta_$(round(δ, digits=2)).csv"
+    # Extract dispatch for all generators, time steps, and scenarios
+    rows = [(t, o, g, value(m.model[:q][g, t, o])) for g in G, t in T, o in O]
+    # Create a DataFrame
+    df = DataFrame(rows, [:Time, :Scenario, :Generator, :Dispatch])
+    # Save to CSV
+    CSV.write(filename, df)
+    println("Gas dispatch saved to '$filename'")
+
 
 end
 

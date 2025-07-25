@@ -55,6 +55,9 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     gen_data = data["data"]["generation_data"]  # Generation data (DenseAxisArray)
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
         data["data"]["additional_params"]["λ"] : nothing  # Lagrange multipliers (Dict or nothing)
+    gas_price = data["data"]["additional_params"]["gas_price"]
+    factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]
+
 
     G_VRE = [g for g in G if gen_data[g, "VRE"] >= 1]  # Variable Renewable Energy generators
     # Set price_available flag based on whether λ is provided
@@ -78,7 +81,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         )
         # Investment costs: Based on installed capacity (not scenario-specific)
         @expression(m, gen_investment_costs[g in G], 
-            gen_data[g, "C_inv"] * gen_data[g, "CRF"] * m[:x_g][g]
+            (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"])* m[:x_g][g]
         )
         # Total costs: Combine variable and investment costs, per scenario
         @expression(m, gen_total_costs[g in G, o in O], 
@@ -104,7 +107,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], 
             δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
+            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) 
         )
     end
 
@@ -128,7 +131,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     if remove_first
         return
     end
-"""
+
     # Define new CVaR tail constraint for generators
     if !has_cvar_tail_g
         if price_available
@@ -143,7 +146,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             )
         end
     end
-"""
+
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end

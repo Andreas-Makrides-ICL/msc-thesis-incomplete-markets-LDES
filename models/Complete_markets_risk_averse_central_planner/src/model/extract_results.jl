@@ -60,17 +60,28 @@ function extract_price!(model; verbose = false)
 
     O = data["sets"]["O"]
     T = data["sets"]["T"]
+    P = data["data"]["additional_params"]["P"]
 
     # Check if the demand_balance constraint exists in the model
     if haskey(m, :demand_balance)
         # Extract shadow prices (dual values) from the demand balance constraint
         price = dual.(m[:demand_balance])
-        dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
+
+        # Get raw dual values of CVaR tail constraints
+        dual_vals = Dict(o => abs(dual(m[:cvar_tail_total][o])) for o in O)
+        # Total dual weight for normalization
+        #total_dual = sum(abs(dual_vals[o]) for o in O)
+        # Compute normalized risk weights
+        #risk_weights = total_dual > 0 ? Dict(o => dual_vals[o] / total_dual for o in O) : Dict(o => 0.0 for o in O)
+
         
+        #dual_vals = Dict(o => max(0.0, -dual(m[:cvar_tail_total][o])) for o in O)
+        #total_dual = sum(dual_vals[o] for o in O)
+        #risk_weights = total_dual > 0 ? Dict(o => dual_vals[o] / total_dual for o in O) : Dict(o => 0.0 for o in O)
         
         # Adjust prices by weights and probabilities if specified
         for t in T, o in O
-            price[t, o] /= data["data"]["time_weights"][t,o] * (data["data"]["additional_params"]["P"][o] * δ + dual_vals[o]) #This step is needed because your model likely multiplies constraints and objectives by weights during optimization.
+            price[t, o] = price[t, o] / (data["data"]["time_weights"][t,o] * (P[o]*δ + dual_vals[o])) #This step is needed because your model likely multiplies constraints and objectives by weights during optimization.
         end
 
         # Ensure prices are positive by negating if the average is negative
@@ -214,6 +225,7 @@ function extract_unserved_demand(model)
     T = model.data["sets"]["T"]
     O = model.data["sets"]["O"]
     W = model.data["data"]["time_weights"]
+    P = model.data["data"]["additional_params"]["P"]
     
     unserved_demand_fix = Dict(o => sum(W[t,o] *  value(m[:unserved_fixed][t,o]) for t in T) for o in O)
     unserved_demand_flex = Dict(o => sum(W[t,o] *  value(m[:unserved_flex][t,o]) for t in T) for o in O)

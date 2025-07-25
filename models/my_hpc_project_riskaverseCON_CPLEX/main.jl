@@ -29,7 +29,7 @@ function run_ADMM(data, setup, solver, delta)
     # Load CSV with prices
     price_df = CSV.read("C:\\Users\\user\\Desktop\\msc-thesis-incomplete-markets-LDES\\models\\my_hpc_project_riskaverseCON_CPLEX\\fix_prices.csv", DataFrame)
     # Create Dict{(T, O) => price}
-    prices = Dict((row.T, row.O) => row.price for row in eachrow(price_df))
+    prices = Dict((row.T, row.O) => row.price_2 for row in eachrow(price_df))
     # Inject into model data
     data["data"]["additional_params"]["λ"] = prices
 
