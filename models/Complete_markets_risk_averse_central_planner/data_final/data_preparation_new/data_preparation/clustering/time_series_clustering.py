@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist
@@ -67,7 +68,7 @@ def hierarchical_chronological_clustering(data, n_reduced):
 
     return cluster_centroids, cluster_weights
 
-def process_scenarios(scenarios, n_reduced=3600):
+def process_scenarios(scenarios, n_reduced=1460):
     """
     Process the given scenarios to perform hierarchical chronological clustering and save the results to CSV files.
 
@@ -76,8 +77,8 @@ def process_scenarios(scenarios, n_reduced=3600):
     - n_reduced: The desired reduced number of clusters (N'). Default is 720.
     """
     # Load data
-    data_load = pd.read_csv('data_load.csv')
-    data_cf = pd.read_csv('data_VRE.csv')
+    data_load = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Complete_markets_risk_averse_central_planner\data_final\data_preparation_new\data_preparation\clustering\sampled_normalized_data_12.csv")
+    data_cf = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Complete_markets_risk_averse_central_planner\data_final\data_preparation_new\data_preparation\clustering\processed_pv_wind_12.csv")
     data_full = pd.concat([data_load.set_index(["Y", "T"]), data_cf.set_index(["Y", "T"])], axis=1)
 
     clustered_data = {}
@@ -98,7 +99,7 @@ def process_scenarios(scenarios, n_reduced=3600):
         data_clustered_weights.loc[s, :] = clustered_data[s]["weights"]
 
     # Create a folder to store the clustered data
-    folder = 'clustered_data'
+    folder = r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Complete_markets_risk_averse_central_planner\data_final\data_preparation_new\data_preparation\clustering\clustered_data"
     if not os.path.exists(folder):
         os.makedirs(folder)
 
