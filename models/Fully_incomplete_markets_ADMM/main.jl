@@ -202,7 +202,8 @@ results = []
 for delta in [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
-    
+        set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
+
         local_setup = copy(default_setup)
         local_setup["max_iterations"] = 10000
         local_setup["penalty"] = 1.1
@@ -215,7 +216,7 @@ for delta in [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
-        data = load_data(local_setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
+        data = load_data(local_setup, user_sets = Dict("O" => set2_middle, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver, delta);
 
@@ -240,9 +241,9 @@ for delta in [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 
             BESS_P = safeget(cap, :x_P, "BESS"),
             BESS_E = safeget(cap, :x_E, "BESS"),
             Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
-            LDES_PHS_P = safeget(cap, :x_P, "LDES_PHS"),
-            LDES_PHS_E = safeget(cap, :x_E, "LDES_PHS"),
-            Duration_PHS = safe_div(safeget(cap, :x_E, "LDES_PHS"), safeget(cap, :x_P, "LDES_PHS"))
+            LDES_PHS_P = safeget(cap, :x_P, "H2"),
+            LDES_PHS_E = safeget(cap, :x_E, "H2"),
+            Duration_PHS = safe_div(safeget(cap, :x_E, "H2"), safeget(cap, :x_P, "H2"))
         ))
 
     end
@@ -251,6 +252,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("ADMM_risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
+CSV.write("ADMM_risk_aversion_results_O30_T672_new_final.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

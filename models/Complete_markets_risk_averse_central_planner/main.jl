@@ -1,4 +1,4 @@
-using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, CPLEX
+using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, CPLEX, Distributions, RiskMeasures
 
 include("src/_init_.jl");
 
@@ -34,6 +34,10 @@ function run_central_planner(data, setup, solver)
     # ============================
     # Define the objective (expected value) and add constraints
     define_objective!(m, expected_value = false)
+    println("CVaR constraint present? ", haskey(m.model, :cvar_tail_total))
+    println("ζ_total present? ", haskey(m.model, :ζ_total))
+    println("u_total present? ", haskey(m.model, :u_total))
+
     define_balances!(m)
     add_residual!(m)
 
@@ -42,6 +46,8 @@ function run_central_planner(data, setup, solver)
 
     # Solve the base model
     @objective(m.model, Max, m.model[:objective_expr])
+
+
 
     #print CVaR and ζ_total to ensure correct operation
     println("CVaR variable ζ_total exists? ", haskey(m.model, :ζ_total))
@@ -80,6 +86,7 @@ function run_central_planner(data, setup, solver)
                 #rhs and lhs on cvar tail constraint
                 inspect_cvar_constraint_tightness(m)
                 residual_print(m)
+                print_model_structure_symbolic(m.model)
             end
         end
     else
@@ -119,12 +126,16 @@ m = run_central_planner(data, setup, solver);
 """
 
 results = []
-for delta in [1.00,0.75,0.50,0.25] #[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
+        set1_lowest = [21, 6, 10, 9, 14, 17, 15, 3, 18, 28, 2, 25, 20, 5, 19]
+        set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
+        set3_manual = [6, 10, 14, 17, 18, 20, 12, 11, 7, 23, 8, 24, 30, 1, 26, 29, 13, 4]
+        set4_stable_core = [ 24, 25, 26, 27, 28, 29, 30]
 
-        data = load_data(setup, user_sets = Dict("O" => 1:30, "T" => 1:672));
+        data = load_data(setup, user_sets = Dict("O" => set2_middle, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup, solver);
 
