@@ -35,11 +35,11 @@ const default_setup = Dict(
     # Data Path Options
     "input_path" => "data_final/f672",
     #"input_path" => "synthetic_data/",
-    "availability" => "concatenated_capacity_factors_672_30yr_new_final_lf.csv", #"CF.csv",
-    "demand" => "concatenated_load_profiles_672_30yr_new_final.csv", #"load_profile.csv",
+    "availability" => "concatenated_capacity_factors_672_30yr_new_lf.csv", #"CF.csv",
+    "demand" => "concatenated_load_profiles_672_30yr_new.csv", #"load_profile.csv",
     "storage_data" => "storagedata.csv",
     "generation_data" => "gendata.csv",
-    "time_weight" => "concatenated_weights_672_30yr_new_final.csv", #"time_weight.csv",
+    "time_weight" => "concatenated_weights_672_30yr_new.csv", #"time_weight.csv",
 
     # Demand and Load Shedding Options
     "peak_demand" => 100,
@@ -50,8 +50,8 @@ const default_setup = Dict(
     # Risk Aversion Options
     "δ" => 1,
     "Ψ" => 0.5,
-    "gas_price" => 128, #128
-    "factor_gas_price" => 10,
+    "gas_price" => 173, #128
+    "factor_gas_price" => 1,
 
     # ADMM Options
     "penalty" => 2,  # Penalty parameter for ADMM
