@@ -443,9 +443,24 @@ function residual_print(m)
 
     filename = "gas_dispatch_delta_$(round(δ, digits=2)).csv"
     # Extract dispatch for all generators, time steps, and scenarios
-    rows = [(t, o, g, value(m.model[:q][g, t, o])) for g in G, t in T, o in O]
+    rows = [(t, o, g, value(m.model[:q][g, t, o])) for g in G for t in T for o in O]
     # Create a DataFrame
     df = DataFrame(rows, [:Time, :Scenario, :Generator, :Dispatch])
+    # Save to CSV
+    CSV.write(filename, df)
+    println("Gas dispatch saved to '$filename'")
+
+
+
+
+    peak_demand = m.data["data"]["additional_params"]["peak_demand"]
+    D = m.data["data"]["demand"]
+
+    filename = "served_demand_delta_$(round(δ, digits=2)).csv"
+    # Extract dispatch for all generators, time steps, and scenarios
+    rows = [(t, o, peak_demand*D[t,o], value(m.model[:d_fix][t, o]), value(m.model[:d_flex][t, o])) for t in T for o in O]
+    # Create a DataFrame
+    df = DataFrame(rows, [:Time, :Scenario, :Dto, :dfix_to, :dflex_to])
     # Save to CSV
     CSV.write(filename, df)
     println("Gas dispatch saved to '$filename'")
