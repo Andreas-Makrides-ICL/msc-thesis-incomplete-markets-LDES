@@ -156,7 +156,7 @@ function run_ADMM(data, setup, solver, delta)
     if termination_status(m.model) == MOI.OPTIMAL
         # Then call the function with output redirected
         filename = "agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
-        str = "gurobi"
+        str = "cplex"
         open(filename, "w") do io
             redirect_stdout(io) do
                 print_agents_objective_breakdown(m,str)
@@ -199,7 +199,7 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [0.5]# [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
         set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
@@ -212,7 +212,7 @@ for delta in [1,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 
         local_setup["factor_gas_price"] = 10
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
-        solver = "Gurobi"
+        solver = "CPLEX"
         #setup["δ"] = delta
         #setup["Ψ"] = psi
 
