@@ -85,6 +85,9 @@ function define_objective!(model; expected_value::Bool=false)
     end
     maybe_remove_constraint(m, :cvar_tail_total)
 
+    @show objective_type, δ
+
+
     if objective_type == "central"
         # Define Total Costs Expression (per scenario)
         @expression(m, total_costs[o in O],
@@ -106,11 +109,20 @@ function define_objective!(model; expected_value::Bool=false)
             if !haskey(m, :ζ_total)
                 @variable(m, ζ_total)  # VaR variable for the total system
             end
+            
+            @assert haskey(m, :demand_value) "Expression :demand_value must be defined before CVaR"
+            @assert haskey(m, :total_costs) "Expression :total_costs must be defined before CVaR"
 
             # Define CVaR Tail Constraint for the Total System
             @constraint(m, cvar_tail_total[o in O], 
                  ζ_total - (m[:demand_value][o] - total_costs[o]) <= u_total[o]
             )
+
+            println("Added cvar_tail_total? ", haskey(m, :cvar_tail_total))
+            println("Number of constraint types: ", length(JuMP.list_of_constraint_types(m)))
+            total_constraints = sum(length(JuMP.all_constraints(m, f, s)) for (f, s) in JuMP.list_of_constraint_types(m))
+            println("Total number of constraints: ", total_constraints)
+
             @expression(m, co2,
                     sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
             )
