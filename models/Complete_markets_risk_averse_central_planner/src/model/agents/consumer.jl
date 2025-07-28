@@ -91,21 +91,32 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     if demand_type == "QP"
         @expression(m, demand_value[o in O], 
             sum(W[t, o] * (B) * 
-                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / (2 * ((flexible_demand-1) * D[t, o] * peak_demand))) 
+                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / ( ((flexible_demand-1) * D[t, o] * peak_demand))) 
                 for t in T)
         )
+        #@expression(m, demand_value[o in O], 
+        #    sum(W[t, o] * (B) * 
+        #        (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / (2 * (0.05 * peak_demand))) 
+        #        for t in T)
+        #)
         @expression(m, unserved_demand_cost[o in O], 
             0
         )
         @expression(m, unserved_fixed[t in T, o in O], 
             D[t,o]* peak_demand - ((flexible_demand-1) * D[t, o] * peak_demand) - m[:d_fix][t, o]
         )
+        #@expression(m, unserved_fixed[t in T, o in O], 
+        #    D[t,o]* peak_demand - (0.05 * peak_demand) - m[:d_fix][t, o]
+        #)
         @expression(m, unserved_fixed_cost[o in O], 
             sum(W[t,o] * (B) * unserved_fixed[t,o] for t in T)
         )
         @expression(m, unserved_flex[t in T, o in O], 
             ((flexible_demand-1) * D[t, o] * peak_demand) - m[:d_flex][t, o]
         )
+        #@expression(m, unserved_flex[t in T, o in O], 
+        #    (0.05 * peak_demand) - m[:d_flex][t, o]
+        #)
          
         @expression(m, unserved_flex_cost[o in O], 
             sum(W[t,o] * 0.5 * unserved_flex[t,o] * ((price_available ? price[t, o] : 50) - minWTP) for t in T) 
@@ -149,15 +160,21 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
             @constraint(m, d_flex_limit[t in T, o in O], 
                 m[:d_flex][t, o] <= (flexible_demand-1) * D[t, o] * peak_demand
             )
+            #@constraint(m, d_flex_limit[t in T, o in O], 
+            #    m[:d_flex][t, o] <= 0.05 * peak_demand
+            #)
             @constraint(m, d_fix_limit_extra[t in T, o in O], 
                 m[:d_fix][t, o] <= D[t, o] * peak_demand - (flexible_demand-1) * D[t, o] * peak_demand
             )
+            #@constraint(m, d_fix_limit_extra[t in T, o in O], 
+            #    m[:d_fix][t, o] <= D[t, o] * peak_demand - 0.05 * peak_demand
+            #)
             #dfixmax=D-Dflex
         end
     end
 
-    @expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
-"""
+    #@expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
+
     # Consumer risk-adjusted welfare: Weighted sum of expected welfare minus costs and CVaR
     if δ == 1.0
         @expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
@@ -182,7 +199,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
             )
         end
     end
-"""
+
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end
