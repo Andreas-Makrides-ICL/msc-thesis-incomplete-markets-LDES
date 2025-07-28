@@ -360,6 +360,11 @@ function print_agents_objective_breakdown(m, str::String)
     λ = m.data["data"]["additional_params"]["λ"]
     gas_price = m.data["data"]["additional_params"]["gas_price"]
     factor_gas_price = m.data["data"]["additional_params"]["factor_gas_price"]
+
+    demand = m.data["data"]["demand"]                  # D[t,o]
+    B = m.data["data"]["additional_params"]["B"]
+    peak = m.data["data"]["additional_params"]["peak_demand"]
+    flex = m.setup["flexible_demand"]
     
     filename = "prices_delta_$(round(δ, digits=2)).csv"
     rows = [(t, o, λ[t, o]) for t in T for o in O]
@@ -372,7 +377,7 @@ function print_agents_objective_breakdown(m, str::String)
     CSV.write(filename, df)
 
     filename = "served_demand_delta_$(round(δ, digits=2)).csv"
-    rows = [(t, o, peak_demand*D[t,o], value(m.model[:d_fix][t, o]), value(m.model[:d_flex][t, o])) for t in T for o in O]
+    rows = [(t, o, peak*demand[t,o], value(m.model[:d_fix][t, o]), value(m.model[:d_flex][t, o])) for t in T for o in O]
     df = DataFrame(rows, [:Time, :Scenario, :Dto, :dfix_to, :dflex_to])
     CSV.write(filename, df)
     println("Gas dispatch saved to '$filename'")
@@ -493,10 +498,7 @@ function print_agents_objective_breakdown(m, str::String)
     ρ = value(m.model[:ρ_d])
     #expected = compute_expected_consumer_welfare(m)
 
-    demand = m.data["data"]["demand"]                  # D[t,o]
-    B = m.data["data"]["additional_params"]["B"]
-    peak = m.data["data"]["additional_params"]["peak_demand"]
-    flex = m.setup["flexible_demand"]
+    
 
     expected = 0.0
     for o in O
@@ -617,11 +619,11 @@ function print_agents_objective_breakdown(m, str::String)
 
     exp_term = sum(P[o] * (value(m.model[:demand_value][o]) - sum(value(m.model[:gen_total_costs][g, o]) for g in G) - sum(value(m.model[:stor_total_costs][s, o]) for s in S)) for o in O)
 
-    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_value 
+    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_val.value
 
     println("\n===== Social Welfare Fully Incomplete Markets =====")
     println("Expected Term:     ", exp_term)
-    println("CVaR Term:       ", cvar_value)
+    println("CVaR Term:       ", cvar_val.value)
     println("CO2 price:       ", co2)
     println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
     println("===========================================")
