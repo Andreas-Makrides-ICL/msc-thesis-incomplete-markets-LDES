@@ -82,7 +82,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         )
         # Investment costs: Based on installed capacity (not scenario-specific)
         @expression(m, gen_investment_costs[g in G], 
-            gen_data[g, "C_inv"] * gen_data[g, "CRF"] * m[:x_g][g]
+            (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"])* m[:x_g][g]
         )
         # Total costs: Combine variable and investment costs, per scenario
         @expression(m, gen_total_costs[g in G, o in O], 
@@ -113,7 +113,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], 
             δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) - (δ) * (g == "Gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
+            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) #- (δ) * (g == "Gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
         ) 
         
     end
