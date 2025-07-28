@@ -85,7 +85,7 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         @expression(m, stor_variable_costs[s in S, o in O], 0)
         # Investment costs: Based on installed power and energy capacity (not scenario-specific)
         @expression(m, stor_investment_costs[s in S], 
-            stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] * m[:x_P][s] + 
+            (stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"])* m[:x_P][s] + 
             stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * m[:x_E][s]
         )
         # Total costs: Combine variable and investment costs, per scenario
@@ -188,10 +188,8 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         @constraint(m, storage_duration1, m[:x_E]["BESS"] <= 4 * m[:x_P]["BESS"])
         @constraint(m, storage_duration2, m[:x_E]["BESS"] >= 1 * m[:x_P]["BESS"])
         #@constraint(m, storage_duration_8h, m[:x_E]["BESS_8h"] == 8 * m[:x_P]["BESS_8h"])
-        @constraint(m, LDES_PHS_morethan10h, m[:x_E]["H2_FC"] >= 8 * m[:x_P]["H2_FC"])
-        #@constraint(m, LDES_PHS_lessthan15h, m[:x_E]["LDES_PHS"] <= 15 * m[:x_P]["LDES_PHS"])
-
-
+        @constraint(m, H2_morethan10h, m[:x_E]["H2"] >= 8 * m[:x_P]["H2"])
+        #@constraint(m, H2_lessthan15h, m[:x_E]["H2"] <= (20 - δ*6)* m[:x_P]["H2"])
     end 
 
     # Define new CVaR tail constraint for storage units
