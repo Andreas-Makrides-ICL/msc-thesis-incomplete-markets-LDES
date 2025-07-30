@@ -193,15 +193,19 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     @constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
     @constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
-"""
+
     gas_gen = 0.25
 
+    @expression(m, co2_1,
+                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+            )
+"""
     for g in G
         if g == "Gas"
-            @constraint(m, m[:x_g][g] == gas_gen * setup["peak_demand"])
+            @constraint(m, co2_1 <= 100000)???
         end
     end
-"""
+"""    
 end
 
 export define_generator!
