@@ -17,7 +17,7 @@ def implied_wacc(Cinv_net, Cinv_riskfree, N, WACC):
 
     Rm_guess = 0.05  # initial guess of 5%
     Rm_solution = fsolve(present_value_diff, Rm_guess)[0]
-    return Rm_solution * 100  # convert to percentage
+    return Rm_solution
 
 # Example usage
 #0.75
