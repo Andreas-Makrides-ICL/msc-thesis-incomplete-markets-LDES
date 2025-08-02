@@ -20,14 +20,48 @@ def implied_wacc(Cinv_net, Cinv_riskfree, N, WACC):
     return Rm_solution * 100  # convert to percentage
 
 # Example usage
+#0.75
+example_Rm_for_PV = implied_wacc(Cinv_net=13815869.8253642, Cinv_riskfree=13931806.898, N=25, WACC=0.062)
+example_Rm_for_Windon = implied_wacc(Cinv_net=11545359.5979975, Cinv_riskfree= 6509745.581, N=30, WACC=0.061)
+example_Rm_for_Windoff = implied_wacc(Cinv_net=26508950.3289839, Cinv_riskfree=31669167.794, N=30, WACC=0.065)
+example_Rm_for_Nuclear = implied_wacc(Cinv_net=5187121.36632513, Cinv_riskfree=2431509.189, N=60, WACC=0.07)
+example_Rm_for_Gas = implied_wacc(Cinv_net=5862131.58481193, Cinv_riskfree=20743922.010, N=25, WACC=0.07)
+example_Rm_for_LDES = implied_wacc(Cinv_net=2659321.236299, Cinv_riskfree=2575367.058, N=18, WACC=0.07)
+example_Rm_for_BESS = implied_wacc(Cinv_net=2858075.72416177, Cinv_riskfree=3009084.101, N=20, WACC=0.06)
 
-example_Rm_for_PV = implied_wacc(Cinv_net=, Cinv_riskfree=5871231.104, N=30, WACC=0.03)
-example_Rm_for_Windon = implied_wacc(Cinv_net=, Cinv_riskfree= 5599436.756, N=25, WACC=0.035)
-example_Rm_for_Windoff = implied_wacc(Cinv_net=, Cinv_riskfree=13203248.55, N=30, WACC=0.04)
-example_Rm_for_Nuclear = implied_wacc(Cinv_net=, Cinv_riskfree=2484411.684, N=60, WACC=0.047)
-example_Rm_for_Gas = implied_wacc(Cinv_net=, Cinv_riskfree=6204974.02, N=25, WACC=0.07)
-example_Rm_for_LDES = implied_wacc(Cinv_net=, Cinv_riskfree=5129341.161, N=40, WACC=0.035)
-example_Rm_for_BESS = implied_wacc(Cinv_net=, Cinv_riskfree=16961.38387, N=15, WACC=0.06)
+print("Implied WACC for PV", example_Rm_for_PV)
+print("Implied WACC for Wind Onshore", example_Rm_for_Windon)
+print("Implied WACC for Wind Offshore", example_Rm_for_Windoff)
+print("Implied WACC for Nuclear", example_Rm_for_Nuclear)
+print("Implied WACC for Gas", example_Rm_for_Gas)
+print("Implied WACC for LDES", example_Rm_for_LDES)
+print("Implied WACC for BESS", example_Rm_for_BESS)
+
+#0.50
+example_Rm_for_PV = implied_wacc(Cinv_net=13799965.2170157, Cinv_riskfree=13931806.898, N=25, WACC=0.062)
+example_Rm_for_Windon = implied_wacc(Cinv_net=11522861.6142249, Cinv_riskfree= 6509745.581, N=30, WACC=0.061)
+example_Rm_for_Windoff = implied_wacc(Cinv_net=26513570.4676637, Cinv_riskfree=31669167.794, N=30, WACC=0.065)
+example_Rm_for_Nuclear = implied_wacc(Cinv_net=5135386.92689675, Cinv_riskfree=2431509.189, N=60, WACC=0.07)
+example_Rm_for_Gas = implied_wacc(Cinv_net=4967323.95898848, Cinv_riskfree=20743922.010, N=25, WACC=0.07)
+example_Rm_for_LDES = implied_wacc(Cinv_net=2697660.6642398, Cinv_riskfree=2575367.058, N=18, WACC=0.07)
+example_Rm_for_BESS = implied_wacc(Cinv_net=2813182.90661901, Cinv_riskfree=3009084.101, N=20, WACC=0.06)
+
+print("Implied WACC for PV", example_Rm_for_PV)
+print("Implied WACC for Wind Onshore", example_Rm_for_Windon)
+print("Implied WACC for Wind Offshore", example_Rm_for_Windoff)
+print("Implied WACC for Nuclear", example_Rm_for_Nuclear)
+print("Implied WACC for Gas", example_Rm_for_Gas)
+print("Implied WACC for LDES", example_Rm_for_LDES)
+print("Implied WACC for BESS", example_Rm_for_BESS)
+
+#0.25
+example_Rm_for_PV = implied_wacc(Cinv_net=13810448.8160794, Cinv_riskfree=13931806.898, N=25, WACC=0.062)
+example_Rm_for_Windon = implied_wacc(Cinv_net=11531175.7957445, Cinv_riskfree= 6509745.581, N=30, WACC=0.061)
+example_Rm_for_Windoff = implied_wacc(Cinv_net=26575618.5137309, Cinv_riskfree=31669167.794, N=30, WACC=0.065)
+example_Rm_for_Nuclear = implied_wacc(Cinv_net=5100723.63860877, Cinv_riskfree=2431509.189, N=60, WACC=0.07)
+example_Rm_for_Gas = implied_wacc(Cinv_net=4317043.78688742, Cinv_riskfree=20743922.010, N=25, WACC=0.07)
+example_Rm_for_LDES = implied_wacc(Cinv_net=2759541.16775282, Cinv_riskfree=2575367.058, N=18, WACC=0.07)
+example_Rm_for_BESS = implied_wacc(Cinv_net=2761606.10009699, Cinv_riskfree=3009084.101, N=20, WACC=0.06)
 
 print("Implied WACC for PV", example_Rm_for_PV)
 print("Implied WACC for Wind Onshore", example_Rm_for_Windon)

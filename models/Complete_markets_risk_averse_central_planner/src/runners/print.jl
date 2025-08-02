@@ -349,11 +349,12 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         gic = (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"])* value(m[:x_g][g])
         gvc = Dict(o => sum(W[t, o] * gen_data[g, "C_v"] * value(m[:q][g, t, o]) for t in T) for o in O)
         expected = sum(P[o] * (π[o] - gic - gvc[o]) for o in O)
+        netrevg=sum(P[o] * (π[o] - gvc[o]) for o in O)
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
         ex_g[g] = expected
         cvar_g[g] = cvar
         risk_g[g] = δ * expected + (1 - δ) * cvar
-        println("Generator $(g) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar)")
+        println("Generator $(g) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar), net_revenues=$(netrevg)")
     end
 
     stor_data = data["data"]["storage_data"]
@@ -368,12 +369,13 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
             sum(W[t, o] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) * λ[t, o] for t in T)
             for o in O)
         sic = (stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"])* value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
+        netrevs = sum(P[o] * (π[o]) for o in O)
         expected = sum(P[o] * (π[o] - svc - sic) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
         ex_s[s] = expected
         cvar_s[s] = cvar
         risk_s[s] = δ * expected + (1 - δ) * cvar
-        println("Storage $(s) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar)")
+        println("Storage $(s) : expected = $(expected), cvar = $(cvar), ρ=$(δ * expected + (1 - δ) * cvar), net_revenues=$(netrevs)")
     end
 
     # === Consumer
