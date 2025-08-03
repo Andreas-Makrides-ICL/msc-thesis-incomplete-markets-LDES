@@ -116,8 +116,16 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         @constraint(m, gen_limits[g in G, t in T, o in O], 
             (g in A.axes[3] || g in G_VRE ? m[:x_g][g] * A[t, o, g] : m[:x_g][g]) >= m[:q][g, t, o]
         )
-        #@constraint(m, gaslimit[t in T, o in O],
-        #    m[:x_g]["Gas"] * 0.7 >= m[:q]["Gas", t, o]
+
+        #@constraint(m, gen_limits[g in G, t in T, o in O],
+        #    m[:q][g, t, o] <= (
+        #        (g in A.axes[3] || g in G_VRE) ?
+        #            (g == "Wind_Offshore" ?
+        #                m[:x_g][g] * min(1.0, 1.2 * A[t, o, g]) :
+        #                m[:x_g][g] * A[t, o, g]
+        #            ) :
+        #            m[:x_g][g]
+        #    )
         #)
     end
 
@@ -193,6 +201,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     @constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
     @constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
+    @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.62 * setup["peak_demand"])
 
     gas_gen = 0.25
 
