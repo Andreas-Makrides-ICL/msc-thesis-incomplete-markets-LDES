@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -N julia_parallel_jobs
+#PBS -l select=1:ncpus=64:mem=450gb
+#PBS -l walltime=23:00:00
+#PBS -j oe
+#PBS -m ae
+#PBS -M am1824@ic.ac.uk
+
+
+# Load Julia module (adjust version as needed)
+module load Julia/1.10.4-linux-x86_64
+module load Gurobi/11.0.0-GCCcore-12.3.0
+
+# Move to the working directory
+cd $PBS_O_WORKDIR
+
+# Run 6 Julia scripts in parallel (backgrounded with &)
+julia main_15000_1_75.jl > log_15000_1_75.txt &
+julia main_15000_05_025.jl > log_15000_05_025.txt &
+
+
+# Wait for all background processes to finish
+wait
