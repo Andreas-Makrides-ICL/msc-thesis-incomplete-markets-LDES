@@ -157,26 +157,6 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         "time_weights" => (["T", "O"], String[])
     )
 
-
-
-    # Scale offshore wind CFs
-    offshore_label = "Wind_Offshore"  # Change this if your CSV uses a different label
-    scaling_factor_offshore = 1.455
-
-    # Apply scaling only to offshore
-    if "G" in names(dataframes["availability"])
-        filter_offshore = dataframes["availability"].G .== offshore_label
-        dataframes["availability"][filter_offshore, "value"] .*= scaling_factor_offshore
-        if verbose
-            println("   Scaled offshore wind capacity factors by factor $scaling_factor_offshore")
-        end
-    else
-        println("   Warning: 'G' column not found in availability data; offshore scaling skipped.")
-    end
-
-
-
-
     # Convert filtered DataFrames to DenseAxisArrays
     data_arrays = Dict{String, Any}()
     for (key, df) in dataframes
@@ -242,7 +222,6 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         println("Data loaded successfully.")
     end
 
-
     if verbose && haskey(setup, "participants")
         println("   Participants: ", join(setup["participants"], ", "))
         println("   Tech map keys: ", join(keys(get(setup, "investor_tech_map", Dict())), ", "))
@@ -253,8 +232,7 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         println("   Multi-investor storage units: ", join(get(setup["investor_storage_map"], "multi", []), ", "))
     end
 
-
-
+    
     # Return dictionary with arrays and sets
     inputs = Dict{String, Any}()
     

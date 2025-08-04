@@ -49,86 +49,115 @@ function define_and_compute_penalty!(model, iteration)
     # Extract duals from previous iteration
     μ_g = model.results[iteration][:μ_g]
     μ_s = model.results[iteration][:μ_s]
-    #μ_multi = model.results[iteration][:μ_multi]
-
+    #μ_d = model.results[iteration][:μ_d]
 
     # Remove previous penalty expressions if they exist
-    for sym in [:penalty_term_g, :penalty_term_s, :penalty_term_c, :penalty_term_multi, :total_penalty_term]
+    for sym in [:penalty_term_g, :penalty_term_s, :penalty_term_c, :total_penalty_term]
         maybe_remove_expression(m, sym)
     end
 
     println("\nChecking penalty coefficients and duals for generators...")
     for g in G, o in O
-        coeffg = δ * P[o] + μ_g[(g,g, o)]
+        coeffg = P[o] * δ + μ_g[(g, o)]
         if coeffg < 0
             println("     Negative penalty coefficient for generator: g = $g, o = $o")
-            println("     δ * P[o] = ", δ * P[o])
-            println("     μ_g[$g,$g, $o] = ", μ_g[(g, g, o)])
+            println("     P[o] * δ = ", P[o] * δ)
+            println("     μ_g[$g, $o] = ", μ_g[(g, o)])
             println("     Total coefficient = ", coeffg)
         end
     end
 
+
     println("\nChecking penalty coefficients and duals for storage...")
     for s in S, o in O
-        coeffs = δ * P[o] + μ_s[(s,s, o)]
+        coeffs = P[o] * δ + μ_s[(s, o)]
         if coeffs < 0
             println("     Negative penalty coefficient for storage: s = $s, o = $o")
-            println("     δ * P[o] = ", δ * P[o])
-            println("     μ_s[$s, $s, $o] = ", μ_s[(s, s, o)])
+            println("     P[o] * δ = ", P[o] * δ)
+            println("     μ_s[$s, $o] = ", μ_s[(s, o)])
             println("     Total coefficient = ", coeffs)
         end
     end
-    
+
+    #println("\nChecking penalty coefficients and duals for consumer...")
+    #for s in S, o in O
+    #    coeffs = P[o] * δ + μ_d[o]
+    #    if coeffs < 0
+    #        println("     Negative penalty coefficient for consumer:  o = $o")
+    #        println("     P[o] * δ = ", P[o] * δ)
+    #        println("     μ_d[ $o] = ", μ_d[o])
+    #        println("     Total coefficient = ", coeffs)
+    #    end
+    #end
+   
     if δ==1.0
         # Define penalty term for generators
         @expression(m, penalty_term_g[g in G], 
-            sum(W[t, o] * (max(0.0, P[o] + μ_g[(g, g, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, P[o] + μ_g[(g, o)])) * penalty / 2 *
             (m[:q][g, t, o] - q_prev[g, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         )
         # Define penalty term for storage (net charge/discharge)
         @expression(m, penalty_term_s[s in S], 
-            sum(W[t, o] * (max(0.0, P[o] + μ_s[(s, s, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, P[o] + μ_s[(s, o)])) * penalty / 2 *
             (m[:q_dch][s, t, o]- m[:q_ch][s, t, o] - q_dch_prev[s, t, o] + q_ch_prev[s, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         ) 
+                # Define penalty term for demand
+        #@expression(m, penalty_term_c, 
+        #    sum(W[t, o] * (max(0.0, P[o] + μ_d[o])) * penalty / 2 * 
+        #    (-m[:d_fix][t, o] - m[:d_flex][t, o] + d_fix_prev[t, o] + d_flex_prev[t, o] + residual[t, o] / len_r)^2 
+        #    for t in T, o in O)
+        #)
     elseif δ==0.0
         # Define penalty term for generators
         @expression(m, penalty_term_g[g in G], 
-            sum(W[t, o] * (max(0.0, μ_g[(g, g, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, μ_g[(g, o)])) * penalty / 2 *
             (m[:q][g, t, o] - q_prev[g, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         )
         # Define penalty term for storage (net charge/discharge)
         @expression(m, penalty_term_s[s in S], 
-            sum(W[t, o] * (max(0.0, μ_s[(s, s, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, μ_s[(s, o)])) * penalty / 2 *
             (m[:q_dch][s, t, o]- m[:q_ch][s, t, o] - q_dch_prev[s, t, o] + q_ch_prev[s, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         )
+                # Define penalty term for demand
+        #@expression(m, penalty_term_c, 
+        #    sum(W[t, o] * (max(0.0, μ_d[o])) * penalty / 2 * 
+        #    (-m[:d_fix][t, o] - m[:d_flex][t, o] + d_fix_prev[t, o] + d_flex_prev[t, o] + residual[t, o] / len_r)^2 
+        #    for t in T, o in O)
+        #)
     else
         # Define penalty term for generators
         @expression(m, penalty_term_g[g in G], 
-            sum(W[t, o] * (max(0.0, P[o] * δ + μ_g[(g, g, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, P[o] * δ + μ_g[(g, o)])) * penalty / 2 *
             (m[:q][g, t, o] - q_prev[g, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         )
         # Define penalty term for storage (net charge/discharge)
         @expression(m, penalty_term_s[s in S], 
-            sum(W[t, o] * (max(0.0, P[o] * δ + μ_s[(s, s, o)])) * penalty / 2 *
+            sum(W[t, o] * (max(0.0, P[o] * δ + μ_s[(s, o)])) * penalty / 2 *
             (m[:q_dch][s, t, o]- m[:q_ch][s, t, o] - q_dch_prev[s, t, o] + q_ch_prev[s, t, o] + residual[t, o] / len_r)^2
             for t in T, o in O)
         )
+        # Define penalty term for demand
+        #@expression(m, penalty_term_c, 
+        #    sum(W[t, o] * (max(0.0, P[o] * δ + μ_d[o])) * penalty / 2 * 
+        #    (-m[:d_fix][t, o] - m[:d_flex][t, o] + d_fix_prev[t, o] + d_flex_prev[t, o] + residual[t, o] / len_r)^2 
+        #    for t in T, o in O)
+        #)
     end
     # Define penalty term for demand
     @expression(m, penalty_term_c, 
         sum(W[t, o] * P[o] * penalty / 2 * 
         (-m[:d_fix][t, o] - m[:d_flex][t, o] + d_fix_prev[t, o] + d_flex_prev[t, o] + residual[t, o] / len_r)^2 
         for t in T, o in O)
-    )
+    )    
 
     @expression(m, total_penalty_term, 
         sum(penalty_term_g[g] for g in G) + sum(penalty_term_s[s] for s in S) + penalty_term_c
     )
 
+    
 end
-

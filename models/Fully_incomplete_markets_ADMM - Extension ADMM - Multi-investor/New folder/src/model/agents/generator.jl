@@ -55,8 +55,10 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     gen_data = data["data"]["generation_data"]  # Generation data (DenseAxisArray)
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
         data["data"]["additional_params"]["λ"] : nothing  # Lagrange multipliers (Dict or nothing)
+
     gas_price = data["data"]["additional_params"]["gas_price"]
     factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]
+
 
     G_VRE = [g for g in G if gen_data[g, "VRE"] >= 1]  # Variable Renewable Energy generators
     # Set price_available flag based on whether λ is provided
@@ -78,15 +80,15 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     if !update_prices
         # Define Generator Costs Expressions
         # Variable costs: Based on output and variable cost rates, per scenario
-        @expression(m, gen_variable_costs[i in participants, g in G, o in O; g==i && g in get(setup["investor_gen_map"], i, [])], 
+        @expression(m, gen_variable_costs[i in participants, g in G, o in O; g in get(setup["investor_tech_map"], i, [])], 
             (m[:x_g][i, g] / max(m[:x_g_total][g], 1e-6)) * sum(W[t, o] * gen_data[g, "C_v"] * m[:q][g, t, o] for t in T)
         )
         # Investment costs: Based on installed capacity (not scenario-specific)
-        @expression(m, gen_investment_costs[i in participants, g in G; g==i && g in get(setup["investor_gen_map"], i, [])], 
+        @expression(m, gen_investment_costs[i in participants, g in G; g in get(setup["investor_tech_map"], i, [])], 
             (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"])* m[:x_g][i, g]
         )
         # Total costs: Combine variable and investment costs, per scenario
-        @expression(m, gen_total_costs[i in participants, g in G, o in O; g==i && g in get(setup["investor_gen_map"], i, [])], 
+        @expression(m, gen_total_costs[i in participants, g in G, o in O; g in get(setup["investor_tech_map"], i, [])], 
             m[:gen_variable_costs][i, g, o] + m[:gen_investment_costs][i, g]
         )
     end
@@ -96,32 +98,23 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     # Define Revenue Expression (excluding costs)
     # Generation revenue per scenario: Use λ if available, otherwise set to 0
-    @expression(m, π_g[i in participants, g in G, o in O; g==i && g in get(setup["investor_gen_map"], i, [])],
+    @expression(m, π_g[i in participants, g in G, o in O; g in get(setup["investor_tech_map"], i, [])],
         (m[:x_g][i, g] / max(m[:x_g_total][g], 1e-6)) * sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
     )
-
-    #@expression(m, π_g[g in G, o in O], 
-    #    sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
-    #)
-
 
     @expression(m, gen_profit_multi[o in O],
         sum(m[:π_g]["multi", g, o] - m[:gen_total_costs]["multi", g, o] for g in G if g in get(setup["investor_tech_map"], "multi", []))
     )
 
 
-
-
- 
-
     if δ==1.0
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
-        @expression(m, ρ_g[i in participants; i != "multi"], sum(P[o] * (m[:π_g][i, g, o] - m[:gen_total_costs][i, g, o]) for o in O, g in G if g==i && g in get(setup["investor_gen_map"], i, []))
+        @expression(m, ρ_g[i in participants; i != "multi"], sum(P[o] * (m[:π_g][i, g, o] - m[:gen_total_costs][i, g, o]) for o in O, g in G if g in get(setup["investor_tech_map"], i, []))
         )
     elseif δ==0.0
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[i in participants; i != "multi"],
-            sum(m[:ζ_g][i, g] - (1 / Ψ) * sum(P[o] * m[:u_g][i, g, o] for o in O) for g in G if g==i && g in get(setup["investor_gen_map"], i, []))
+            sum(m[:ζ_g][i, g] - (1 / Ψ) * sum(P[o] * m[:u_g][i, g, o] for o in O) for g in G if g in get(setup["investor_tech_map"], i, []))
         )
     else
         # Define Risk-Adjusted Profit Expression
@@ -130,17 +123,15 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
             sum(
                 δ * sum(P[o] * (m[:π_g][i, g, o] - m[:gen_total_costs][i, g, o]) for o in O) +
                 (1 - δ) * (m[:ζ_g][i, g] - (1 / Ψ) * sum(P[o] * m[:u_g][i, g, o] for o in O))
-            for g in G if g==i && g in get(setup["investor_gen_map"], i, []))
+            for g in G if g in get(setup["investor_tech_map"], i, []))
         )
     end
-
-
 
 
     if !update_prices
         # Generation Limits: Ensures generator output does not exceed capacity times availability
         @constraint(m, gen_limits[g in G, t in T, o in O], 
-            (g in A.axes[3] || g in G_VRE ? m[:x_g_total][g] * A[t, o, g] : m[:x_g_total][g]) >= m[:q][g, t, o]
+            (g in A.axes[3] || g in G_VRE ? m[:x_g][g] * A[t, o, g] : m[:x_g][g]) >= m[:q][g, t, o]
         )
     end
 
@@ -161,18 +152,16 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     # Define new CVaR tail constraint for generators
     if !has_cvar_tail_g
         if price_available
-            @constraint(m, cvar_tail_g[i in participants, g in G, o in O; i != "multi" && g==i &&  g in get(setup["investor_gen_map"], i, [])], 
+            @constraint(m, cvar_tail_g[i in participants, g in G, o in O; i != "multi" && g in get(setup["investor_tech_map"], i, [])], 
                 m[:u_g][i, g, o] - m[:ζ_g][i, g] + 
                 π_g[i, g, o] - m[:gen_total_costs][i, g, o] >= 0
             )
         else
-            @constraint(m, cvar_tail_g[i in participants, g in G, o in O; i != "multi" && g==i && g in get(setup["investor_gen_map"], i, [])], 
+            @constraint(m, cvar_tail_g[i in participants, g in G, o in O; i != "multi" && g in get(setup["investor_tech_map"], i, [])], 
                 m[:u_g][i, g, o] - m[:ζ_g][i, g] - m[:gen_total_costs][i, g, o] >= 0
             )
         end
     end
-
-
 
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints

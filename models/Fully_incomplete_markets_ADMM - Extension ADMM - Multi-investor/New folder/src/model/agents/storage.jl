@@ -98,24 +98,18 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         )
     end
 
+    # Define Revenue Expression (excluding costs)
+    # Storage revenue per scenario: Use λ if available, otherwise set to 0
     @expression(m, π_s[i in participants, s in S, o in O; s in get(setup["investor_storage_map"], i, [])], 
         (m[:x_P][i, s] / max(m[:x_P_total][s], 1e-6)) * sum(W[t, o] * (m[:q_dch][s, t, o] - m[:q_ch][s, t, o]) * (price_available ? λ[t, o] : 0) for t in T)
     )
-
-
-    # Define Revenue Expression (excluding costs)
-    # Storage revenue per scenario: Use λ if available, otherwise set to 0
-    #@expression(m, π_s[s in S, o in O], 
-    #    sum(W[t, o] * (m[:q_dch][s, t, o] - m[:q_ch][s, t, o]) * (price_available ? λ[t, o] : 0) for t in T)
-    #)
-
 
     @expression(m, stor_profit_multi[o in O],
         sum(m[:π_s]["multi", s, o] - m[:stor_total_costs]["multi", s, o] for s in S if s in get(setup["investor_storage_map"], "multi", []))
     )
 
-
     @expression(m, net_profit_multi[o in O], m[:gen_profit_multi][o] + m[:stor_profit_multi][o])
+
 
     if δ==1.0
         @expression(m, objective_multi_investor, sum(P[o] * m[:net_profit_multi][o] for o in O))
@@ -124,7 +118,6 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
     else
         @expression(m, objective_multi_investor, δ * sum(P[o] * m[:net_profit_multi][o] for o in O) + (1 - δ) * (m[:ζ_multi] - (1 / Ψ) * sum(P[o] * m[:u_multi][o] for o in O)))
     end
-
 
 
 
@@ -150,8 +143,6 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
             for s in S if s in get(setup["investor_storage_map"], i, []))
         )
     end
-
-
 
     # Energy Cost Expression (using λ values if available)
     if price_available
@@ -235,16 +226,15 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
 
     end 
 
-
     # Define new CVaR tail constraint for storage units
     if !has_cvar_tail_s
         if price_available
-            @constraint(m, cvar_tail_s[i in participants, s in S, o in O; i != "multi" && s==i && s in get(setup["investor_storage_map"], i, [])], 
+            @constraint(m, cvar_tail_s[i in participants, s in S, o in O; i != "multi" && s in get(setup["investor_storage_map"], i, [])], 
                 m[:u_s][i, s, o] - m[:ζ_s][i, s] + 
                 π_s[i, s, o] - m[:stor_total_costs][i, s, o] >= 0
             )
         else
-            @constraint(m, cvar_tail_s[i in participants, s in S, o in O; i != "multi" && s==i && s in get(setup["investor_storage_map"], i, [])],
+            @constraint(m, cvar_tail_s[i in participants, s in S, o in O; i != "multi" && s in get(setup["investor_storage_map"], i, [])],
                 m[:u_s][i, s, o] - m[:ζ_s][i, s] - m[:stor_total_costs][i, s, o] >= 0
             )
         end
@@ -260,7 +250,6 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
             )
         end
     end
-
 
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints

@@ -66,14 +66,16 @@ function extract_price!(model; verbose = false)
 
     O = data["sets"]["O"]
     T = data["sets"]["T"]
+
     # Check if the demand_balance constraint exists in the model
     if haskey(m, :demand_balance)
         # Extract shadow prices (dual values) from the demand balance constraint
         price = dual.(m[:demand_balance])
         
+
         # Adjust prices by weights and probabilities if specified
         for t in T, o in O
-            price[t, o] /= data["data"]["time_weights"][t,o] * data["data"]["additional_params"]["P"][o]  #This step is needed because your model likely multiplies constraints and objectives by weights during optimization.
+            price[t, o] /= data["data"]["time_weights"][t,o] * data["data"]["additional_params"]["P"][o] #This step is needed because your model likely multiplies constraints and objectives by weights during optimization.
         end
 
         # Ensure prices are positive by negating if the average is negative
@@ -112,6 +114,7 @@ function extract_op!(model)
     peak_demand = data["data"]["additional_params"]["peak_demand"]  # Peak demand
     T = data["sets"]["T"]
     O = data["sets"]["O"]
+
     # Generator outputs
     op[:q] = value.(m[:q])
 
@@ -127,7 +130,7 @@ function extract_op!(model)
         op[:d] = -(op[:d_fix] .+ op[:d_flex])
     else
         op[:l] = value.(m[:l])
-        op[:d] = Dict((t, o) => - D[t, o] * peak_demand for t in T, o in O)
+        op[:d] = - D[t, o] * peak_demand
     end
 
     return op
@@ -138,9 +141,6 @@ function extract_base_results(model)
 
     base_results["capacities"] = extract_capacities!(model)   # Extract primal solution values
     base_results["price"] = extract_price!(model) # Extract dual prices if needed
-    #caps = extract_capacities!(model)
-    #caps[:x_g][("multi", "Nuclear")]     # per-investor capacity
-    #caps[:x_g_total]["Nuclear"]          # total installed across investors
 
     return base_results
 end
@@ -158,9 +158,6 @@ function extract_iteration_results!(model, name)
     iteration_results = Dict{Symbol, Any}()
     iteration_results[:price] = extract_price!(model)  # Extract dual prices (shadow prices)
     iteration_results[:capacities] = extract_capacities!(model)  # Extract investment decisions
-    #caps = extract_capacities!(model)
-    #caps[:x_g][("multi", "Nuclear")]     # per-investor capacity
-    #caps[:x_g_total]["Nuclear"]          # total installed across investors
     iteration_results[:residual] = value.(model.model[:residual])  # Extract primal residual values
     for (key, value) in op
         iteration_results[key] = value  # Store operational parameters in the results dictionary
@@ -172,17 +169,17 @@ function extract_iteration_results!(model, name)
     G = model.data["sets"]["G"]
     S = model.data["sets"]["S"]
     O = model.data["sets"]["O"]
-
+    
     iteration_results[:μ_g] = Dict(
         (i, g, o) => dual(m[:cvar_tail_g][i, g, o])
         for i in participants, g in G, o in O
-        if i != "multi" && g==i && g in get(model.setup["investor_gen_map"], i, [])
+        if i != "multi" && g in get(model.setup["investor_tech_map"], i, [])
     )
 
     iteration_results[:μ_s] = Dict(
         (i, s, o) => dual(m[:cvar_tail_s][i, s, o])
         for i in participants, s in S, o in O
-        if i != "multi" && s==i && s in get(model.setup["investor_storage_map"], i, [])
+        if i != "multi" && s in get(model.setup["investor_storage_map"], i, [])
     )
 
     if haskey(m, :cvar_tail_multi)
@@ -190,6 +187,7 @@ function extract_iteration_results!(model, name)
     end
     
     model.results[name] = iteration_results
+    
 end
 
 """
@@ -242,6 +240,7 @@ function extract_risk_adjusted_weights(model)
 
     return dual_vals, risk_weights
 end
+
 function extract_unserved_demand(model)
     m = model.model
     T = model.data["sets"]["T"]

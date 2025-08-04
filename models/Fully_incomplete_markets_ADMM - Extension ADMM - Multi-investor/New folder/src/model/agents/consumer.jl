@@ -86,6 +86,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
         has_cvar_tail_d = false
     end
     
+    minWTP = 0
     # Define Welfare Value of Demand (per scenario)
     if demand_type == "QP"
         @expression(m, demand_value[o in O], 
@@ -115,6 +116,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
         @expression(m, unserved_demand_cost_fix_and_flex[o in O], 
             unserved_fixed_cost[o] + unserved_flex_cost[o]
         )
+
     elseif demand_type == "linear"
         @expression(m, demand_value[o in O], 
             sum(W[t, o] * B * (D[t, o] * peak_demand) for t in T)
@@ -141,18 +143,22 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     if demand_type == "QP"
         if !update_prices
             @constraint(m, d_fix_limit[t in T, o in O], 
-                m[:d_fix][t, o] <= D[t, o] * peak_demand
+                m[:d_fix][t, o] + m[:d_flex][t, o] <= D[t, o] * peak_demand
             )
             @constraint(m, d_flex_limit[t in T, o in O], 
                 m[:d_flex][t, o] <= (flexible_demand-1) * D[t, o] * peak_demand
             )
+            @constraint(m, d_fix_limit_extra[t in T, o in O], 
+                m[:d_fix][t, o] <= D[t, o] * peak_demand - (flexible_demand-1) * D[t, o] * peak_demand
+            )
+            #dfixmax=D-Dflex
         end
     end
 
     # Consumer risk-adjusted welfare: Weighted sum of expected welfare minus costs and CVaR    
     @expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
-
 """
+
     if δ==1.0
         # Consumer risk-adjusted welfare: Weighted sum of expected welfare minus costs and CVaR
         @expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O)

@@ -44,12 +44,14 @@ const default_setup = Dict(
     # Demand and Load Shedding Options
     "peak_demand" => 100,
     "flexible_demand" => 1.1,  # Fraction of demand that can be flexible, 10% demand flexibility, This value means that the demand at each time step can vary up to ±10% around its nominal (reference) value.
-    "B" => 1000,
+    "B" => 9000,
     "demand_type" => "QP",  # Options: :QP or :linear, QP= Quadratic Programming — demand deviation penalized quadratically (e.g., (Δdemand)²)
 
     # Risk Aversion Options
     "δ" => 1,
     "Ψ" => 0.5,
+    "gas_price" => 173, #128
+    "factor_gas_price" => 1,
 
     # ADMM Options
     "penalty" => 2,  # Penalty parameter for ADMM
@@ -75,25 +77,14 @@ const default_setup = Dict(
         "invoffshore" => ["Wind_Offshore"],
         "invgas" => ["Gas"],
         "invnuclear" => ["Nuclear"],
-        "invldes" => ["LDES"],
+        "invldes" => ["H2"],
         "invbess" => ["BESS"],
         "multi" => ["PV", "Wind_Onshore", "Wind_Offshore", "LDES"]  # flexible, extend as needed
     ),
 
-    # Tech assignments per investor
-    "investor_gen_map" => Dict(
-        "invpv" => ["PV"],
-        "invonshore" => ["Wind_Onshore"],
-        "invoffshore" => ["Wind_Offshore"],
-        "invgas" => ["Gas"],
-        "invnuclear" => ["Nuclear"]
-    ),
-
     "investor_storage_map" => Dict(
-        "invldes" => ["LDES"],
+        "invldes" => ["H2"],
         "invbess" => ["BESS"],
-        "multi" => ["LDES"]
+        "multi" => ["H2"]
     )
-
-
 )
