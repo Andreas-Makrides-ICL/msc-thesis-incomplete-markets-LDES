@@ -352,7 +352,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     rows = [(s, t, o, dual_discharge[(s,t,o)], dual_charge[(s,t,o)], dual_energy[(s,t,o)]) for s in S for t in T for o in O]
     df = DataFrame(rows, [:Storage, :Time, :Scenario, :Dual_discharge, :Dual_charge, :Dual_energy])
     CSV.write(filename, df)
-    println("Full residuals saved to '$filename'")
+    println("Full duals saved to '$filename'")
 
 
 
