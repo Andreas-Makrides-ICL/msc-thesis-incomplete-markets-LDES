@@ -6,7 +6,7 @@ Risk aversion (δ): 0.25, CVaR confidence (Ψ): 0.5
 ------------------------------------------------------------------------------------------------------------------
 Iter  Primal Conv.  Dual Conv.    PV          Wind OnshoreWind OffshoreGas         Nuclear     BESS Pwr.   BESS En.    Duration    H2 Pwr.     H2 En.      Dur_PHS     Time      Total Time
 ------------------------------------------------------------------------------------------------------------------
-CENT   -             -            135.71      51.22       92.19       4.00        49.48       6.06        510.36      84.29       23.96       95.82       4.00        54.77s    54.77s    
+CENT   -             -            135.71      51.22       92.19       4.00        49.48       6.06        510.36      84.29       23.96       95.82       4.00        58.62s    58.62s    
 
 Total Installed Capacity: 362.6 MW
 
@@ -65,9 +65,9 @@ CVaR Term ((1 - δ) * CVaR) :       3.5160489006527e9
   ↳ u_total[o]:                    Dict(29 => 2.2875, 7 => 3.63434600143e7, 12 => 3.64506232005e7, 24 => 4.5453, 30 => 671862.8777, 8 => 5.7105774206e6, 1 => 2.2872, 19 => 5.50138637583e7, 22 => 2.2869, 13 => 2.2873, 23 => 3.5245351145e6, 4 => 2.287, 11 => 3.40915957215e7, 27 => 2.2868, 26 => 2.2874)
 Full Objective Value:             4.713850087529893e9
 ===========================================
-Storage H2 : scarcity_rent_discharge = -167439.07449346196, scarcity_rent_charge = -218949.32782533564, scarcity_rent_energy = -1238.1456632369193
-Storage BESS : scarcity_rent_discharge = -102.33095471461391, scarcity_rent_charge = -123.13063256152317, scarcity_rent_energy = -21233.24583113069
-Full residuals saved to 'scarcity_rent_delta_0.25.csv'
+Storage H2 : scarcity_rent_discharge = 2.5030156621985856e7, scarcity_rent_charge = 1.5819924495745521e7, scarcity_rent_energy = 108507.16253897836
+Storage BESS : scarcity_rent_discharge = -31522.32293515263, scarcity_rent_charge = -37969.13966353125, scarcity_rent_energy = 1.8158832742402854e6
+Full duals saved to 'scarcity_rent_delta_0.25.csv'
 Generator PV : expected = -240332.82412014494, cvar = -2.8108045932105206e7, ρ=-2.114111765510894e7, net_revenues=1.381369014193246e7
 Generator Wind_Onshore : expected = 5.107488410788383e6, cvar = -1.2848758010042233e7, ρ=-8.359696404834579e6, net_revenues=1.1531867415809505e7
 Generator Wind_Offshore : expected = -4.676731798548033e6, cvar = -6.250773934735081e7, ρ=-4.804998746015012e7, net_revenues=2.6577137875127375e7

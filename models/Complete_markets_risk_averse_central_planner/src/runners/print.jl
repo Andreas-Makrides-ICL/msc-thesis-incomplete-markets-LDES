@@ -340,10 +340,11 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     dual_energy = Dict((s,t,o) => dual(m[:storage_energy_limits][s, t, o]) for s in S, t in T, o in O)
 
     # Scarcity rent  per storage asset
-    scarcity_rent_discharge = Dict(s => sum(dual_discharge[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
-    scarcity_rent_charge = Dict(s => sum(dual_charge[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
-    scarcity_rent_energy = Dict(s => sum(dual_energy[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
+    scarcity_rent_discharge = Dict(s => sum((dual_discharge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge = Dict(s => sum((dual_charge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy = Dict(s => sum((dual_energy[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o] for t in T, o in O) for s in S)
 
+    
     for s in S
         println("Storage $(s) : scarcity_rent_discharge = $(scarcity_rent_discharge[s]), scarcity_rent_charge = $(scarcity_rent_charge[s]), scarcity_rent_energy = $(scarcity_rent_energy[s])")
     end
@@ -382,6 +383,8 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     stor_data = data["data"]["storage_data"]
     svc = 0
     
+
+
     # === Storage
     ex_s = Dict{String, Float64}()
     cvar_s = Dict{String, Float64}()
