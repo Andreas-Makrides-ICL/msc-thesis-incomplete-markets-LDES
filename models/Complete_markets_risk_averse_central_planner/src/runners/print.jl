@@ -334,6 +334,28 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     # === Extract solved λ from dual of balance constraint
     dual_vals = Dict(o => dual(m[:cvar_tail_total][o]) for o in O)
 
+
+    dual_discharge = Dict((s,t,o) => dual(m[:discharging_limits][s, t, o]) for s in S, t in T, o in O)
+    dual_charge = Dict((s,t,o) => dual(m[:charging_limits][s, t, o]) for s in S, t in T, o in O)
+    dual_energy = Dict((s,t,o) => dual(m[:storage_energy_limits][s, t, o]) for s in S, t in T, o in O)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge = Dict(s => sum(dual_discharge[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge = Dict(s => sum(dual_charge[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy = Dict(s => sum(dual_energy[(s,t,o)]* W[t,o] * P[o]  for t in T, o in O) for s in S)
+
+    for s in S
+        println("Storage $(s) : scarcity_rent_discharge = $(scarcity_rent_discharge[s]), scarcity_rent_charge = $(scarcity_rent_charge[s]), scarcity_rent_energy = $(scarcity_rent_energy[s])")
+    end
+    
+    filename = "scarcity_rent_delta_$(round(δ, digits=2)).csv"
+    rows = [(s, t, o, dual_discharge[(s,t,o)], dual_charge[(s,t,o)], dual_energy[(s,t,o)]) for s in S for t in T for o in O]
+    df = DataFrame(rows, [:Storage, :Time, :Scenario, :Dual_discharge, :Dual_charge, :Dual_energy])
+    CSV.write(filename, df)
+    println("Full residuals saved to '$filename'")
+
+
+
     λ = model.results["base"]["base_results"]["price"]
     #λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(W[t,o]*(P[o]*δ + dual_vals[o])) for t in T, o in O)
 

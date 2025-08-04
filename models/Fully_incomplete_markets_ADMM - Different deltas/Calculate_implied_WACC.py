@@ -4,8 +4,8 @@ from scipy.optimize import fsolve
 def implied_wacc(Cinv_net, Cinv_riskfree, N, WACC):
     """
     Solve for implied WACC Rm given:
-    - Cinv_net: net revenue per year from the risk-averse model ($/MW-year)
-    - Cinv_riskfree: annualized investment cost at risk-free rate ($/MW-year)
+    - Cinv_net: net revenue
+    - Cinv_riskfree: annualized investment cost at risk-free rate
     - N: lifetime in years
     Returns:
     - Rm (implied WACC) as a percentage
