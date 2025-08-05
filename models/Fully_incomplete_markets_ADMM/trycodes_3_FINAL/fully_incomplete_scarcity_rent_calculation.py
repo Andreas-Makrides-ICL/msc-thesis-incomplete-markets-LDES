@@ -30,7 +30,7 @@ for storage in merged["Storage"].unique():
     
     scarcity_rent_discharge = sum(-df["Dual_discharge"] * p_o * df["value"])
     scarcity_rent_charge = sum(-df["Dual_charge"] * p_o * df["value"])
-    scarcity_rent_energy = sum(-df["Dual_energy"] * p_o * df["value"])
+    scarcity_rent_energy = sum(-df["Dual_energy"]* p_o * df["value"])
     
     results[storage] = {
         "Scarcity_Rent_discharge": scarcity_rent_discharge,

@@ -6,146 +6,148 @@ Risk aversion (δ): 0.5, CVaR confidence (Ψ): 0.5
 ------------------------------------------------------------------------------------------------------------------
 Iter  Primal Conv.  Dual Conv.    PV          Wind OnshoreWind OffshoreGas         Nuclear     BESS Pwr.   BESS En.    Duration    H2 Pwr.     H2 En.      Dur_PHS     Time      Total Time
 ------------------------------------------------------------------------------------------------------------------
-CENT   -             -            135.27      51.39       92.51       4.00        49.32       5.68        488.31      85.99       23.96       95.86       4.00        58.19s    58.19s    
+CENT   -             -            147.89      49.45       89.02       4.00        48.71       2.66        272.20      102.36      20.35       202.63      9.96        61.93s    61.93s    
 
-Total Installed Capacity: 362.14 MW
+Total Installed Capacity: 362.09 MW
 
-Total Installed Energy: 584.17 MWh
-Average price in scenario 11 = 177.7227 [£/MWh]
-Average price in scenario 12 = 194.9965 [£/MWh]
-Average price in scenario 13 = 160.1698 [£/MWh]
-Average price in scenario 19 = 131.8378 [£/MWh]
-Average price in scenario 1 = 122.2835 [£/MWh]
-Average price in scenario 22 = 160.2006 [£/MWh]
-Average price in scenario 23 = 166.7888 [£/MWh]
-Average price in scenario 24 = 150.3379 [£/MWh]
-Average price in scenario 26 = 132.1441 [£/MWh]
-Average price in scenario 27 = 176.7116 [£/MWh]
-Average price in scenario 29 = 156.8959 [£/MWh]
-Average price in scenario 30 = 153.3051 [£/MWh]
-Average price in scenario 4 = 154.8016 [£/MWh]
-Average price in scenario 7 = 177.8263 [£/MWh]
-Average price in scenario 8 = 179.9687 [£/MWh]
-Total Average price Case B = 159.7327 [£/MWh]
-Total Average price Case A = 159.7327 [£/MWh]
+Total Installed Energy: 474.83 MWh
+Average price in scenario 11 = 172.1956 [£/MWh]
+Average price in scenario 12 = 202.5322 [£/MWh]
+Average price in scenario 13 = 157.5566 [£/MWh]
+Average price in scenario 19 = 126.1553 [£/MWh]
+Average price in scenario 1 = 115.8506 [£/MWh]
+Average price in scenario 22 = 154.5459 [£/MWh]
+Average price in scenario 23 = 162.7749 [£/MWh]
+Average price in scenario 24 = 145.8053 [£/MWh]
+Average price in scenario 26 = 131.0895 [£/MWh]
+Average price in scenario 27 = 167.8068 [£/MWh]
+Average price in scenario 29 = 157.1579 [£/MWh]
+Average price in scenario 30 = 148.08 [£/MWh]
+Average price in scenario 4 = 152.6653 [£/MWh]
+Average price in scenario 7 = 170.6475 [£/MWh]
+Average price in scenario 8 = 189.0635 [£/MWh]
+Total Average price Case B = 156.9284 [£/MWh]
+Total Average price Case A = 156.9284 [£/MWh]
 
 ===== Risk-Averse Objective Breakdown from model =====
-Expected Term (E[W - C]):     4.728418106821235e9
-CVaR Term :       4.68807674541575e9
-CO2 price :       3.8861765049164086e6
-Expected Term (δ * E[W - C]):     2.3642090534106e9
-CVaR Term ((1 - δ) * CVaR) :       2.3440383727079e9
-  ↳ ζ_total:                       4.71108010416e9
-  ↳ u_total[o]:                    Dict(29 => 1.6555, 7 => 3.6506159645e7, 12 => 3.66071107681e7, 24 => 3.2662, 30 => 684195.6332, 8 => 5.763704955e6, 1 => 1.6554, 19 => 5.50938182743e7, 22 => 1.6554, 13 => 1.6555, 23 => 3.5809603123e6, 4 => 1.6554, 11 => 3.4289226163e7, 27 => 1.6554, 26 => 1.6555)
-Full Objective Value:             4.708247426118496e9
+Expected Term (E[W - C]):     4.729304952502825e9
+CVaR Term :       4.688975748387678e9
+CO2 price :       3.732397491480222e6
+Expected Term (δ * E[W - C]):     2.3646524762514e9
+CVaR Term ((1 - δ) * CVaR) :       2.3444878741938e9
+  ↳ ζ_total:                       4.71189855963e9
+  ↳ u_total[o]:                    Dict(29 => 1.4588, 7 => 3.60729017459e7, 12 => 3.68630415423e7, 24 => 2.8676, 30 => 641117.7541, 8 => 5.5859071925e6, 1 => 1.4587, 19 => 5.52000949053e7, 22 => 1.4587, 13 => 1.4588, 23 => 3.3689859419e6, 4 => 1.4587, 11 => 3.41890221341e7, 27 => 1.4587, 26 => 1.4588)
+Full Objective Value:             4.709140350445262e9
 ===========================================
-For scenario 11: Demand value = 4.8263232172957e9, Total costs = 8.74539719637e7
-For scenario 12: Demand value = 4.8258231507479e9, Total costs = 8.95902087347e7
-For scenario 13: Demand value = 4.9044970084753e9, Total costs = 9.01544785891e7
-For scenario 19: Demand value = 4.8027530453861e9, Total costs = 8.45644708386e7
-For scenario 1: Demand value = 4.8884794438643e9, Total costs = 8.2868876725e7
-For scenario 22: Demand value = 5.0013630926949e9, Total costs = 9.04161664828e7
-For scenario 23: Demand value = 4.8612690723179e9, Total costs = 9.13136576733e7
-For scenario 24: Demand value = 4.8616209789049e9, Total costs = 8.78353508738e7
-For scenario 26: Demand value = 4.8883096193025e9, Total costs = 8.5234505396e7
-For scenario 27: Demand value = 5.0010916226765e9, Total costs = 9.44531271818e7
-For scenario 29: Demand value = 4.8879301723555e9, Total costs = 8.9311640233e7
-For scenario 30: Demand value = 4.8615614951415e9, Total costs = 8.85171303714e7
-For scenario 4: Demand value = 4.9045561673464e9, Total costs = 8.89549350893e7
-For scenario 7: Demand value = 4.8265078113762e9, Total costs = 8.99083759716e7
-For scenario 8: Demand value = 4.8611107250445e9, Total costs = 9.35227972657e7
+For scenario 11: Demand value = 4.8262204218457e9, Total costs = 8.63614388063e7
+For scenario 12: Demand value = 4.825487862515e9, Total costs = 8.8761714723e7
+For scenario 13: Demand value = 4.9045259436682e9, Total costs = 8.92624872994e7
+For scenario 19: Demand value = 4.8029175434414e9, Total costs = 8.39505775553e7
+For scenario 1: Demand value = 4.8885553507852e9, Total costs = 8.17958694919e7
+For scenario 22: Demand value = 5.0014274530156e9, Total costs = 8.97228486738e7
+For scenario 23: Demand value = 4.8613606651806e9, Total costs = 9.03464960441e7
+For scenario 24: Demand value = 4.8616827812918e9, Total costs = 8.70217027937e7
+For scenario 26: Demand value = 4.8882942009376e9, Total costs = 8.43121650719e7
+For scenario 27: Demand value = 5.0012431693901e9, Total costs = 9.35421259301e7
+For scenario 29: Demand value = 4.8879129617708e9, Total costs = 8.84332807538e7
+For scenario 30: Demand value = 4.8616252014693e9, Total costs = 8.76603862666e7
+For scenario 4: Demand value = 4.9045780058294e9, Total costs = 8.82233834405e7
+For scenario 7: Demand value = 4.8268503479951e9, Total costs = 8.90506327294e7
+For scenario 8: Demand value = 4.8609181456694e9, Total costs = 9.24436819772e7
 
 ===== Risk-Averse Objective Breakdown Manual Calculation =====
-Expected Term (E[W - C]):     4.791273128636028e9
-CVaR Term :       4.68807674541575e9
-CO2 Price :       3.8861765049164086e6
-Expected Term (δ * E[W - C]):     2.395636564318e9
-CVaR Term ((1 - δ) * CVaR) :       2.3440383727079e9
-  ↳ ζ_total:                       4.71108010416e9
-  ↳ u_total[o]:                    Dict(29 => 1.6555, 7 => 3.6506159645e7, 12 => 3.66071107681e7, 24 => 3.2662, 30 => 684195.6332, 8 => 5.763704955e6, 1 => 1.6554, 19 => 5.50938182743e7, 22 => 1.6554, 13 => 1.6555, 23 => 3.5809603123e6, 4 => 1.6554, 11 => 3.4289226163e7, 27 => 1.6554, 26 => 1.6555)
-Full Objective Value:             4.739674937025888e9
+Expected Term (E[W - C]):     4.792180750883213e9
+CVaR Term :       4.688975748387678e9
+CO2 Price :       3.732397491480222e6
+Expected Term (δ * E[W - C]):     2.3960903754416e9
+CVaR Term ((1 - δ) * CVaR) :       2.3444878741938e9
+  ↳ ζ_total:                       4.71189855963e9
+  ↳ u_total[o]:                    Dict(29 => 1.4588, 7 => 3.60729017459e7, 12 => 3.68630415423e7, 24 => 2.8676, 30 => 641117.7541, 8 => 5.5859071925e6, 1 => 1.4587, 19 => 5.52000949053e7, 22 => 1.4587, 13 => 1.4588, 23 => 3.3689859419e6, 4 => 1.4587, 11 => 3.41890221341e7, 27 => 1.4587, 26 => 1.4588)
+Full Objective Value:             4.740578249635446e9
 ===========================================
-Storage H2 : scarcity_rent_discharge = 2.848199584226802e7, scarcity_rent_charge = 4.881223809107906e7, scarcity_rent_energy = 265822.64855401724
-Storage H2 : scarcity_rent_discharge1 = 1.5561359301246266e9, scarcity_rent_charge1 = 3.8902659700656075e9, scarcity_rent_energy1 = 3.6775670315642975e7
-Storage H2 : scarcity_rent_discharge2 = 163775.68691196787, scarcity_rent_charge2 = 220978.36779907253, scarcity_rent_energy2 = 1212.5035565236738
-Storage H2 : scarcity_rent_discharge3 = 6.109868118709344e6, scarcity_rent_charge3 = 3.294482107211865e7, scarcity_rent_energy3 = 283543.0040848139
-Storage BESS : scarcity_rent_discharge = 15063.716201367199, scarcity_rent_charge = 18163.137249837764, scarcity_rent_energy = 4.540289054083326e6
-Storage BESS : scarcity_rent_discharge1 = 1.3136776430495468e6, scarcity_rent_charge1 = 1.5944729882450819e6, scarcity_rent_energy1 = 4.3283388345924634e8
-Storage BESS : scarcity_rent_discharge2 = 51.01248084048126, scarcity_rent_charge2 = 61.468636138937384, scarcity_rent_energy2 = 21096.035834495164
-Storage BESS : scarcity_rent_discharge3 = 9214.71900232624, scarcity_rent_charge3 = 13168.68025184868, scarcity_rent_energy3 = 5.015583227512644e6
+Storage H2 : scarcity_rent_discharge = 2.603639899949022e7, scarcity_rent_charge = 5.530630033789142e7, scarcity_rent_energy = 246488.05265461307
+Storage H2 : scarcity_rent_discharge1 = 1.859246441586204e9, scarcity_rent_charge1 = 4.559195213818177e9, scarcity_rent_energy1 = 3.9814412201557554e7
+Storage H2 : scarcity_rent_discharge2 = 148812.80848747585, scarcity_rent_charge2 = 246774.69131930248, scarcity_rent_energy2 = 1181.5324611186975
+Storage H2 : scarcity_rent_discharge3 = 7.007355386169349e6, scarcity_rent_charge3 = 3.7160495219041206e7, scarcity_rent_energy3 = 308126.6454740097
+Storage BESS : scarcity_rent_discharge = 384613.20555094694, scarcity_rent_charge = 6.378280831535846e6, scarcity_rent_energy = 2.7693331042419802e6
+Storage BESS : scarcity_rent_discharge1 = 1.4943794972054022e6, scarcity_rent_charge1 = 8.090923584883037e8, scarcity_rent_energy1 = 2.7430000136050063e8
+Storage BESS : scarcity_rent_discharge2 = 1670.6358978660376, scarcity_rent_charge2 = 27490.918410825096, scarcity_rent_energy2 = 13206.772488238194
+Storage BESS : scarcity_rent_discharge3 = 7930.050516438222, scarcity_rent_charge3 = 1.1942617271878736e7, scarcity_rent_energy3 = 2.944543030713731e6
 Full duals saved to 'scarcity_rent_delta_0.5.csv'
-Generator PV : expected = -206190.83036857063, cvar = -2.8018289721682757e7, ρ=-1.4112240276025664e7, net_revenues=1.3802954030472802e7
-Generator Wind_Onshore : expected = 5.076893629306937e6, cvar = -1.2893691830223601e7, ρ=-3.9083991004583323e6, net_revenues=1.1523739544418735e7
-Generator Wind_Offshore : expected = -4.84760950416393e6, cvar = -6.2726337245520435e7, ρ=-3.378697337484218e7, net_revenues=2.6515559118596293e7
-Generator Nuclear : expected = 2.7034346968123172e6, cvar = -5.781733620240655e6, ρ=-1.5391494617141688e6, net_revenues=5.134941408827783e6
-Generator Gas : expected = -2.0931360603858994e6, cvar = -5.667184912152059e7, ρ=-2.9382492590953242e7, net_revenues=4.965934287706821e6
-Storage H2 : expected = -251586.15543434513, cvar = -5.901661920554165e6, ρ=-3.076624037994255e6, net_revenues=2.6992448048427384e6
-Storage BESS : expected = -128680.39316561754, cvar = -5.886395658885371e6, ρ=-3.007538026025494e6, net_revenues=2.8145174362770687e6
-Consumer: expected = 4.791020022978232e9, cvar = -45942.15085724359, ρ=2.3954870404136877e9
+Storage H2 : nn = -1.441362545893341e6, nnn = 1.4580972581458306e6
+Storage BESS : nn = -4.61788976851665e6, nnn = 4.626683220375021e6
+Generator PV : expected = -243057.32276244348, cvar = -3.0632189255880915e7, ρ=-1.543762328932168e7, net_revenues=1.5073037305178022e7
+Generator Wind_Onshore : expected = 4.878676736279799e6, cvar = -1.2406682590354664e7, ρ=-3.764002927037433e6, net_revenues=1.108201803145713e7
+Generator Wind_Offshore : expected = -4.795940272340777e6, cvar = -6.0357094509874724e7, ρ=-3.257651739110775e7, net_revenues=2.5382606982596572e7
+Generator Nuclear : expected = 2.6116378941145223e6, cvar = -5.767154547601498e6, ρ=-1.5777583267434877e6, net_revenues=5.043145351682412e6
+Generator Gas : expected = -2.1373677177384268e6, cvar = -5.481434352725495e7, ρ=-2.8475855622496687e7, net_revenues=4.8348914294690965e6
+Storage H2 : expected = -123360.97988573342, cvar = -2.893299690357064e6, ρ=-1.5083303351213986e6, net_revenues=1.3232888652927978e6
+Storage BESS : expected = -205854.69696526826, cvar = -9.247741419602683e6, ρ=-4.726798058283975e6, net_revenues=4.418016012836075e6
+Consumer: expected = 4.792196034309459e9, cvar = -45992.05582585991, ρ=2.3960750211268163e9
 
 ===== Unserved demand per scenario =====
-  Scenario 11 → Unserved Demand Fix = 22.549224270186606, Unserved Demand Flex = 29219.20030071323, Total Unserved Demand = 29241.749524983417
-  Scenario 12 → Unserved Demand Fix = 46.72139034030182, Unserved Demand Flex = 29285.99475387372, Total Unserved Demand = 29332.716144214024
-  Scenario 13 → Unserved Demand Fix = 2.675860054322442, Unserved Demand Flex = 29587.654882681436, Total Unserved Demand = 29590.330742735758
-  Scenario 19 → Unserved Demand Fix = 2.4555558277885368, Unserved Demand Flex = 28905.64666195832, Total Unserved Demand = 28908.10221778611
-  Scenario 1 → Unserved Demand Fix = 2.666390262535323, Unserved Demand Flex = 29363.389486564374, Total Unserved Demand = 29366.05587682691
-  Scenario 22 → Unserved Demand Fix = 2.7255654526806907, Unserved Demand Flex = 30186.15828763291, Total Unserved Demand = 30188.88385308559
-  Scenario 23 → Unserved Demand Fix = 2.4862932064182246, Unserved Demand Flex = 29375.088300117317, Total Unserved Demand = 29377.574593323734
-  Scenario 24 → Unserved Demand Fix = 2.528668014936038, Unserved Demand Flex = 29308.237256328222, Total Unserved Demand = 29310.76592434316
-  Scenario 26 → Unserved Demand Fix = 2.666708213888036, Unserved Demand Flex = 29400.710008991704, Total Unserved Demand = 29403.376717205592
-  Scenario 27 → Unserved Demand Fix = 2.7260202051703715, Unserved Demand Flex = 30242.97475765442, Total Unserved Demand = 30245.70077785959
-  Scenario 29 → Unserved Demand Fix = 2.667185287337311, Unserved Demand Flex = 29483.698636077366, Total Unserved Demand = 29486.365821364703
-  Scenario 30 → Unserved Demand Fix = 2.486351036463674, Unserved Demand Flex = 29321.230599694325, Total Unserved Demand = 29323.716950730788
-  Scenario 4 → Unserved Demand Fix = 2.6757098421356105, Unserved Demand Flex = 29574.891071781763, Total Unserved Demand = 29577.5667816239
-  Scenario 7 → Unserved Demand Fix = 5.4850032991276905, Unserved Demand Flex = 29221.64188471156, Total Unserved Demand = 29227.126888010687
-  Scenario 8 → Unserved Demand Fix = 2.486157955201051, Unserved Demand Flex = 29413.196378523542, Total Unserved Demand = 29415.682536478744
+  Scenario 11 → Unserved Demand Fix = 42.155166863047725, Unserved Demand Flex = 29203.107030433053, Total Unserved Demand = 29245.262197296102
+  Scenario 12 → Unserved Demand Fix = 57.62237286160468, Unserved Demand Flex = 29320.058524581073, Total Unserved Demand = 29377.68089744268
+  Scenario 13 → Unserved Demand Fix = 2.3623481904485786, Unserved Demand Flex = 29581.943375041657, Total Unserved Demand = 29584.305723232104
+  Scenario 19 → Unserved Demand Fix = 2.167926950225862, Unserved Demand Flex = 28880.27721455594, Total Unserved Demand = 28882.445141506167
+  Scenario 1 → Unserved Demand Fix = 2.3538994426442343, Unserved Demand Flex = 29347.48334541744, Total Unserved Demand = 29349.837244860086
+  Scenario 22 → Unserved Demand Fix = 2.406230993015221, Unserved Demand Flex = 30172.68477644036, Total Unserved Demand = 30175.091007433377
+  Scenario 23 → Unserved Demand Fix = 2.19521898292723, Unserved Demand Flex = 29362.042348334795, Total Unserved Demand = 29364.237567317723
+  Scenario 24 → Unserved Demand Fix = 2.2327417514534744, Unserved Demand Flex = 29295.321301351378, Total Unserved Demand = 29297.55404310283
+  Scenario 26 → Unserved Demand Fix = 2.354278135366151, Unserved Demand Flex = 29404.41444631469, Total Unserved Demand = 29406.768724450056
+  Scenario 27 → Unserved Demand Fix = 2.4065610837190334, Unserved Demand Flex = 30213.080955206875, Total Unserved Demand = 30215.487516290596
+  Scenario 29 → Unserved Demand Fix = 2.354793851685642, Unserved Demand Flex = 29487.997718380655, Total Unserved Demand = 29490.35251223234
+  Scenario 30 → Unserved Demand Fix = 2.195418238878716, Unserved Demand Flex = 29307.885233998728, Total Unserved Demand = 29310.080652237608
+  Scenario 4 → Unserved Demand Fix = 2.362282707439469, Unserved Demand Flex = 29570.758516009126, Total Unserved Demand = 29573.120798716565
+  Scenario 7 → Unserved Demand Fix = 2.179644811802099, Unserved Demand Flex = 29192.595510613697, Total Unserved Demand = 29194.7751554255
+  Scenario 8 → Unserved Demand Fix = 2.195133012438042, Unserved Demand Flex = 29447.06766279186, Total Unserved Demand = 29449.262795804298
 
 Total Unserved Demand across all scenarios:
- Total Unserved Demand Fix = 7.066805551232895, Total Unserved Demand Flex = 29459.314217820283, Total Unserved Demand = 29466.381023371516
+ Total Unserved Demand Fix = 8.636267858446413, Total Unserved Demand Flex = 29452.447863964753, Total Unserved Demand = 29461.084131823198
 ====================================
 
 
-Total MWh of gas = 68195.04555342185
+Total MWh of gas = 65496.51479621771
 ====================================
 
 
 ===== CVaR Tail Dual Analysis =====
 Raw dual values (all shown):
-  Scenario 11 → dual = -6.667113242496e-02
-  Scenario 12 → dual = -6.667113223288e-02
-  Scenario 13 → dual = -2.027633188612e-09
-  Scenario 19 → dual = -6.667113486435e-02
-  Scenario 1 → dual = -1.339185018275e-09
-  Scenario 22 → dual = 3.468545497619e-09
-  Scenario 23 → dual = -6.667102613761e-02
-  Scenario 24 → dual = -3.329435135015e-02
-  Scenario 26 → dual = -3.031354058814e-09
-  Scenario 27 → dual = 7.853379472452e-10
-  Scenario 29 → dual = -3.161405588160e-09
-  Scenario 30 → dual = -6.666986463024e-02
-  Scenario 4 → dual = -7.116626394456e-10
-  Scenario 7 → dual = -6.667113146485e-02
-  Scenario 8 → dual = -6.667108148467e-02
+  Scenario 11 → dual = -6.667060460165e-02
+  Scenario 12 → dual = -6.667060568652e-02
+  Scenario 13 → dual = -3.229831834112e-09
+  Scenario 19 → dual = -6.667060767210e-02
+  Scenario 1 → dual = -1.723358326758e-09
+  Scenario 22 → dual = 2.991818839762e-09
+  Scenario 23 → dual = -6.667045743838e-02
+  Scenario 24 → dual = -3.329942701034e-02
+  Scenario 26 → dual = -4.018103515480e-09
+  Scenario 27 → dual = 5.478889509417e-10
+  Scenario 29 → dual = -3.988454917522e-09
+  Scenario 30 → dual = -6.666906688822e-02
+  Scenario 4 → dual = -8.487251711144e-10
+  Scenario 7 → dual = -6.667060420835e-02
+  Scenario 8 → dual = -6.667054678250e-02
 
 Normalized risk-adjusted probabilities:
 ====================================
 
 ===== CVaR Constraint Tightness per Scenario =====
-Scenario 11: welfare = 4.6767918475752e9, LHS = 3.42882565879e7, RHS = 3.4289226163e7, Gap = -969.5752
-Scenario 12: welfare = 4.674474177316e9, LHS = 3.66059268471e7, RHS = 3.66071107681e7, Gap = -1183.9211
-Scenario 13: welfare = 4.7511730892248e9, LHS = -4.00929850617e7, RHS = 1.6555, Gap = -4.00929867172e7
-Scenario 19: welfare = 4.6559873948546e9, LHS = 5.50927093085e7, RHS = 5.50938182743e7, Gap = -1108.9658
-Scenario 1: welfare = 4.7421049350057e9, LHS = -3.10248308426e7, RHS = 1.6554, Gap = -3.1024832498e7
-Scenario 22: welfare = 4.846590039605e9, LHS = -1.355099354419e8, RHS = 1.6554, Gap = -1.355099370972e8
-Scenario 23: welfare = 4.7075002320831e9, LHS = 3.5798720799e6, RHS = 3.5809603123e6, Gap = -1088.2323
-Scenario 24: welfare = 4.7110810742905e9, LHS = -970.1274, RHS = 3.2662, Gap = -973.3935
-Scenario 26: welfare = 4.7397355447718e9, LHS = -2.86554406087e7, RHS = 1.6555, Gap = -2.86554422642e7
-Scenario 27: welfare = 4.8425214911363e9, LHS = -1.314413869732e8, RHS = 1.6554, Gap = -1.314413886286e8
-Scenario 29: welfare = 4.7356464179862e9, LHS = -2.45663138231e7, RHS = 1.6555, Gap = -2.45663154786e7
-Scenario 30: welfare = 4.710396886373e9, LHS = 683217.79, RHS = 684195.6332, Gap = -977.8432
-Scenario 4: welfare = 4.7523760746026e9, LHS = -4.12959704395e7, RHS = 1.6554, Gap = -4.12959720949e7
-Scenario 7: welfare = 4.6745750278534e9, LHS = 3.65050763097e7, RHS = 3.6506159645e7, Gap = -1083.3352
-Scenario 8: welfare = 4.7053173696403e9, LHS = 5.7627345228e6, RHS = 5.763704955e6, Gap = -970.4322
+Scenario 11: welfare = 4.6777104038835e9, LHS = 3.41881557435e7, RHS = 3.41890221341e7, Gap = -866.3905
+Scenario 12: welfare = 4.6750367776409e9, LHS = 3.68617819861e7, RHS = 3.68630415423e7, Gap = -1259.5562
+Scenario 13: welfare = 4.7520687257248e9, LHS = -4.01701660978e7, RHS = 1.4588, Gap = -4.01701675567e7
+Scenario 19: welfare = 4.6566993705621e9, LHS = 5.51991890649e7, RHS = 5.52000949053e7, Gap = -905.8405
+Scenario 1: welfare = 4.7431837883927e9, LHS = -3.12852287657e7, RHS = 1.4587, Gap = -3.12852302244e7
+Scenario 22: welfare = 4.8472879424445e9, LHS = -1.353893828175e8, RHS = 1.4587, Gap = -1.353893842761e8
+Scenario 23: welfare = 4.7085305462037e9, LHS = 3.3680134233e6, RHS = 3.3689859419e6, Gap = -972.5186
+Scenario 24: welfare = 4.7118994202132e9, LHS = -860.5862, RHS = 2.8676, Gap = -863.4537
+Scenario 26: welfare = 4.7406575764312e9, LHS = -2.87590168042e7, RHS = 1.4588, Gap = -2.87590182631e7
+Scenario 27: welfare = 4.843463666461e9, LHS = -1.31565106834e8, RHS = 1.4587, Gap = -1.315651082927e8
+Scenario 29: welfare = 4.7365262365139e9, LHS = -2.46276768869e7, RHS = 1.4588, Gap = -2.46276783457e7
+Scenario 30: welfare = 4.7112583164472e9, LHS = 640243.1798, RHS = 641117.7541, Gap = -874.5742
+Scenario 4: welfare = 4.7531112893712e9, LHS = -4.12127297442e7, RHS = 1.4587, Gap = -4.12127312029e7
+Scenario 7: welfare = 4.67582667874e9, LHS = 3.6071880887e7, RHS = 3.60729017459e7, Gap = -1020.8589
+Scenario 8: welfare = 4.7063135485125e9, LHS = 5.5850111145e6, RHS = 5.5859071925e6, Gap = -896.078
 ==================================================
 
 =================================
@@ -10234,23 +10236,24 @@ t=672, o=30 → Model: 0.0, Manual: 0.0, Diff: 0.0
 t=672, o=4 → Model: 0.0, Manual: 0.0, Diff: 0.0
 t=672, o=7 → Model: 0.0, Manual: 0.0, Diff: 0.0
 t=672, o=8 → Model: 0.0, Manual: 0.0, Diff: 0.0
-Scenario 11: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 12: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 13: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 19: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 1: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 22: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 23: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 24: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 26: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 27: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 29: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 30: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 4: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 7: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
-Scenario 8: L2 Norm = 0.0004, Max = 0.0, Avg = 0.0
+Scenario 11: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 12: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 13: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 19: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 1: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 22: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 23: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 24: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 26: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 27: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 29: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 30: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 4: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 7: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
+Scenario 8: L2 Norm = 0.0003, Max = 0.0, Avg = 0.0
 Full residuals saved to 'residuals_detailed_delta_0.5_psi_0.5.csv'
-Gas dispatch saved to 'gas_dispatch_delta_0.5.csv'
+Gas dispatch saved to 'dispatch_delta_0.5.csv'
+Storage dispatch saved to 'energy_charge_discharge_delta_0.5.csv'
 Gas dispatch saved to 'served_demand_delta_0.5.csv'
 ========== MODEL STRUCTURE ==========
 
