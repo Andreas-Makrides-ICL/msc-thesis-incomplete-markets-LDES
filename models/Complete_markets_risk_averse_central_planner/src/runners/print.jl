@@ -376,6 +376,28 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
 
 
 
+
+    prc=Dict((t, o) => dual(m[:demand_balance][t, o]) for t in T, o in O)
+    nn= Dict(s => sum(prc[(t,o)] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) for t in T, o in O) for s in S)
+    
+    nnn=Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)])*value(m[:x_P][s]) + (-dual_energy[(s,t,o)])*value(m[:x_E][s]) for t in T, o in O) for s in S)
+    for s in S
+        println("Storage $(s) : nn = $(nn[s]), nnn = $(nnn[s])")
+        
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
     λ = model.results["base"]["base_results"]["price"]
     #λ = Dict((t, o) => dual(m[:demand_balance][t, o])/(W[t,o]*(P[o]*δ + dual_vals[o])) for t in T, o in O)
 
@@ -487,7 +509,7 @@ function residual_print(m)
 
     
 
-    filename = "gas_dispatch_delta_$(round(δ, digits=2)).csv"
+    filename = "dispatch_delta_$(round(δ, digits=2)).csv"
     # Extract dispatch for all generators, time steps, and scenarios
     rows = [(t, o, g, value(m.model[:q][g, t, o])) for g in G for t in T for o in O]
     # Create a DataFrame
@@ -495,6 +517,17 @@ function residual_print(m)
     # Save to CSV
     CSV.write(filename, df)
     println("Gas dispatch saved to '$filename'")
+
+
+
+    filename = "energy_charge_discharge_delta_$(round(δ, digits=2)).csv"
+    # Extract dispatch for all generators, time steps, and scenarios
+    rows = [(s, t, o,  value(m.model[:q_dch][s, t, o]), value(m.model[:q_ch][s, t, o]),value(m.model[:e][s, t, o]) ) for s in S for t in T for o in O]
+    # Create a DataFrame
+    df = DataFrame(rows, [:Storage, :Time, :Scenario, :Discharge, :Charge,:energy_level])
+    # Save to CSV
+    CSV.write(filename, df)
+    println("Storage dispatch saved to '$filename'")
 
 
 
