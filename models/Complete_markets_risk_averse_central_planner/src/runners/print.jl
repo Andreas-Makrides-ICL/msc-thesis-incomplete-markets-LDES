@@ -340,13 +340,25 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     dual_energy = Dict((s,t,o) => dual(m[:storage_energy_limits][s, t, o]) for s in S, t in T, o in O)
 
     # Scarcity rent  per storage asset
-    scarcity_rent_discharge = Dict(s => sum((dual_discharge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
-    scarcity_rent_charge = Dict(s => sum((dual_charge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
-    scarcity_rent_energy = Dict(s => sum((dual_energy[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o] for t in T, o in O) for s in S)
+    scarcity_rent_discharge = Dict(s => sum((-dual_discharge[(s,t,o)]/ (δ * P[o] + abs(dual_vals[o])))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge = Dict(s => sum((-dual_charge[(s,t,o)]/ (δ * P[o] + abs(dual_vals[o])))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy = Dict(s => sum((-dual_energy[(s,t,o)]/ (δ * P[o] + abs(dual_vals[o])))* W[t,o] for t in T, o in O) for s in S)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge1 = Dict(s => sum((-dual_discharge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge1 = Dict(s => sum((-dual_charge[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy1 = Dict(s => sum((-dual_energy[(s,t,o)]/ (δ * P[o] + dual_vals[o]))* W[t,o] for t in T, o in O) for s in S)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge2 = Dict(s => sum(-dual_discharge[(s,t,o)] * P[o] * W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge2 = Dict(s => sum(-dual_charge[(s,t,o)] * P[o] * W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy2 = Dict(s => sum(-dual_energy[(s,t,o)] * P[o] * W[t,o] for t in T, o in O) for s in S)
 
     
     for s in S
         println("Storage $(s) : scarcity_rent_discharge = $(scarcity_rent_discharge[s]), scarcity_rent_charge = $(scarcity_rent_charge[s]), scarcity_rent_energy = $(scarcity_rent_energy[s])")
+        println("Storage $(s) : scarcity_rent_discharge1 = $(scarcity_rent_discharge1[s]), scarcity_rent_charge1 = $(scarcity_rent_charge1[s]), scarcity_rent_energy1 = $(scarcity_rent_energy1[s])")
+        println("Storage $(s) : scarcity_rent_discharge2 = $(scarcity_rent_discharge2[s]), scarcity_rent_charge2 = $(scarcity_rent_charge2[s]), scarcity_rent_energy2 = $(scarcity_rent_energy2[s])")
     end
     
     filename = "scarcity_rent_delta_$(round(δ, digits=2)).csv"

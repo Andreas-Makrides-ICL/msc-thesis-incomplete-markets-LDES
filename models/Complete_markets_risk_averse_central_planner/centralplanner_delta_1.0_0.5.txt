@@ -6,7 +6,7 @@ Risk aversion (δ): 1.0, CVaR confidence (Ψ): 0.5
 ------------------------------------------------------------------------------------------------------------------
 Iter  Primal Conv.  Dual Conv.    PV          Wind OnshoreWind OffshoreGas         Nuclear     BESS Pwr.   BESS En.    Duration    H2 Pwr.     H2 En.      Dur_PHS     Time      Total Time
 ------------------------------------------------------------------------------------------------------------------
-CENT   -             -            134.53      51.90       93.41       4.00        48.68       4.90        440.67      89.93       24.50       98.00       4.00        44.58s    44.58s    
+CENT   -             -            134.53      51.90       93.41       4.00        48.68       4.90        440.67      89.93       24.50       98.00       4.00        41.98s    41.98s    
 
 Total Installed Capacity: 361.91 MW
 
@@ -65,8 +65,12 @@ CVaR Term ((1 - δ) * CVaR) :       -0.0
   ↳ u_total[o]:                    Dict(29 => 1956.3, 7 => 1956.3087, 12 => 1956.2913, 24 => 1956.2051, 30 => 1956.1272, 8 => 1956.2154, 1 => 1956.3948, 19 => 1956.1946, 22 => 1956.0715, 13 => 1956.1506, 23 => 1956.2913, 4 => 1956.4681, 11 => 1956.173, 27 => 1956.1506, 26 => 1956.2255)
 Full Objective Value:             4.791291589341733e9
 ===========================================
-Storage H2 : scarcity_rent_discharge = -3.687474073612434e7, scarcity_rent_charge = -5.119578031659646e7, scarcity_rent_energy = -271038.6905555722
-Storage BESS : scarcity_rent_discharge = -218.00395703500516, scarcity_rent_charge = -263.2350473703803, scarcity_rent_energy = -4.70982980313252e6
+Storage H2 : scarcity_rent_discharge = 3.687474073612434e7, scarcity_rent_charge = 5.119578031659646e7, scarcity_rent_energy = 271038.6905555722
+Storage H2 : scarcity_rent_discharge1 = 3.687474073612434e7, scarcity_rent_charge1 = 5.119578031659646e7, scarcity_rent_energy1 = 271038.6905555722
+Storage H2 : scarcity_rent_discharge2 = 163887.73834150608, scarcity_rent_charge2 = 227536.80384768813, scarcity_rent_energy2 = 1204.6164152553656
+Storage BESS : scarcity_rent_discharge = 218.00395703500516, scarcity_rent_charge = 263.2350473703803, scarcity_rent_energy = 4.70982980313252e6
+Storage BESS : scarcity_rent_discharge1 = 218.00395703500516, scarcity_rent_charge1 = 263.2350473703803, scarcity_rent_energy1 = 4.70982980313252e6
+Storage BESS : scarcity_rent_discharge2 = 0.9689064860367231, scarcity_rent_charge2 = 1.1699335563333093, scarcity_rent_energy2 = 20932.577125672822
 Full duals saved to 'scarcity_rent_delta_1.0.csv'
 Generator PV : expected = -48.010984656983055, cvar = -2.7863188682175945e7, ρ=-48.010984656983055, net_revenues=1.3931546330103315e7
 Generator Wind_Onshore : expected = 5.084523668740091e6, cvar = -1.3019423915551387e7, ρ=5.084523668740091e6, net_revenues=1.1594235626515783e7
