@@ -365,7 +365,6 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         println("Storage $(s) : scarcity_rent_discharge1 = $(scarcity_rent_discharge1[s]), scarcity_rent_charge1 = $(scarcity_rent_charge1[s]), scarcity_rent_energy1 = $(scarcity_rent_energy1[s])")
         println("Storage $(s) : scarcity_rent_discharge2 = $(scarcity_rent_discharge2[s]), scarcity_rent_charge2 = $(scarcity_rent_charge2[s]), scarcity_rent_energy2 = $(scarcity_rent_energy2[s])")
         println("Storage $(s) : scarcity_rent_discharge3 = $(scarcity_rent_discharge3[s]), scarcity_rent_charge3 = $(scarcity_rent_charge3[s]), scarcity_rent_energy3 = $(scarcity_rent_energy3[s])")
-
     end
     
     filename = "scarcity_rent_delta_$(round(δ, digits=2)).csv"
