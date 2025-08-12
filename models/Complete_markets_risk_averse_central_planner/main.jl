@@ -175,7 +175,7 @@ for delta in [1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #
             Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
             H2_P = safeget(cap, :x_P, "H2"),
             H2_E = safeget(cap, :x_E, "H2"),
-            Duration_PHS = safe_div(safeget(cap, :x_E, "H2"), safeget(cap, :x_P, "H2"))
+            Duration_H2 = safe_div(safeget(cap, :x_E, "H2"), safeget(cap, :x_P, "H2"))
         ))
     end
 end
