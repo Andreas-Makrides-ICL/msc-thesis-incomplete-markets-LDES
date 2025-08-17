@@ -9,7 +9,7 @@ Storage H2 : scarcity_rent_discharge2 = 146774.45946978693, scarcity_rent_charge
 Storage H2 : scarcity_rent_discharge3 = 165339.43561693662, scarcity_rent_charge3 = 332675.8789821776, scarcity_rent_energy3 = 2574.3815497564046
 Storage BESS : scarcity_rent_discharge = 398005.85130550514, scarcity_rent_charge = 5.991856155218917e6, scarcity_rent_energy = 3.1881309933652724e6
 Storage BESS : scarcity_rent_discharge1 = 398005.85130550514, scarcity_rent_charge1 = 5.991856155218917e6, scarcity_rent_energy1 = 3.1881309933652724e6
-Storage BESS : scarcity_rent_discharge2 = 1757.2010917036512, scarcity_rent_charge2 = 27311.229120346612, scarcity_rent_energy2 = 13360.025715136422
+Storage BESS : scarcity_rent_discharge2 = 1757.2010917036512, scarcity_rent_charge2 = 27311.229120346612 (27081.22912), scarcity_rent_energy2 = 13360.025715136422
 Storage BESS : scarcity_rent_discharge3 = 8690.539728450747, scarcity_rent_charge3 = 87156.46812727151, scarcity_rent_energy3 = 29474.351112842607
 Storage H2 : nn = 1.0029750096242579e6, nnn1 = 706881.3474388788 , nnn2 = 291186.52167867514 , nnn = 998067.8691175503
 Storage BESS : nn = 3.826214066136026e6, nnn1 = 1.0633437254525414e6 , nnn2 = 3.45915334486262e6 , nnn = 4.522497070315122e6

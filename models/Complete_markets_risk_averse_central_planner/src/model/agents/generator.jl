@@ -113,20 +113,40 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     if !update_prices
         # Generation Limits: Ensures generator output does not exceed capacity times availability
-        @constraint(m, gen_limits[g in G, t in T, o in O], 
-            (g in A.axes[3] || g in G_VRE ? m[:x_g][g] * A[t, o, g] : m[:x_g][g]) >= m[:q][g, t, o]
+        #@constraint(m, gen_limits[g in G, t in T, o in O], 
+        #    (g in A.axes[3] || g in G_VRE ? m[:x_g][g] * A[t, o, g] : m[:x_g][g]) >= m[:q][g, t, o]
+        #)
+"""
+        @constraint(m, gen_limits[g in G, t in T, o in O],
+            m[:q][g, t, o] <= (
+                (g in A.axes[3] || g in G_VRE) ?
+                    (g == "Wind_Offshore" ?
+                        m[:x_g][g] * min(1.0, 1.6 * A[t, o, g]) :
+                    g == "Wind_Onshore" ?
+                        m[:x_g][g] * min(1.0, 1.3 * A[t, o, g]) :
+                    g == "PV" ?
+                        m[:x_g][g] * min(1.0, 0.8 * A[t, o, g]) :
+                        m[:x_g][g] * A[t, o, g]
+                    ) :
+                    m[:x_g][g]
+            )
+        )
+"""
+        @constraint(m, gen_limits[g in G, t in T, o in O],
+            m[:q][g, t, o] <= (
+                (g in A.axes[3] || g in G_VRE) ?
+                    (g == "Wind_Offshore" ?
+                        m[:x_g][g] * min(1.0, A[t, o, g]) :
+                    g == "Wind_Onshore" ?
+                        m[:x_g][g] * min(1.0, A[t, o, g]) :
+                    g == "PV" ?
+                        m[:x_g][g] * min(1.0, A[t, o, g]) :
+                        m[:x_g][g] * A[t, o, g]
+                    ) :
+                    m[:x_g][g]
+            )
         )
 
-        #@constraint(m, gen_limits[g in G, t in T, o in O],
-        #    m[:q][g, t, o] <= (
-        #        (g in A.axes[3] || g in G_VRE) ?
-        #            (g == "Wind_Offshore" ?
-        #                m[:x_g][g] * min(1.0, 1.2 * A[t, o, g]) :
-        #                m[:x_g][g] * A[t, o, g]
-        #            ) :
-        #            m[:x_g][g]
-        #    )
-        #)
     end
 
     # Check if CVaR constraint already exists
@@ -188,7 +208,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
         # --- Nuclear Minimum Stable Output Constraint ---
     min_output_frac = 0.5  # Minimum output is 50% of installed capacity
-    nuclear_fraction = 0.04
+    nuclear_fraction = 0.09
 
     for g in G
         if g == "Nuclear"
@@ -199,9 +219,11 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         end
     end
 
-    @constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
-    @constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
-    @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.62 * setup["peak_demand"])
+    #@constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
+    #@constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
+    @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.50 * setup["peak_demand"]) #0.62 prin
+    @constraint(m, m[:x_g]["PV"] ≤ 0.80 * setup["peak_demand"])
+
 
     gas_gen = 0.25
 
