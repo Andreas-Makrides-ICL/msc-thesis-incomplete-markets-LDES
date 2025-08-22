@@ -8,8 +8,8 @@ Created on Tue Aug  5 16:41:30 2025
 import pandas as pd
 
 # Load the duals and time weights CSV files
-duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\trycodes_3_FINAL\scarcity_rent_delta_0.25.csv")  # e.g. duals.csv
-weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\trycodes_3_FINAL\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
+duals_df = pd.read_csv(r)  # e.g. duals.csv
+weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
 
 # Filter the scenarios
 scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
