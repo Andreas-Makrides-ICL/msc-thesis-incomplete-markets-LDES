@@ -8,7 +8,7 @@ Created on Tue Aug  5 16:41:30 2025
 import pandas as pd
 
 # Load the duals and time weights CSV files
-duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\trycodes_3_FINAL\scarcity_rent_delta_0.5.csv")  # e.g. duals.csv
+duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\trycodes_3_FINAL\scarcity_rent_delta_0.25.csv")  # e.g. duals.csv
 weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\trycodes_3_FINAL\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
 
 # Filter the scenarios
@@ -29,13 +29,17 @@ for storage in merged["Storage"].unique():
     df = merged[merged["Storage"] == storage]
     
     scarcity_rent_discharge = sum(-df["Dual_discharge"] * p_o * df["value"])
-    scarcity_rent_charge = sum(-df["Dual_charge"] * p_o * df["value"])
+    scarcity_rent_charge = sum((-df["Dual_charge"] -df["Dual_discharge"])* p_o * df["value"])
     scarcity_rent_energy = sum(-df["Dual_energy"]* p_o * df["value"])
+    scarcity_rent_power_perMW = sum(-df["Dual_charge"]-df["Dual_discharge"])
+    scarcity_rent_energy_perMWh = sum(-df["Dual_energy"])
     
     results[storage] = {
         "Scarcity_Rent_discharge": scarcity_rent_discharge,
         "Scarcity_Rent_charge": scarcity_rent_charge,
-        "Scarcity_Rent_energy": scarcity_rent_energy
+        "Scarcity_Rent_energy": scarcity_rent_energy,
+        "scarcity_rent_power_perMW": scarcity_rent_power_perMW,
+        "scarcity_rent_energy_perMWh": scarcity_rent_energy_perMWh
     }
 
 # Show the results

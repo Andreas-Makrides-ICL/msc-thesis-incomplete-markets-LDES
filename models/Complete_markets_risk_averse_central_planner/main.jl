@@ -17,6 +17,7 @@ function run_central_planner(data, setup, solver)
     # Set solver attribute to suppress output
     if solver == "CPLEX"
         set_attribute(m.model, "CPX_PARAM_SCRIND", 0)  # CPLEX: print progress
+        set_attribute(m.model, "CPXPARAM_Barrier_ConvergeTol", 1e-12)
     elseif solver == "Gurobi"
         set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs

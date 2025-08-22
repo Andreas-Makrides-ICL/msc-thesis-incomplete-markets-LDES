@@ -338,6 +338,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     dual_discharge = Dict((s,t,o) => dual(m[:discharging_limits][s, t, o]) for s in S, t in T, o in O)
     dual_charge = Dict((s,t,o) => dual(m[:charging_limits][s, t, o]) for s in S, t in T, o in O)
     dual_energy = Dict((s,t,o) => dual(m[:storage_energy_limits][s, t, o]) for s in S, t in T, o in O)
+    
 
     # Scarcity rent  per storage asset
     scarcity_rent_discharge = Dict(s => sum((-dual_discharge[(s,t,o)]/ (δ * P[o] + abs(dual_vals[o])))* W[t,o]  for t in T, o in O) for s in S)
@@ -378,18 +379,19 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
 
     prc=Dict((t, o) => dual(m[:demand_balance][t, o]) for t in T, o in O)
     nn= Dict(s => sum(prc[(t,o)] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) for t in T, o in O) for s in S)
-    
+    n1 =Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)])*value(m[:x_P][s]) for t in T, o in O) for s in S)
+    n2 =Dict(s => sum((-dual_energy[(s,t,o)])*value(m[:x_E][s]) for t in T, o in O) for s in S)
+    n11 =Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)]) for t in T, o in O) for s in S)
+    n22 =Dict(s => sum((-dual_energy[(s,t,o)]) for t in T, o in O) for s in S)
     nnn=Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)])*value(m[:x_P][s]) + (-dual_energy[(s,t,o)])*value(m[:x_E][s]) for t in T, o in O) for s in S)
+    
     for s in S
-        println("Storage $(s) : nn = $(nn[s]), nnn = $(nnn[s])")
-        
+        println("Storage $(s) : revenues_from_price = $(nn[s]), revenues_from_scarcity_power = $(n1[s]), revenues_from_scarcity_energy = $(n2[s]), total_revenues_from_scarcity = $(nnn[s]), revenues_from_scarcity_power_perMW = $(n11[s]), revenues_from_scarcity_energy_perMWh = $(n22[s])")
+    
     end
 
 
-
-
-
-
+    
 
 
 
