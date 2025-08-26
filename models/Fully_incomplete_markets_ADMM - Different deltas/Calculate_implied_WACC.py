@@ -20,16 +20,16 @@ def implied_wacc(Cinv_net, Cinv_riskfree, N, WACC):
     return Rm_solution
 
 # Example usage
-example_Rm_for_PV = implied_wacc(Cinv_net=110068.5736, Cinv_riskfree=103561.363, N=25, WACC=0.062)
-example_Rm_for_Windon = implied_wacc(Cinv_net=238495.3858, Cinv_riskfree=125438.907, N=30, WACC=0.061)
-example_Rm_for_Windoff = implied_wacc(Cinv_net=440343.7914, Cinv_riskfree=339025.541, N=30, WACC=0.065)
-example_Rm_for_Nuclear = implied_wacc(Cinv_net=1417118.684, Cinv_riskfree=607878.207, N=60, WACC=0.07)
-example_Rm_for_Gas = implied_wacc(Cinv_net=243900.9097, Cinv_riskfree=426127.988, N=25, WACC=0.07)
+example_Rm_for_PV = implied_wacc(Cinv_net=114066.2989, Cinv_riskfree=103561.363, N=25, WACC=0.062)
+example_Rm_for_Windon = implied_wacc(Cinv_net=248244.7875, Cinv_riskfree=125438.907, N=30, WACC=0.061)
+example_Rm_for_Windoff = implied_wacc(Cinv_net=308366.399, Cinv_riskfree=339025.541, N=30, WACC=0.065)
+example_Rm_for_Nuclear = implied_wacc(Cinv_net=1343757.188, Cinv_riskfree=607878.207, N=60, WACC=0.07)
+example_Rm_for_Gas = implied_wacc(Cinv_net=2.34E+05, Cinv_riskfree=426127.988, N=25, WACC=0.07)
 
-example_Rm_for_LDES_P = implied_wacc(Cinv_net=391384.65439429076, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
-example_Rm_for_LDES_E = implied_wacc(Cinv_net=1354.1488894591064, Cinv_riskfree=1491.189025, N=18, WACC=0.07)
-example_Rm_for_BESS_P = implied_wacc(Cinv_net=54162.45824, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
-example_Rm_for_BESS_E = implied_wacc(Cinv_net=30700.799, Cinv_riskfree=17524.09595, N=20, WACC=0.06)
+example_Rm_for_LDES_P = implied_wacc(Cinv_net=478271.356625686, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
+example_Rm_for_LDES_E = implied_wacc(Cinv_net=2042.34644695941, Cinv_riskfree=1491.189025, N=18, WACC=0.07)
+example_Rm_for_BESS_P = implied_wacc(Cinv_net=50442.03223225109, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
+example_Rm_for_BESS_E = implied_wacc(Cinv_net=21035.098957088834, Cinv_riskfree=17524.09595, N=20, WACC=0.06)
 
 # this is for risk neutral
 example_Rm_for_LDES_P = implied_wacc(Cinv_net=391384.22369767685, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
