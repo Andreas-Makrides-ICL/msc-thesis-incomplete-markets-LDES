@@ -117,26 +117,18 @@ setup["tolerance"] = 0.01
 setup["objective"] = "central"
 setup["use_hierarchical_clustering"] = true
 
-"""
-setup["δ"] = 1   # Risk aversion coefficient - > 1 means risk neutral for validation of ADMM
-setup["Ψ"] = 0.5
-
-data = load_data(setup, user_sets = Dict("O" => 1:3, "T" => 1:150));
-m = run_central_planner(data, setup, solver);
-
-"""
 
 results = []
-for delta in [1]#[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
-        set1_lowest = [21, 6, 10, 9, 14, 17, 15, 3, 18, 28, 2, 25, 20, 5, 19]
-        set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
-        set3_manual = [6, 10, 14, 17, 18, 20, 12, 11, 7, 23, 8, 24, 30, 1, 26, 29, 13, 4]
-        set4_stable_core = [ 24, 25, 26, 27, 28, 29, 30]
+        
+        # Just to make sure all scenarios are included of the processed data
+        set_scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
+        
 
-        data = load_data(setup, user_sets = Dict("O" => set2_middle, "T" => 1:672));
+        data = load_data(setup, user_sets = Dict("O" => set_scenarios, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup, solver);
 
@@ -184,7 +176,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
-#Print the model for inspection
-#print_model_structure_symbolic(m.model)
+CSV.write("complete_markets_results.csv", df)
+
 

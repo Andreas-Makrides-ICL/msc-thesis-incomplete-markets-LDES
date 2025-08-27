@@ -62,20 +62,7 @@ function define_objective!(model; expected_value::Bool=false)
     for sym in [:total_costs, :objective_expr]
         maybe_remove_expression(m, sym)
     end
-    """
-    if δ==1.0
-        y=0
-    elseif δ==0.75
-        j=0.15
-        y=0
-    elseif δ==0.50
-        j=0.130
-        y=0
-    elseif δ==0.25
-        j=0.101
-        y=0
-    end
-    """
+    
     # Remove existing variables and constraints (only if they exist)
     for sym in [:u_total, :ζ_total]
         if haskey(m, sym)
@@ -136,12 +123,10 @@ function define_objective!(model; expected_value::Bool=false)
                 # Define Objective Function Expression: Demand value minus total costs, adjusted for risk aversion
                 @expression(m, objective_expr, 
                     δ * sum(P[o] * (m[:demand_value][o] - total_costs[o]) for o in O) + 
-                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) #- (δ) * (gas_price * 0.3294 * co2 * factor_gas_price) #- y*(1 - δ) * (j*sum(m[:unserved_fixed_cost][o] for o in O))
+                    (1 - δ) * (ζ_total - (1 / Ψ) * sum(P[o] * u_total[o] for o in O)) 
                 )
             end
 
-            #@variable(m,obj_value)  # Register the objective expression
-            #@constraint(m, obj_value == objective_expr)  # Register the objective expression as a constraint
         else
             # Define Objective Function Expression: Expected value without risk aversion
             @expression(m, objective_expr, 

@@ -1,4 +1,4 @@
-using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, RiskMeasures, Distributions#,CPLEX
+using DataFrames, CSV, Statistics, JuMP, Gurobi, LinearAlgebra, Random, Dates, Printf, Plots, MathOptInterface, RiskMeasures, Distributions,CPLEX
 
 include("src/_init_.jl");
 
@@ -14,14 +14,14 @@ function run_ADMM(data, setup, solver, delta)
     # Initialize the optimization model
     m = OptimizationModel(data, setup = setup, solver=solver)
     # Set solver attribute to suppress output
-    #if solver == "CPLEX"
-    #    set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
-    #    set_optimizer_attribute(m.model, "CPX_PARAM_THREADS", 10)
-    #    #set_optimizer_attribute(m.model, "CPX_PARAM_SCAIND", 1)  # Enable scaling: 0 for equilibrium scaling (default), 1 for aggressive scaling
-    if solver == "Gurobi"
+    if solver == "CPLEX"
+        set_attribute(m.model, "CPX_PARAM_SCRIND", 1)  # CPLEX: print progress
+        set_optimizer_attribute(m.model, "CPX_PARAM_THREADS", 10)
+        #set_optimizer_attribute(m.model, "CPX_PARAM_SCAIND", 1)  # Enable scaling: 0 for equilibrium scaling (default), 1 for aggressive scaling
+    elseif solver == "Gurobi"
         set_optimizer_attribute(m.model, "OutputFlag", 1)      # print Gurobi output
         set_optimizer_attribute(m.model, "QCPDual", 1)         # allow duals for QCPs
-        #set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
+        set_optimizer_attribute(m.model, "NonConvex", 2)       # allow nonconvex QPs/QCPs
         #set_optimizer_attribute(m.model, "LogFile", "gurobi_log1.txt")
         set_optimizer_attribute(m.model, "Threads", 6)
     else
@@ -135,6 +135,7 @@ function run_ADMM(data, setup, solver, delta)
         total_time = time() - total_start_time
         print_iteration(m, iter, total_time)
 
+    
         # Check convergence
         if iter > 1
             converged = check_convergence(m, iter, tolerance)
@@ -157,8 +158,8 @@ function run_ADMM(data, setup, solver, delta)
 
     if termination_status(m.model) == MOI.OPTIMAL
         # Then call the function with output redirected
-        filename = "H2_15000_1_075_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
-        str = "H2_15000_1_075"
+        filename = "H2_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
+        str = "H2"
         open(filename, "w") do io
             redirect_stdout(io) do
                 print_agents_objective_breakdown(m,str)
@@ -166,6 +167,14 @@ function run_ADMM(data, setup, solver, delta)
         end
     else
         println("Model did not solve to optimality — skipping breakdown.")
+        # Then call the function with output redirected
+        filename = "H2_agent_objective_breakdown_delta_$(round(delta, digits=2)).txt"
+        str = "H2"
+        open(filename, "w") do io
+            redirect_stdout(io) do
+                print_agents_objective_breakdown(m,str)
+            end
+        end
     end
 
     return m
@@ -201,24 +210,31 @@ m = run_ADMM(data, setup);
 
 
 results = []
-for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.00,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         
-        set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
+        # make sure you include all scenarios
+        set_scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
 
         local_setup = copy(default_setup)
-        local_setup["max_iterations"] = 10000
-        local_setup["penalty"] = 1.1
-        local_setup["tolerance"] = 0.008
+        local_setup["max_iterations"] = 798
+
+        # Tune accordingly
+        local_setup["penalty"] = 2
+        # Tune accordingly
+        local_setup["tolerance"] =  
+
+
+
         local_setup["use_hierarchical_clustering"] = true
         local_setup["factor_gas_price"] = 1
         local_setup["δ"] = delta
         local_setup["Ψ"] = psi
-        solver = "Gurobi"
-        #setup["δ"] = delta
-        #setup["Ψ"] = psi
+        # Choose solver
+        solver = "CPLEX" #or "Gurobi"
+       
 
-        data = load_data(local_setup, user_sets = Dict("O" => set2_middle, "T" => 1:672));
+        data = load_data(local_setup, user_sets = Dict("O" => set_scenarios, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_ADMM(data, local_setup, solver, delta);
 
@@ -242,10 +258,10 @@ for delta in [1]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_P = safeget(cap, :x_P, "BESS"),
             BESS_E = safeget(cap, :x_E, "BESS"),
-            Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
-            LDES_PHS_P = safeget(cap, :x_P, "H2"),
-            LDES_PHS_E = safeget(cap, :x_E, "H2"),
-            Duration_PHS = safe_div(safeget(cap, :x_E, "H2"), safeget(cap, :x_P, "H2"))
+            #Duration = safe_div(safeget(cap, :x_E, "BESS"), safeget(cap, :x_P, "BESS")),
+            LDES_H2_P = safeget(cap, :x_P, "H2"),
+            LDES_H2_E = safeget(cap, :x_E, "H2"),
+            #Duration_PHS = safe_div(safeget(cap, :x_E, "H2"), safeget(cap, :x_P, "H2"))
         ))
 
     end
@@ -254,6 +270,6 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("H2_15000_1_075_ADMM_risk_aversion_results_O30_T672_new_final.csv", df)
+CSV.write("H2_15000_05_ADMM_risk_aversion_results_O30_T672_new_final.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)

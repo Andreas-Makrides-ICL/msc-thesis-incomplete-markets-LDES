@@ -111,8 +111,7 @@ function define_objective!(model; expected_value::Bool=false)
                 )  
             end          
 
-            #@variable(m,obj_value)  # Register the objective expression
-            #@constraint(m, obj_value == objective_expr)  # Register the objective expression as a constraint
+        
         else
             # Define Objective Function Expression: Expected value without risk aversion
             @expression(m, objective_expr, 

@@ -566,11 +566,11 @@ function print_agents_objective_breakdown(m, str::String)
 
     # Consumer (only one set of variables)
     println("\n--- Consumer ---")
-    #ζ = value(m.model[:ζ_d])
-    #u_vals = Dict(o => value(m.model[:u_d][o]) for o in O)
-    #u_avg = sum(P[o] * u_vals[o] for o in O)
+    ζ = value(m.model[:ζ_d])
+    u_vals = Dict(o => value(m.model[:u_d][o]) for o in O)
+    u_avg = sum(P[o] * u_vals[o] for o in O)
     ρ = value(m.model[:ρ_d])
-    #expected = compute_expected_consumer_welfare(m)
+    expected = compute_expected_consumer_welfare(m)
 
     
 
@@ -584,20 +584,20 @@ function print_agents_objective_breakdown(m, str::String)
         println("For scenario $o: Demand value = $(round(dm, digits=4)), Energy costs = $(round(ec, digits=4))")
     end
 
-    #cvar = ζ - (1 / Ψ) * u_avg
-    #expected_term = δ * expected
-    #cvar_term = (1 - δ) * cvar
-    #println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
-    println("Consumer: ρ = $(round(ρ, digits=4)),  Expected = $(round(expected, digits=4))")
+    cvar = ζ - (1 / Ψ) * u_avg
+    expected_term = δ * expected
+    cvar_term = (1 - δ) * cvar
+    println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+    #println("Consumer: ρ = $(round(ρ, digits=4)),  Expected = $(round(expected, digits=4))")
 
-    #println("  Scenario breakdown for Consumer:")
-    #for o in O
-    #    u = value(m.model[:u_d][o])
-    #    d = dual(m.model[:cvar_tail_d][o])
-    #    tail_flag = u > 1e-6 ? "TAIL" : ""
-    #    println("    Scenario $o: ζd = $ζ, u = $u, dual = $d $tail_flag")
-    #    #println("    Scenario $o: u = $u $tail_flag")
-    #end
+    println("  Scenario breakdown for Consumer:")
+    for o in O
+        u = value(m.model[:u_d][o])
+        d = dual(m.model[:cvar_tail_d][o])
+        tail_flag = u > 1e-6 ? "TAIL" : ""
+        println("    Scenario $o: ζd = $ζ, u = $u, dual = $d $tail_flag")
+        #println("    Scenario $o: u = $u $tail_flag")
+    end
 
     println("=================================\n")
     
@@ -674,32 +674,6 @@ function print_agents_objective_breakdown(m, str::String)
         net = dv - tc
         println("Scenario $o: Demand Value = $(round(dv, digits=4)) [£], Total Cost = $tc [£], Net Welfare = $(round(net, digits=4)) [£]")
     end
-    # Compute net welfare per scenario
-    net_values = [value(m.model[:demand_value][o]) -
-                sum(value(m.model[:gen_total_costs][g, o]) for g in G) -
-                sum(value(m.model[:stor_total_costs][s, o]) for s in S)
-                for o in O]
-
-    # Extract scenario probabilities
-    p = [P[o] for o in O]
-
-    # Compute CVaR at level Ψ
-    #cvar_val = CVaR(net_values, p, Ψ)
-    #cvar_value=cvar_val.value
-    dist = DiscreteNonParametric(net_values, p)
-    cvar_val = CVaR(dist, Ψ)
-    println("\n=== CVaR using RiskMeasures.jl ===")
-    println("CVaR at Ψ = $Ψ: $cvar_val")
-
-    exp_term = sum(P[o] * (value(m.model[:demand_value][o]) - sum(value(m.model[:gen_total_costs][g, o]) for g in G) - sum(value(m.model[:stor_total_costs][s, o]) for s in S)) for o in O)
-
-    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_val
-
-    println("\n===== Social Welfare Fully Incomplete Markets =====")
-    println("Expected Term:     ", exp_term)
-    println("CVaR Term:       ", cvar_val)
-    println("CO2 price:       ", co2)
-    println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
-    println("===========================================")
+    
 
 end

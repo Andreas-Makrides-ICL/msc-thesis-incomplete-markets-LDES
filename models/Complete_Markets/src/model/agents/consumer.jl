@@ -57,6 +57,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     δ = data["data"]["additional_params"]["δ"]  # Risk aversion coefficient
     Ψ = data["data"]["additional_params"]["Ψ"]  # CVaR parameter
     B = data["data"]["additional_params"]["B"]  # Penalty for unserved energy
+    flexible_demand_share = (flexible_demand-1)/2
     peak_demand = data["data"]["additional_params"]["peak_demand"]  # Peak demand
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
         data["data"]["additional_params"]["λ"] : nothing  # Lagrange multipliers (Dict or nothing)
@@ -87,11 +88,12 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     end
     
     minWTP = 0
+    
     # Define Welfare Value of Demand (per scenario)
     if demand_type == "QP"
         @expression(m, demand_value[o in O], 
             sum(W[t, o] * (B) * 
-                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / ( ((flexible_demand-1) * D[t, o] * peak_demand))) 
+                (m[:d_fix][t, o] + m[:d_flex][t, o] - m[:d_flex][t, o]^2 / (2* flexible_demand_share * D[t, o] * peak_demand)) 
                 for t in T)
         )
         #@expression(m, demand_value[o in O], 
