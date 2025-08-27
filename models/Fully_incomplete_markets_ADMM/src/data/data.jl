@@ -208,7 +208,7 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
         "factor_gas_price" => get(setup, "factor_gas_price", 10),
         "N_cvar" => N_cvar,            # Number of CVaR scenarios
         "P" => P,                       # Scenario probabilities
-        "flexible_demand" => get(setup, "flexible_demand", 2),
+        "flexible_demand" => get(setup, "flexible_demand", 1.1),
     )
 
     if verbose

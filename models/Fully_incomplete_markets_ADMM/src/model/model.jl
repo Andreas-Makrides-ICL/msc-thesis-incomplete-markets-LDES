@@ -42,9 +42,10 @@ mutable struct OptimizationModel
         # Configure solver settings using Gurobi-specific function
         optimizer = configure_gurobi()
         
-        if solver == "CPLEX"
-            m = Model(CPLEX.Optimizer)  # CPLEX
-        elseif solver == "Gurobi"
+        #if solver == "CPLEX"
+        #    m = Model(CPLEX.Optimizer)  # CPLEX
+        #else
+        if solver == "Gurobi"
             m = Model(Gurobi.Optimizer)      # Gurobi 
         else
             error("Unsupported solver. Choose 'CPLEX' or 'Gurobi'.")

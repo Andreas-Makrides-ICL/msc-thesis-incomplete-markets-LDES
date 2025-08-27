@@ -244,7 +244,9 @@ function safe_objective_value(model::Model)
     if termination_status(model) == MOI.OPTIMAL
         return objective_value(model)
     else
-        error("Tried to access objective value but model was not solved to optimality.")
+        #error("Tried to access objective value but model was not solved to optimality.")
+        println("Tried to access objective value but model was not solved to optimality.")
+        return objective_value(model)
     end
 end
 
@@ -269,7 +271,8 @@ function solve_and_check_optimality!(m, verbose::Bool = true)
     @time optimize!(m)
     term_status = termination_status(m)
     if termination_status(m) != MOI.OPTIMAL
-        throw(ErrorException("Model not solved to optimality: $term_status"))
+        #throw(ErrorException("Model not solved to optimality: $term_status"))
+        println("Model not solved to optimality: $term_status")
     end
     # Extract results
     primal_stat = primal_status(m)

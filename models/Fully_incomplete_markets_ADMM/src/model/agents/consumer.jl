@@ -156,8 +156,8 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
     end
 
     # Consumer risk-adjusted welfare: Weighted sum of expected welfare minus costs and CVaR    
-    #@expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
-
+    @expression(m, ρ_d, sum(P[o] * (m[:demand_value][o] - (price_available ? m[:energy_cost][o] : 0)) for o in O))
+"""
 
     if δ==1.0
         # Consumer risk-adjusted welfare: Weighted sum of expected welfare minus costs and CVaR
@@ -188,7 +188,7 @@ function define_consumer!(model; remove_first::Bool=false, update_prices::Bool=f
             )
         end
     end
-
+"""
     if update_prices
         return  # Exit after updating constraints without redefining other expressions or constraints
     end

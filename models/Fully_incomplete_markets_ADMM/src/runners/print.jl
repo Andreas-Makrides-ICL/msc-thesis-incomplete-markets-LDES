@@ -365,18 +365,91 @@ function print_agents_objective_breakdown(m, str::String)
     B = m.data["data"]["additional_params"]["B"]
     peak = m.data["data"]["additional_params"]["peak_demand"]
     flex = m.setup["flexible_demand"]
+
+
+    dual_val_s = Dict((s,o) => dual(m.model[:cvar_tail_s][s, o]) for s in S, o in O)
+
     
-    filename = "prices_delta_$(round(δ, digits=2)).csv"
+    dual_discharge = Dict((s,t,o) => dual(m.model[:discharging_limits][s, t, o]) for s in S, t in T, o in O)
+    dual_charge = Dict((s,t,o) => dual(m.model[:charging_limits][s, t, o]) for s in S, t in T, o in O)
+    dual_energy = Dict((s,t,o) => dual(m.model[:storage_energy_limits][s, t, o]) for s in S, t in T, o in O)
+
+   
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge = Dict(s => sum((-dual_discharge[(s,t,o)]/ (δ * P[o] + abs(dual_val_s[(s,o)])))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge = Dict(s => sum((-dual_charge[(s,t,o)]/ (δ * P[o] + abs(dual_val_s[(s,o)])))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy = Dict(s => sum((-dual_energy[(s,t,o)]/ (δ * P[o] + abs(dual_val_s[(s,o)])))* W[t,o] for t in T, o in O) for s in S)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge1 = Dict(s => sum((-dual_discharge[(s,t,o)]/ (δ * P[o] + dual_val_s[(s,o)]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge1 = Dict(s => sum((-dual_charge[(s,t,o)]/ (δ * P[o] + dual_val_s[(s,o)]))* W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy1 = Dict(s => sum((-dual_energy[(s,t,o)]/ (δ * P[o] + dual_val_s[(s,o)]))* W[t,o] for t in T, o in O) for s in S)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge2 = Dict(s => sum(-dual_discharge[(s,t,o)] * P[o] * W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_charge2 = Dict(s => sum(-dual_charge[(s,t,o)] * P[o] * W[t,o]  for t in T, o in O) for s in S)
+    scarcity_rent_energy2 = Dict(s => sum(-dual_energy[(s,t,o)] * P[o] * W[t,o] for t in T, o in O) for s in S)
+
+    # Scarcity rent  per storage asset
+    scarcity_rent_discharge3 = Dict(s => sum((-dual_discharge[(s,t,o)]/ (W[t,o] *(δ * P[o] + dual_val_s[(s,o)]))) for t in T, o in O) for s in S)
+    scarcity_rent_charge3 = Dict(s => sum((-dual_charge[(s,t,o)]/ (W[t,o] *(δ * P[o] + dual_val_s[(s,o)])))  for t in T, o in O) for s in S)
+    scarcity_rent_energy3 = Dict(s => sum((-dual_energy[(s,t,o)]/ (W[t,o] *(δ * P[o] + dual_val_s[(s,o)]))) for t in T, o in O) for s in S)
+
+    for s in S
+        println("Storage $(s) : scarcity_rent_discharge = $(scarcity_rent_discharge[s]), scarcity_rent_charge = $(scarcity_rent_charge[s]), scarcity_rent_energy = $(scarcity_rent_energy[s])")
+        println("Storage $(s) : scarcity_rent_discharge1 = $(scarcity_rent_discharge1[s]), scarcity_rent_charge1 = $(scarcity_rent_charge1[s]), scarcity_rent_energy1 = $(scarcity_rent_energy1[s])")
+        println("Storage $(s) : scarcity_rent_discharge2 = $(scarcity_rent_discharge2[s]), scarcity_rent_charge2 = $(scarcity_rent_charge2[s]), scarcity_rent_energy2 = $(scarcity_rent_energy2[s])")
+        println("Storage $(s) : scarcity_rent_discharge3 = $(scarcity_rent_discharge3[s]), scarcity_rent_charge3 = $(scarcity_rent_charge3[s]), scarcity_rent_energy3 = $(scarcity_rent_energy3[s])")
+    end
+    
+
+    
+    nn= Dict(s => sum(λ[t, o] * (value(m.model[:q_dch][s, t, o]) - value(m.model[:q_ch][s, t, o])) for t in T, o in O) for s in S)
+    n1=Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)])*value(m.model[:x_P][s]) for t in T, o in O) for s in S)
+    n2=Dict(s => sum((-dual_energy[(s,t,o)])*value(m.model[:x_E][s]) for t in T, o in O) for s in S)
+    n11=Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)]) for t in T, o in O) for s in S)
+    n22=Dict(s => sum((-dual_energy[(s,t,o)]) for t in T, o in O) for s in S)
+    nnn=Dict(s => sum((-dual_discharge[(s,t,o)]-dual_charge[(s,t,o)])*value(m.model[:x_P][s]) + (-dual_energy[(s,t,o)])*value(m.model[:x_E][s]) for t in T, o in O) for s in S)
+    for s in S
+        println("Storage $(s) : revenues_from_price = $(nn[s]), revenues_from_scarcity_power = $(n1[s]), revenues_from_scarcity_energy = $(n2[s]), total_revenues_from_scarcity = $(nnn[s]), revenues_from_scarcity_power_perMW = $(n11[s]), revenues_from_scarcity_energy_perMWh = $(n22[s])")
+        
+    end
+
+    filename = "scarcity_rent_delta_$(round(δ, digits=2)).csv"
+    rows = [(s, t, o, dual_discharge[(s,t,o)], dual_charge[(s,t,o)], dual_energy[(s,t,o)]) for s in S for t in T for o in O]
+    df = DataFrame(rows, [:Storage, :Time, :Scenario, :Dual_discharge, :Dual_charge, :Dual_energy])
+    CSV.write(filename, df)
+    println("Full duals saved to '$filename'")
+
+    filename = "dual_cvar_delta_$(round(δ, digits=2)).csv"
+    rows = [(s, o, dual_val_s[(s,o)]) for s in S for o in O]
+    df = DataFrame(rows, [:Storage, :Scenario, :dualcvarstorage])
+    CSV.write(filename, df)
+    println("Full duals saved to '$filename'")
+
+
+    
+    filename = "prices_delta_$(round(δ, digits=2))_$(str).csv"
     rows = [(t, o, λ[t, o]) for t in T for o in O]
     df = DataFrame(rows, [:Time, :Scenario, :price_model])
     CSV.write(filename, df)
 
-    filename = "dispatch_delta_$(round(δ, digits=2)).csv"
+    filename = "dispatch_delta_$(round(δ, digits=2))_$(str).csv"
     rows = [(t, o, g,  value(m.model[:q][g, t, o])) for g in G for t in T for o in O]
     df = DataFrame(rows, [:Time, :Scenario, :generator, :dispatch])
     CSV.write(filename, df)
 
-    filename = "served_demand_delta_$(round(δ, digits=2)).csv"
+    filename = "energy_charge_discharge_delta_$(round(δ, digits=2)).csv"
+    # Extract dispatch for all generators, time steps, and scenarios
+    rows = [(s, t, o,  value(m.model[:q_dch][s, t, o]), value(m.model[:q_ch][s, t, o]),value(m.model[:e][s, t, o]) ) for s in S for t in T for o in O]
+    # Create a DataFrame
+    df = DataFrame(rows, [:Storage, :Time, :Scenario, :Discharge, :Charge,:energy_level])
+    # Save to CSV
+    CSV.write(filename, df)
+    println("Storage dispatch saved to '$filename'")
+
+
+    filename = "served_demand_delta_$(round(δ, digits=2))_$(str).csv"
     rows = [(t, o, peak*demand[t,o], value(m.model[:d_fix][t, o]), value(m.model[:d_flex][t, o])) for t in T for o in O]
     df = DataFrame(rows, [:Time, :Scenario, :Dto, :dfix_to, :dflex_to])
     CSV.write(filename, df)
@@ -398,7 +471,7 @@ function print_agents_objective_breakdown(m, str::String)
     println("\n--- Generators ---")
     for g in G
         ζ = value(m.model[:ζ_g][g])
-        u_vals = [value(m.model[:u_g][g, o]) for o in O]
+        u_vals = Dict(o => value(m.model[:u_g][g, o]) for o in O)
         u_avg = sum(P[o] * u_vals[o] for o in O)
         ρ = value(m.model[:ρ_g][g])
         
@@ -406,32 +479,31 @@ function print_agents_objective_breakdown(m, str::String)
         gic = (gen_data[g, "C_inv"] * gen_data[g, "CRF"] + gen_data[g, "FOMg"] )* value(m.model[:x_g][g])
 
         expected = 0.0
+        avg_net_rev = 0.0
         for o in O
             πg = sum(W[t, o] * λ[t, o] * value(m.model[:q][g, t, o]) for t in T)
             gvc = sum(W[t, o] * gen_data[g, "C_v"] * value(m.model[:q][g, t, o]) for t in T)
             gtc = gic + gvc
 
             expected += P[o] * (πg - gtc)
-
+            
             #check with expressions
             genrev = value(m.model[:π_g][g, o])
             genvar = value(m.model[:gen_variable_costs][g, o])
             ginvestment = (m.model[:gen_investment_costs][g])
             generators_total_costs = value(m.model[:gen_total_costs][g, o])
             netrev= πg - gvc
+            avg_net_rev += P[o] *netrev
             println("Net revenue for scenario $o: net rev = $netrev")
             println("(Manual Calculation) For scenario $o: π_g = $(round(πg, digits=4)), TCG = $(round(gtc, digits=4)), IGC = $(round(gic, digits=4)), VGC = $(round(gvc, digits=4))")
             println("(From model expression) For scenario $o: π_g = $(round(genrev, digits=4)), TCG = $(round(generators_total_costs, digits=4)), IGC = $ginvestment, VGC = $genvar")
         end
 
-
         cvar = ζ - (1 / Ψ) * u_avg
         expected_term = δ * expected
         cvar_term = (1 - δ) * cvar
 
-        
-
-        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+        println("Gen $g: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), CO2 = $co2, Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)), Average Net Revenues = $(avg_net_rev)")
         
         println("  Scenario breakdown for Gen $g:")
         for o in O
@@ -447,7 +519,7 @@ function print_agents_objective_breakdown(m, str::String)
     println("\n--- Storage ---")
     for s in S
         ζ = value(m.model[:ζ_s][s])
-        u_vals = [value(m.model[:u_s][s, o]) for o in O]
+        u_vals = Dict(o => value(m.model[:u_s][s, o]) for o in O)
         u_avg = sum(P[o] * u_vals[o] for o in O)
         ρ = value(m.model[:ρ_s][s])
     
@@ -457,6 +529,7 @@ function print_agents_objective_breakdown(m, str::String)
         sic = (stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"] )* value(m.model[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m.model[:x_E][s])
 
         expected = 0.0
+        avg_net_revstor = 0.0
         for o in O
             πs = sum(W[t, o] * λ[t, o] * (value(m.model[:q_dch][s, t, o]) - value(m.model[:q_ch][s, t, o])) for t in T)
             stc = sic + svc
@@ -470,6 +543,7 @@ function print_agents_objective_breakdown(m, str::String)
             storinv=value(m.model[:stor_investment_costs][s])
 
             netrevstorage= πs - svc
+            avg_net_revstor += P[o] *netrevstorage
             println("Net revenue for scenario $o: net rev = $netrevstorage")
             println("(Manual Calculation) For scenario $o: π_s = $(round(πs, digits=4)), TCS = $(round(stc, digits=4)), VCS = $(round(svc, digits=4)), ICS = $(round(sic, digits=4))")
             println("(From model expression) For scenario $o: π_s = $(round(storrev, digits=4)), TCS = $(round(storage_total_costs, digits=4)), VCS = $(round(storvar, digits=4)), ICS = $(round(storinv, digits=4))")
@@ -478,7 +552,7 @@ function print_agents_objective_breakdown(m, str::String)
         cvar = ζ - (1 / Ψ) * u_avg
         expected_term = δ * expected
         cvar_term = (1 - δ) * cvar
-        println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+        println("Storage $s: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4)),  Average Net Revenues = $(avg_net_revstor)")
         
         println("  Scenario breakdown for Storage $s:")
         for o in O
@@ -492,9 +566,9 @@ function print_agents_objective_breakdown(m, str::String)
 
     # Consumer (only one set of variables)
     println("\n--- Consumer ---")
-    ζ = value(m.model[:ζ_d])
-    u_vals = [value(m.model[:u_d][o]) for o in O]
-    u_avg = sum(P[o] * u_vals[o] for o in O)
+    #ζ = value(m.model[:ζ_d])
+    #u_vals = Dict(o => value(m.model[:u_d][o]) for o in O)
+    #u_avg = sum(P[o] * u_vals[o] for o in O)
     ρ = value(m.model[:ρ_d])
     #expected = compute_expected_consumer_welfare(m)
 
@@ -510,20 +584,20 @@ function print_agents_objective_breakdown(m, str::String)
         println("For scenario $o: Demand value = $(round(dm, digits=4)), Energy costs = $(round(ec, digits=4))")
     end
 
-    cvar = ζ - (1 / Ψ) * u_avg
-    expected_term = δ * expected
-    cvar_term = (1 - δ) * cvar
-    println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
+    #cvar = ζ - (1 / Ψ) * u_avg
+    #expected_term = δ * expected
+    #cvar_term = (1 - δ) * cvar
+    #println("Consumer: ζ = $(round(ζ, digits=4)), ū = $(round(u_avg, digits=4)), ρ = $(round(ρ, digits=4)), Expected = $(round(expected, digits=4)), CVaR = $(round(cvar, digits=4)), Expected Term (δ * E[W - C]) = $(round(expected_term, digits=4)), CVaR Term ((1 - δ) * CVaR) = $(round(cvar_term, digits=4))")
     println("Consumer: ρ = $(round(ρ, digits=4)),  Expected = $(round(expected, digits=4))")
 
-    println("  Scenario breakdown for Consumer:")
-    for o in O
-        u = value(m.model[:u_d][o])
-        d = dual(m.model[:cvar_tail_d][o])
-        tail_flag = u > 1e-6 ? "TAIL" : ""
-        println("    Scenario $o: ζd = $ζ, u = $u, dual = $d $tail_flag")
-        #println("    Scenario $o: u = $u $tail_flag")
-    end
+    #println("  Scenario breakdown for Consumer:")
+    #for o in O
+    #    u = value(m.model[:u_d][o])
+    #    d = dual(m.model[:cvar_tail_d][o])
+    #    tail_flag = u > 1e-6 ? "TAIL" : ""
+    #    println("    Scenario $o: ζd = $ζ, u = $u, dual = $d $tail_flag")
+    #    #println("    Scenario $o: u = $u $tail_flag")
+    #end
 
     println("=================================\n")
     
@@ -619,11 +693,11 @@ function print_agents_objective_breakdown(m, str::String)
 
     exp_term = sum(P[o] * (value(m.model[:demand_value][o]) - sum(value(m.model[:gen_total_costs][g, o]) for g in G) - sum(value(m.model[:stor_total_costs][s, o]) for s in S)) for o in O)
 
-    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_val.value
+    social_welfare_incomplete = δ * exp_term  + (1 - δ) * cvar_val
 
     println("\n===== Social Welfare Fully Incomplete Markets =====")
     println("Expected Term:     ", exp_term)
-    println("CVaR Term:       ", cvar_val.value)
+    println("CVaR Term:       ", cvar_val)
     println("CO2 price:       ", co2)
     println("Social Welfare Value (ADMM):             ", social_welfare_incomplete)
     println("===========================================")
