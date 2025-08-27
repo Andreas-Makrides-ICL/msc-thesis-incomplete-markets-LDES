@@ -41,6 +41,7 @@ Julia (in VS Code):
 - You can install Julia packages directly in your script using:
 
     import Pkg
+
     Pkg.add("library_name")
 
 ## 🔒 Repo Access
