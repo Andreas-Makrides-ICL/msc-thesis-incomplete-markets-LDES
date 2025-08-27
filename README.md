@@ -21,9 +21,11 @@ Inspired by prior research on underinvestment in resilience, this work investiga
 
 - **Julia** – for capacity expansion modeling (Complete Markets Case: central planner & Fully Incomplete Markets Case: ADMM)
 - **Python** – for data, preprocessing and post-processing analysis.
+
 **Notes**:
 - All Python scripts were run through the Spyder environment and VS Code, while Julia scripts were run only in VS Code.
 - Before running each script, make sure the required libraries are installed.
+
 Python:
 - For Spyder (if installed via Anaconda), install libraries from the Anaconda Prompt:
 
