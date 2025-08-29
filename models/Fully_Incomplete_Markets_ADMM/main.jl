@@ -217,7 +217,7 @@ for delta in [1.00,0.75,0.50,0.25]#[1, 0.8, 0.6, 0.4, 0.2, 0.0] #[0.5] #[1.0, 0.
         set_scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
 
         local_setup = copy(default_setup)
-        local_setup["max_iterations"] = 798
+        local_setup["max_iterations"] = 10000
 
         # Tune accordingly
         local_setup["penalty"] = 2
