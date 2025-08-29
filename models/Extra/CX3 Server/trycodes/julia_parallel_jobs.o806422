@@ -1,0 +1,94 @@
+Gurobi shell based on Python 3.11.3 can be launched with command `gurobi.sh`
+Gurobi Python Interface can be loaded in Python 3.11.3 with 'import gurobipy'
+┌ Warning: Assignment to `solver` in soft scope is ambiguous because a global variable by the same name exists: `solver` will be treated as a new local. Disambiguate by using `local solver` to suppress this warning or `global solver` to assign to the existing global variable.
+└ @ ~/trycodes/main_15000_1_75.jl:217
+ERROR: LoadError: Model not solved to optimality: LOCALLY_SOLVED
+Stacktrace:
+ [1] solve_and_check_optimality!(m::Model, verbose::Bool)
+   @ Main ~/trycodes/src/utils.jl:272
+ [2] solve_and_check_optimality!
+   @ ~/trycodes/src/utils.jl:269 [inlined]
+ [3] run_ADMM(data::Dict{String, Any}, setup::Dict{String, Any}, solver::String, delta::Float64)
+   @ Main ~/trycodes/main_15000_1_75.jl:129
+ [4] top-level scope
+   @ ~/trycodes/main_15000_1_75.jl:223
+in expression starting at /rds/general/user/am1824/home/trycodes/main_15000_1_75.jl:204
+=>> PBS: job killed: walltime 82819 exceeded limit 82800
+
+[3748008] signal (15): Terminated
+in expression starting at /rds/general/user/am1824/home/trycodes/main_15000_05_025.jl:204
+PRIVATE00000000002cdde6 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE00000000002f3226 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE00000000002ef48a at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE00000000002b96f4 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE00000000002b7d11 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE00000000002b5cf3 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE0000000000bae634 at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+PRIVATE0000000000956c5e at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+GRBoptimize at /rds/general/user/am1824/home/.julia/artifacts/11003004a058f577cdef79520ad31a3cc1dc4141/lib/libgurobi120.so (unknown line)
+GRBoptimize at /rds/general/user/am1824/home/.julia/packages/Gurobi/PWFKA/src/gen120/libgrb_api.jl:1196 [inlined]
+#34 at /rds/general/user/am1824/home/.julia/packages/Gurobi/PWFKA/src/MOI_wrapper/MOI_wrapper.jl:2816 [inlined]
+disable_sigint at ./c.jl:473 [inlined]
+optimize! at /rds/general/user/am1824/home/.julia/packages/Gurobi/PWFKA/src/MOI_wrapper/MOI_wrapper.jl:2815
+optimize! at /rds/general/user/am1824/home/.julia/packages/MathOptInterface/ugDMh/src/Bridges/bridge_optimizer.jl:367 [inlined]
+optimize! at /rds/general/user/am1824/home/.julia/packages/MathOptInterface/ugDMh/src/Utilities/cachingoptimizer.jl:379
+jfptr_optimizeNOT._4812 at /rds/general/user/am1824/home/.julia/compiled/v1.10/Gurobi/do9v6_BFgLz.so (unknown line)
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+#optimize!#104 at /rds/general/user/am1824/home/.julia/packages/JuMP/LKjRR/src/optimizer_interface.jl:609
+optimize! at /rds/general/user/am1824/home/.julia/packages/JuMP/LKjRR/src/optimizer_interface.jl:560 [inlined]
+macro expansion at ./timing.jl:279 [inlined]
+solve_and_check_optimality! at /rds/general/user/am1824/home/trycodes/src/utils.jl:269
+solve_and_check_optimality! at /rds/general/user/am1824/home/trycodes/src/utils.jl:269 [inlined]
+run_ADMM at /rds/general/user/am1824/home/trycodes/main_15000_05_025.jl:129
+unknown function (ip: 0x1530469acb58)
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+top-level scope at /rds/general/user/am1824/home/trycodes/main_15000_05_025.jl:223
+jl_toplevel_eval_flex at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/toplevel.c:925
+jl_toplevel_eval_flex at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/toplevel.c:877
+ijl_toplevel_eval_in at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/toplevel.c:985
+eval at ./boot.jl:385 [inlined]
+include_string at ./loading.jl:2076
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+_include at ./loading.jl:2136
+include at ./Base.jl:495
+jfptr_include_46393.1 at /rds/easybuild/rome/apps/software/Julia/1.10.4-linux-x86_64/lib/julia/sys.so (unknown line)
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+exec_options at ./client.jl:318
+_start at ./client.jl:552
+jfptr__start_82729.1 at /rds/easybuild/rome/apps/software/Julia/1.10.4-linux-x86_64/lib/julia/sys.so (unknown line)
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+jl_apply at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/julia.h:1982 [inlined]
+true_main at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/jlapi.c:582
+jl_repl_entrypoint at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/jlapi.c:731
+main at julia.bin (unknown line)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 0x4010b8)
+unknown function (ip: (nil))
+Allocations: 82564059613 (Pool: 82514283555; Big: 49776058); GC: 103864
+error in running finalizer: ErrorException("Gurobi Error 10017: ")
+_check_ret at /rds/general/user/am1824/home/.julia/packages/Gurobi/PWFKA/src/MOI_wrapper/MOI_wrapper.jl:417 [inlined]
+#9 at /rds/general/user/am1824/home/.julia/packages/Gurobi/PWFKA/src/MOI_wrapper/MOI_wrapper.jl:393
+unknown function (ip: 0x153009454e95)
+_jl_invoke at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:2895 [inlined]
+ijl_apply_generic at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gf.c:3077
+run_finalizer at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gc.c:318
+jl_gc_run_finalizers_in_list at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gc.c:408
+run_finalizers at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/gc.c:454
+ijl_atexit_hook at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/init.c:299
+jl_exit_thread0_cb at /cache/build/builder-amdci4-0/julialang/julia-release-1-dot-10/src/signals-unix.c:479
+┌ Warning: Assignment to `solver` in soft scope is ambiguous because a global variable by the same name exists: `solver` will be treated as a new local. Disambiguate by using `local solver` to suppress this warning or `global solver` to assign to the existing global variable.
+└ @ ~/trycodes/main_15000_05_025.jl:217
+
+====================================
+CPU Time used: 163:51:21
+CPU Percent: 913%
+Memory usage: 34813660kb
+Approx Power usage: 1.9661999999999997
+Walltime usage: 23:00:30
+
+====================================

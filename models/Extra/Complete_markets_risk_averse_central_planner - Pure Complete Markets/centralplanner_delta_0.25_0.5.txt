@@ -1,0 +1,244 @@
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+Risk aversion (δ): 0.25, CVaR confidence (Ψ): 0.5
+
+------------------------------------------------------------------------------------------------------------------
+Iter  Primal Conv.  Dual Conv.    PV          Wind OnshoreWind OffshoreGas         Nuclear     BESS Pwr.   BESS En.    Duration    H2 Pwr.     H2 En.      Dur_PHS     Time      Total Time
+------------------------------------------------------------------------------------------------------------------
+CENT   -             -            51.77       36.65       65.97       4.00        69.29       0.02        0.21        12.00       0.09        0.35        4.00        102.96s   102.96s   
+
+Total Installed Capacity: 227.78 MW
+
+Total Installed Energy: 0.56 MWh
+Average price in scenario 10 = 101.1138 [£/MWh]
+Average price in scenario 11 = 132.3859 [£/MWh]
+Average price in scenario 12 = 144.2749 [£/MWh]
+Average price in scenario 13 = 109.3752 [£/MWh]
+Average price in scenario 14 = 136.0124 [£/MWh]
+Average price in scenario 15 = 118.3346 [£/MWh]
+Average price in scenario 16 = 145.0884 [£/MWh]
+Average price in scenario 17 = 117.5516 [£/MWh]
+Average price in scenario 18 = 103.4047 [£/MWh]
+Average price in scenario 19 = 131.0328 [£/MWh]
+Average price in scenario 1 = 109.1162 [£/MWh]
+Average price in scenario 20 = 111.783 [£/MWh]
+Average price in scenario 21 = 116.8576 [£/MWh]
+Average price in scenario 22 = 115.199 [£/MWh]
+Average price in scenario 23 = 149.3488 [£/MWh]
+Average price in scenario 24 = 115.5834 [£/MWh]
+Average price in scenario 25 = 128.2322 [£/MWh]
+Average price in scenario 26 = 116.3405 [£/MWh]
+Average price in scenario 27 = 136.1614 [£/MWh]
+Average price in scenario 28 = 119.9988 [£/MWh]
+Average price in scenario 29 = 109.9786 [£/MWh]
+Average price in scenario 2 = 127.9377 [£/MWh]
+Average price in scenario 30 = 133.2763 [£/MWh]
+Average price in scenario 3 = 160.0757 [£/MWh]
+Average price in scenario 4 = 129.8092 [£/MWh]
+Average price in scenario 5 = 112.274 [£/MWh]
+Average price in scenario 6 = 101.3438 [£/MWh]
+Average price in scenario 7 = 135.9001 [£/MWh]
+Average price in scenario 8 = 114.0754 [£/MWh]
+Average price in scenario 9 = 99.7098 [£/MWh]
+Total Average price Case B = 122.7192 [£/MWh]
+Total Average price Case A = 122.7192 [£/MWh]
+
+===== Risk-Averse Objective Breakdown from model =====
+Expected Term (E[W - C]):     4.87214418028581e9
+CVaR Term :       4.791221969912555e9
+CO2 price :       1.107659145914344e7
+Expected Term (δ * E[W - C]):     1.2180360450715e9
+CVaR Term ((1 - δ) * CVaR) :       3.5934164774344e9
+  ↳ ζ_total:                       4.85980554024e9
+  ↳ u_total[o]:                    Dict(5 => 823.3468, 16 => 1.0138, 20 => 3.0740231667e6, 12 => 1.0139, 24 => 1.0139, 28 => 1.96300831375e7, 30 => 1.0139, 17 => 1.096503451986e8, 8 => 1.0139, 1 => 1.0139, 19 => 230075.6577, 22 => 1.0138, 23 => 1.0139, 6 => 1.773362752662e8, 11 => 1.0139, 9 => 1.350595261213e8, 14 => 1.104862058417e8, 3 => 6.20177412312e7, 29 => 1.0139, 7 => 1.0139, 25 => 4.1221405393e6, 13 => 1.0139, 15 => 6.37020229423e7, 21 => 1.842300791213e8, 2 => 4.2327607608e6, 10 => 1.361638469292e8, 18 => 1.88175903909e7, 26 => 1.0139, 27 => 1.0138, 4 => 1.0139)
+Full Objective Value:             4.8114525225058155e9
+===========================================
+For scenario 10: Demand value = 4.8271387471401e9, Total costs = 6.70295684866e7
+For scenario 11: Demand value = 4.9937319450383e9, Total costs = 7.02716804713e7
+For scenario 12: Demand value = 4.9934959684952e9, Total costs = 7.21380955758e7
+For scenario 13: Demand value = 5.0806309353149e9, Total costs = 7.20287412475e7
+For scenario 14: Demand value = 4.8562571936966e9, Total costs = 7.04195043891e7
+For scenario 15: Demand value = 4.9043093021735e9, Total costs = 7.05555883952e7
+For scenario 16: Demand value = 5.185169365136e9, Total costs = 7.21163908711e7
+For scenario 17: Demand value = 4.8562624026788e9, Total costs = 6.94620580963e7
+For scenario 18: Demand value = 4.9505536276815e9, Total costs = 6.94675243866e7
+For scenario 19: Demand value = 4.9680269661328e9, Total costs = 6.79158618587e7
+For scenario 1: Demand value = 5.0619686842548e9, Total costs = 6.72593337415e7
+For scenario 20: Demand value = 4.9685799321844e9, Total costs = 7.12168508365e7
+For scenario 21: Demand value = 4.7834381633973e9, Total costs = 7.31215228753e7
+For scenario 22: Demand value = 5.1863825955526e9, Total costs = 7.27481931563e7
+For scenario 23: Demand value = 5.031839564558e9, Total costs = 7.26362630682e7
+For scenario 24: Demand value = 5.0331036867365e9, Total costs = 7.09446938598e7
+For scenario 25: Demand value = 4.9665979945458e9, Total costs = 7.08809236075e7
+For scenario 26: Demand value = 5.0619674742548e9, Total costs = 6.9082185474e7
+For scenario 27: Demand value = 5.185904392496e9, Total costs = 7.51230569352e7
+For scenario 28: Demand value = 4.9500727282327e9, Total costs = 7.00080560534e7
+For scenario 29: Demand value = 5.0620978612313e9, Total costs = 7.27277662017e7
+For scenario 2: Demand value = 4.9680783144879e9, Total costs = 7.20293032248e7
+For scenario 30: Demand value = 5.0324960353572e9, Total costs = 7.20130585527e7
+For scenario 3: Demand value = 4.9030176926687e9, Total costs = 6.81924926533e7
+For scenario 4: Demand value = 5.080171161272e9, Total costs = 7.14456872442e7
+For scenario 5: Demand value = 4.966985520695e9, Total costs = 6.69729826379e7
+For scenario 6: Demand value = 4.7836501297022e9, Total costs = 6.62420224498e7
+For scenario 7: Demand value = 4.9944471302711e9, Total costs = 7.09474751475e7
+For scenario 8: Demand value = 5.0331493898917e9, Total costs = 7.33684593508e7
+For scenario 9: Demand value = 4.8271345145809e9, Total costs = 6.59372002557e7
+
+===== Risk-Averse Objective Breakdown Manual Calculation =====
+Expected Term (E[W - C]):     4.912745229291805e9
+CVaR Term :       4.791221969912555e9
+CO2 Price :       1.107659145914344e7
+Expected Term (δ * E[W - C]):     1.228186307323e9
+CVaR Term ((1 - δ) * CVaR) :       3.5934164774344e9
+  ↳ ζ_total:                       4.85980554024e9
+  ↳ u_total[o]:                    Dict(5 => 823.3468, 16 => 1.0138, 20 => 3.0740231667e6, 12 => 1.0139, 24 => 1.0139, 28 => 1.96300831375e7, 30 => 1.0139, 17 => 1.096503451986e8, 8 => 1.0139, 1 => 1.0139, 19 => 230075.6577, 22 => 1.0138, 23 => 1.0139, 6 => 1.773362752662e8, 11 => 1.0139, 9 => 1.350595261213e8, 14 => 1.104862058417e8, 3 => 6.20177412312e7, 29 => 1.0139, 7 => 1.0139, 25 => 4.1221405393e6, 13 => 1.0139, 15 => 6.37020229423e7, 21 => 1.842300791213e8, 2 => 4.2327607608e6, 10 => 1.361638469292e8, 18 => 1.88175903909e7, 26 => 1.0139, 27 => 1.0138, 4 => 1.0139)
+Full Objective Value:             4.821602784757367e9
+===========================================
+
+===== Unserved demand per scenario =====
+  Scenario 10 → Unserved Demand Fix = 1.958982013435019, Unserved Demand Flex = 506.32304706594493, Total Unserved Demand = 508.28202907938
+  Scenario 11 → Unserved Demand Fix = 104.84598970025095, Unserved Demand Flex = 686.9691729931469, Total Unserved Demand = 791.8151626933978
+  Scenario 12 → Unserved Demand Fix = 113.93461683650858, Unserved Demand Flex = 740.4064557812817, Total Unserved Demand = 854.3410726177902
+  Scenario 13 → Unserved Demand Fix = 2.459191954756747, Unserved Demand Flex = 573.0512815252985, Total Unserved Demand = 575.5104734800552
+  Scenario 14 → Unserved Demand Fix = 8.16618188883745, Unserved Demand Flex = 672.7974695025925, Total Unserved Demand = 680.96365139143
+  Scenario 15 → Unserved Demand Fix = 1.9920597964926685, Unserved Demand Flex = 588.248392626684, Total Unserved Demand = 590.2404524231766
+  Scenario 16 → Unserved Demand Fix = 35.90849814283669, Unserved Demand Flex = 745.9768845533328, Total Unserved Demand = 781.8853826961695
+  Scenario 17 → Unserved Demand Fix = 45.77475453778406, Unserved Demand Flex = 585.0726804309941, Total Unserved Demand = 630.8474349687781
+  Scenario 18 → Unserved Demand Fix = 2.010209145866419, Unserved Demand Flex = 515.9177105440081, Total Unserved Demand = 517.9279196898744
+  Scenario 19 → Unserved Demand Fix = 2.019442939973608, Unserved Demand Flex = 651.1087146348066, Total Unserved Demand = 653.1281575747802
+  Scenario 1 → Unserved Demand Fix = 1.9945997599291232, Unserved Demand Flex = 579.1307341454922, Total Unserved Demand = 581.1253339054213
+  Scenario 20 → Unserved Demand Fix = 2.0179589477220006, Unserved Demand Flex = 555.3861361495904, Total Unserved Demand = 557.4040950973124
+  Scenario 21 → Unserved Demand Fix = 1.941181112404756, Unserved Demand Flex = 578.2540612782827, Total Unserved Demand = 580.1952423906874
+  Scenario 22 → Unserved Demand Fix = 2.5040839542138684, Unserved Demand Flex = 601.3828197279145, Total Unserved Demand = 603.8869036821284
+  Scenario 23 → Unserved Demand Fix = 28.061534667672056, Unserved Demand Flex = 768.1114885676199, Total Unserved Demand = 796.1730232352919
+  Scenario 24 → Unserved Demand Fix = 2.4410750075737297, Unserved Demand Flex = 605.3539906557507, Total Unserved Demand = 607.7950656633245
+  Scenario 25 → Unserved Demand Fix = 2.017971858747565, Unserved Demand Flex = 635.6123965432344, Total Unserved Demand = 637.630368401982
+  Scenario 26 → Unserved Demand Fix = 2.4529048414429226, Unserved Demand Flex = 610.1943114362327, Total Unserved Demand = 612.6472162776756
+  Scenario 27 → Unserved Demand Fix = 3.3276852682007814, Unserved Demand Flex = 699.9332891429494, Total Unserved Demand = 703.2609744111502
+  Scenario 28 → Unserved Demand Fix = 2.0114208203640587, Unserved Demand Flex = 595.812343312194, Total Unserved Demand = 597.823764132558
+  Scenario 29 → Unserved Demand Fix = 2.4516358055678253, Unserved Demand Flex = 574.6082448516627, Total Unserved Demand = 577.0598806572305
+  Scenario 2 → Unserved Demand Fix = 2.0202247211936353, Unserved Demand Flex = 634.7972953787223, Total Unserved Demand = 636.8175200999159
+  Scenario 30 → Unserved Demand Fix = 14.292377725198499, Unserved Demand Flex = 687.5174090369497, Total Unserved Demand = 701.8097867621483
+  Scenario 3 → Unserved Demand Fix = 1.99313383363382, Unserved Demand Flex = 793.4528255148679, Total Unserved Demand = 795.4459593485017
+  Scenario 4 → Unserved Demand Fix = 2.461015118958521, Unserved Demand Flex = 672.6172871321673, Total Unserved Demand = 675.0783022511258
+  Scenario 5 → Unserved Demand Fix = 2.018790178673214, Unserved Demand Flex = 559.9891154810103, Total Unserved Demand = 562.0079056596835
+  Scenario 6 → Unserved Demand Fix = 1.9410673473396045, Unserved Demand Flex = 506.7588312890753, Total Unserved Demand = 508.6998986364149
+  Scenario 7 → Unserved Demand Fix = 19.632493476952185, Unserved Demand Flex = 704.0935497414641, Total Unserved Demand = 723.7260432184163
+  Scenario 8 → Unserved Demand Fix = 2.4398786015917793, Unserved Demand Flex = 595.3107190906076, Total Unserved Demand = 597.7505976921993
+  Scenario 9 → Unserved Demand Fix = 1.9589752029515637, Unserved Demand Flex = 499.19162192545184, Total Unserved Demand = 501.15059712840343
+
+Total Unserved Demand across all scenarios:
+ Total Unserved Demand Fix = 13.96833117356912, Total Unserved Demand Flex = 624.1126760019777, Total Unserved Demand = 638.0810071755468
+====================================
+
+
+Total MWh of gas = 194373.22473060913
+====================================
+
+
+===== CVaR Tail Dual Analysis =====
+Raw dual values (all shown):
+  Scenario 10 → dual = -5.000364793913e-02
+  Scenario 11 → dual = -2.512076147578e-09
+  Scenario 12 → dual = -3.386603969232e-09
+  Scenario 13 → dual = -2.106204513135e-11
+  Scenario 14 → dual = -5.000364626123e-02
+  Scenario 15 → dual = -5.000364405081e-02
+  Scenario 16 → dual = 1.793988176936e-10
+  Scenario 17 → dual = -5.000364692891e-02
+  Scenario 18 → dual = -5.000363518008e-02
+  Scenario 19 → dual = -5.000263553848e-02
+  Scenario 1 → dual = -8.393697687946e-11
+  Scenario 20 → dual = -5.000357781050e-02
+  Scenario 21 → dual = -5.000364770159e-02
+  Scenario 22 → dual = 1.794267054137e-10
+  Scenario 23 → dual = -4.070076916675e-10
+  Scenario 24 → dual = -3.707626452566e-10
+  Scenario 25 → dual = -5.000357947691e-02
+  Scenario 26 → dual = -8.686232131942e-11
+  Scenario 27 → dual = 1.760742401933e-10
+  Scenario 28 → dual = -5.000363369052e-02
+  Scenario 29 → dual = -1.099738921423e-10
+  Scenario 2 → dual = -5.000360104544e-02
+  Scenario 30 → dual = -3.871399031963e-10
+  Scenario 3 → dual = -5.000364419481e-02
+  Scenario 4 → dual = -8.238162590194e-10
+  Scenario 5 → dual = -4.994184358158e-02
+  Scenario 6 → dual = -5.000364755212e-02
+  Scenario 7 → dual = -2.849768741097e-09
+  Scenario 8 → dual = -4.155342862278e-10
+  Scenario 9 → dual = -5.000364773953e-02
+
+Normalized risk-adjusted probabilities:
+====================================
+
+===== CVaR Constraint Tightness per Scenario =====
+Scenario 10: welfare = 4.723624544295e9, LHS = 1.361809959415e8, RHS = 1.361638469292e8, Gap = 17149.0124
+Scenario 11: welfare = 4.8825640739299e9, LHS = -2.27585336934e7, RHS = 1.0139, Gap = -2.27585347073e7
+Scenario 12: welfare = 4.8805589367539e9, LHS = -2.07533965174e7, RHS = 1.0139, Gap = -2.07533975313e7
+Scenario 13: welfare = 4.9647777568812e9, LHS = -1.049722166447e8, RHS = 1.0139, Gap = -1.049722176586e8
+Scenario 14: welfare = 4.7493021935369e9, LHS = 1.105033466997e8, RHS = 1.104862058417e8, Gap = 17140.8579
+Scenario 15: welfare = 4.7960863911045e9, LHS = 6.37191491321e7, RHS = 6.37020229423e7, Gap = 17126.1898
+Scenario 16: welfare = 5.0671875475758e9, LHS = -2.073820073393e8, RHS = 1.0138, Gap = -2.073820083532e8
+Scenario 17: welfare = 4.7501380566755e9, LHS = 1.09667483561e8, RHS = 1.096503451986e8, Gap = 17138.3624
+Scenario 18: welfare = 4.8409707998881e9, LHS = 1.88347403485e7, RHS = 1.88175903909e7, Gap = 17149.9576
+Scenario 19: welfare = 4.8595583271171e9, LHS = 247213.1194, RHS = 230075.6577, Gap = 17137.4618
+Scenario 1: welfare = 4.9517189090685e9, LHS = -9.1913368832e7, RHS = 1.0139, Gap = -9.19133698458e7
+Scenario 20: welfare = 4.8567143634768e9, LHS = 3.0911767597e6, RHS = 3.0740231667e6, Gap = 17153.593
+Scenario 21: welfare = 4.6755583137934e9, LHS = 1.842472264432e8, RHS = 1.842300791213e8, Gap = 17147.3219
+Scenario 22: welfare = 5.0674058619866e9, LHS = -2.076003217501e8, RHS = 1.0138, Gap = -2.076003227639e8
+Scenario 23: welfare = 4.917348960099e9, LHS = -5.75434198625e7, RHS = 1.0139, Gap = -5.75434208763e7
+Scenario 24: welfare = 4.9198283601703e9, LHS = -6.00228199337e7, RHS = 1.0139, Gap = -6.00228209476e7
+Scenario 25: welfare = 4.8556662473203e9, LHS = 4.1392929162e6, RHS = 4.1221405393e6, Gap = 17152.3769
+Scenario 26: welfare = 4.9498984250587e9, LHS = -9.00928848221e7, RHS = 1.0139, Gap = -9.0092885836e7
+Scenario 27: welfare = 5.0647161950794e9, LHS = -2.049106548429e8, RHS = 1.0138, Gap = -2.049106558567e8
+Scenario 28: welfare = 4.8401583064925e9, LHS = 1.96472337441e7, RHS = 1.96300831375e7, Gap = 17150.6065
+Scenario 29: welfare = 4.9463799482142e9, LHS = -8.65744079777e7, RHS = 1.0139, Gap = -8.65744089916e7
+Scenario 2: welfare = 4.8555556360724e9, LHS = 4.2499041641e6, RHS = 4.2327607608e6, Gap = 17143.4033
+Scenario 30: welfare = 4.9184545058234e9, LHS = -5.86489655869e7, RHS = 1.0139, Gap = -5.86489666007e7
+Scenario 3: welfare = 4.7977706760857e9, LHS = 6.20348641508e7, RHS = 6.20177412312e7, Gap = 17122.9196
+Scenario 4: welfare = 4.9651358980528e9, LHS = -1.053303578163e8, RHS = 1.0139, Gap = -1.053303588302e8
+Scenario 5: welfare = 4.8597875785584e9, LHS = 17961.6782, RHS = 823.3468, Gap = 17138.3313
+Scenario 6: welfare = 4.6824521140542e9, LHS = 1.773534261824e8, RHS = 1.773362752662e8, Gap = 17150.9162
+Scenario 7: welfare = 4.8827217459165e9, LHS = -2.29162056799e7, RHS = 1.0139, Gap = -2.29162066938e7
+Scenario 8: welfare = 4.9175558703393e9, LHS = -5.77503301027e7, RHS = 1.0139, Gap = -5.77503311166e7
+Scenario 9: welfare = 4.7247288651543e9, LHS = 1.350766750822e8, RHS = 1.350595261213e8, Gap = 17148.9609
+==================================================
+
+========== MODEL STRUCTURE ==========
+
+--- Objective Function ---
+Sense: MAX_SENSE
+Expression Type: QuadExpr
+Symbolic Expression:
+-90 d_flex[1,10]² - 82.5 d_flex[2,10]² - 75 d_flex[3,10]² - 142.5 d_flex[4,10]² - 142.5 d_flex[5,10]² - 165 d_flex[6,10]² - 75 d_flex[7,10]² - 112.5 d_flex[8,10]² - 67.5 d_flex[9,10]² - 255 d_flex[10,10]² - 105 d_flex[11,10]² - 285 d_flex[12,10]² - 367.5 d_flex[13,10]² - 75 d_flex[14,10]² - 105 d_flex[15,10]² - 97.5 d_flex[16,10]² - 30 d_flex[17,10]² - 405 d_flex[18,10]² - 367.5 d_flex[19,10]² - 82.5 d_flex[20,10]² - 165 d_flex[21,10]² - 120 d_flex[22,10]² - 120 d_flex[23,10]² - 60 d_flex[24,10]² - 240 d_flex[25,10]² - 105 d_flex[26,10]² - 112.5 d_flex[27,10]² - 127.5 d_flex[28,10]² - 105 d_flex[29,10]² - 150 d_flex[30,10]² - [[...20100 terms omitted...]] - 60 d_flex[643,9]² - 142.5 d_flex[644,9]² - 45 d_flex[645,9]² - 82.5 d_flex[646,9]² - 90 d_flex[647,9]² - 82.5 d_flex[648,9]² - 90 d_flex[649,9]² - 82.5 d_flex[650,9]² - 105 d_flex[651,9]² - 277.5 d_flex[652,9]² - 97.5 d_flex[653,9]² - 60 d_flex[654,9]² - 112.5 d_flex[655,9]² - 67.5 d_flex[656,9]² - 90 d_flex[657,9]² - 142.5 d_flex[658,9]² - 240 d_flex[659,9]² - 82.5 d_flex[660,9]² - 232.5 d_flex[661,9]² - 37.5 d_flex[662,9]² - 300 d_flex[663,9]² - 292.5 d_flex[664,9]² - 60 d_flex[665,9]² - 142.5 d_flex[666,9]² - 52.5 d_flex[667,9]² - 225 d_flex[668,9]² - 105 d_flex[669,9]² - 210 d_flex[670,9]² - 82.5 d_flex[671,9]² - 172.5 d_flex[672,9]² + 900 d_fix[1,10] + 900 d_flex[1,10] + 825 d_fix[2,10] + 825 d_flex[2,10] + 750 d_fix[3,10] + 750 d_flex[3,10] + 1425 d_fix[4,10] + 1425 d_flex[4,10] + 1425 d_fix[5,10] + 1425 d_flex[5,10] + 1650 d_fix[6,10] + 1650 d_flex[6,10] + 750 d_fix[7,10] + 750 d_flex[7,10] + 1125 d_fix[8,10] + 1125 d_flex[8,10] + 675 d_fix[9,10] + 675 d_flex[9,10] + 2550 d_fix[10,10] + 2550 d_flex[10,10] + 1050 d_fix[11,10] + 1050 d_flex[11,10] + 2850 d_fix[12,10] + 2850 d_flex[12,10] + 3675 d_fix[13,10] + 3675 d_flex[13,10] + 750 d_fix[14,10] + 750 d_flex[14,10] + 1050 d_fix[15,10] + 1050 d_flex[15,10] + [[...80618 terms omitted...]] - 0.05 u_total[10] - 0.05 u_total[11] - 0.05 u_total[12] - 0.05 u_total[13] - 0.05 u_total[14] - 0.05 u_total[15] - 0.05 u_total[16] - 0.05 u_total[17] - 0.05 u_total[18] - 0.05 u_total[19] - 0.05 u_total[1] - 0.05 u_total[20] - 0.05 u_total[21] - 0.05 u_total[22] - 0.05 u_total[23] - 0.05 u_total[24] - 0.05 u_total[25] - 0.05 u_total[26] - 0.05 u_total[27] - 0.05 u_total[28] - 0.05 u_total[29] - 0.05 u_total[2] - 0.05 u_total[30] - 0.05 u_total[3] - 0.05 u_total[4] - 0.05 u_total[5] - 0.05 u_total[6] - 0.05 u_total[7] - 0.05 u_total[8] - 0.05 u_total[9] - 1.2055198947223518e9
+
+--- Constraints ---
+
+• Constraint Type: MathOptInterface.EqualTo{Float64}
+  Symbolic Name: SOC_limit[H2,1,10]
+  Sample Expression:
+    -8.399999999999999 q_ch[H2,1,10] + 21.818181818181817 q_dch[H2,1,10] + e[H2,1,10] - 0.9 x_E[H2] ∈ MathOptInterface.EqualTo{Float64}(0.0)
+
+• Constraint Type: MathOptInterface.GreaterThan{Float64}
+  Symbolic Name: gen_limits[PV,1,10]
+  Sample Expression:
+    -q[PV,1,10] + 0.013833333 x_g[PV] ∈ MathOptInterface.GreaterThan{Float64}(0.0)
+
+• Constraint Type: MathOptInterface.LessThan{Float64}
+  Symbolic Name: d_fix_limit[1,10]
+  Sample Expression:
+    d_fix[1,10] + d_flex[1,10] ∈ MathOptInterface.LessThan{Float64}(59.6182498)
+
+• Constraint Type: MathOptInterface.LessThan{Float64}
+  Symbolic Name: cvar_tail_total[10]
+  Sample Expression:
+    10800 d_flex[1,10]² + 9900 d_flex[2,10]² + 9000 d_flex[3,10]² + 17100 d_flex[4,10]² + 17100 d_flex[5,10]² + 19800 d_flex[6,10]² + 9000 d_flex[7,10]² + 13500 d_flex[8,10]² + 8100 d_flex[9,10]² + 30600 d_flex[10,10]² + 12600 d_flex[11,10]² + 34200 d_flex[12,10]² + 44100 d_flex[13,10]² + 9000 d_flex[14,10]² + 12600 d_flex[15,10]² + 11700 d_flex[16,10]² + 3600 d_flex[17,10]² + 48600 d_flex[18,10]² + 44100 d_flex[19,10]² + 9900 d_flex[20,10]² + 19800 d_flex[21,10]² + 14400 d_flex[22,10]² + 14400 d_flex[23,10]² + 7200 d_flex[24,10]² + 28800 d_flex[25,10]² + 12600 d_flex[26,10]² + 13500 d_flex[27,10]² + 15300 d_flex[28,10]² + 12600 d_flex[29,10]² + 18000 d_flex[30,10]² + [[...612 terms omitted...]] + 32400 d_flex[643,10]² + 19800 d_flex[644,10]² + 13500 d_flex[645,10]² + 8100 d_flex[646,10]² + 13500 d_flex[647,10]² + 16200 d_flex[648,10]² + 6300 d_flex[649,10]² + 9900 d_flex[650,10]² + 5400 d_flex[651,10]² + 5400 d_flex[652,10]² + 8100 d_flex[653,10]² + 12600 d_flex[654,10]² + 6300 d_flex[655,10]² + 15300 d_flex[656,10]² + 17100 d_flex[657,10]² + 4500 d_flex[658,10]² + 9000 d_flex[659,10]² + 11700 d_flex[660,10]² + 9900 d_flex[661,10]² + 13500 d_flex[662,10]² + 15300 d_flex[663,10]² + 18000 d_flex[664,10]² + 9900 d_flex[665,10]² + 19800 d_flex[666,10]² + 7200 d_flex[667,10]² + 26100 d_flex[668,10]² + 13500 d_flex[669,10]² + 55800 d_flex[670,10]² + 18000 d_flex[671,10]² + 12600 d_flex[672,10]² + 180 q[Nuclear,1,10] + 1560 q[Gas,1,10] + 165 q[Nuclear,2,10] + 1430 q[Gas,2,10] + 150 q[Nuclear,3,10] + 1300 q[Gas,3,10] + 285 q[Nuclear,4,10] + 2470 q[Gas,4,10] + 285 q[Nuclear,5,10] + 2470 q[Gas,5,10] + 330 q[Nuclear,6,10] + 2860 q[Gas,6,10] + 150 q[Nuclear,7,10] + 1300 q[Gas,7,10] + 225 q[Nuclear,8,10] + 1950 q[Gas,8,10] + 135 q[Nuclear,9,10] + 1170 q[Gas,9,10] + 510 q[Nuclear,10,10] + 4420 q[Gas,10,10] + 210 q[Nuclear,11,10] + 1820 q[Gas,11,10] + 570 q[Nuclear,12,10] + 4940 q[Gas,12,10] + 735 q[Nuclear,13,10] + 6370 q[Gas,13,10] + 150 q[Nuclear,14,10] + 1300 q[Gas,14,10] + 210 q[Nuclear,15,10] + 1820 q[Gas,15,10] + [[...3309 terms omitted...]] - 54000 d_flex[652,10] - 81000 d_flex[653,10] - 126000 d_flex[654,10] - 63000 d_flex[655,10] - 153000 d_flex[656,10] - 171000 d_flex[657,10] - 45000 d_flex[658,10] - 90000 d_flex[659,10] - 117000 d_flex[660,10] - 99000 d_flex[661,10] - 135000 d_flex[662,10] - 153000 d_flex[663,10] - 180000 d_flex[664,10] - 99000 d_flex[665,10] - 198000 d_flex[666,10] - 72000 d_flex[667,10] - 261000 d_flex[668,10] - 135000 d_flex[669,10] - 558000 d_flex[670,10] - 180000 d_flex[671,10] - 126000 d_flex[672,10] + 103561.36299492574 x_g[PV] + 125438.90743779452 x_g[Wind_Onshore] + 339025.5411114903 x_g[Wind_Offshore] + 607878.2065721233 x_g[Nuclear] + 143127.98790348525 x_g[Gas] + 391384.6545604954 x_P[H2] + 125431.36482686523 x_P[BESS] - u_total[10] + ζ_total ∈ MathOptInterface.LessThan{Float64}(-4.822079578889404e9)
+
+• Constraint Type: MathOptInterface.GreaterThan{Float64}
+  Symbolic Name: (unnamed)
+  Sample Expression:
+    q[PV,1,10] ∈ MathOptInterface.GreaterThan{Float64}(0.0)
+
+=====================================

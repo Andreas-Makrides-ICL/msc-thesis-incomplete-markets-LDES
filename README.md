@@ -12,28 +12,41 @@ Inspired by prior research on underinvestment in resilience, this work investiga
 
 ## 📁 Project Structure
 
-- `data/`: Raw and processed weather and system input data
-- `literature/`: Reviewed papers, references, and final literature submission
-- `analysis/`: Python code for data selection, cleaning, and prep
-- `models/`: Julia-based equilibrium models for both complete and incomplete markets
-- `results/`: Plots, tables, and output from model runs
-- `pscc_2026/`: Drafts and materials for PSCC 2026 submission
-- `logbook/`: Weekly progress notes
-- `timeline/`: Timeline and planning docs
+- `data/`: Raw and processed weather and system input data.
+- `analysis/`: Scripts for data selection, cleaning, and preprocessing.
+- `models/`: Julia equilibrium models for both complete and incomplete markets.
+- `plots/`: Scripts for plots, tables and post-processing analysis.
 
 ## 🛠 Tools Used
 
-- **Julia** – for capacity expansion modeling (central planner & ADMM)
-- **Python** – for data analysis, preprocessing and year selection
+- **Julia** – for capacity expansion modeling (Complete Markets Case: central planner & Fully Incomplete Markets Case: ADMM)
+- **Python** – for data, preprocessing and post-processing analysis.
 
-## 📌 Timeline Milestone
+**Notes**:
+- All Python scripts were run through the Spyder environment and VS Code, while Julia scripts were run only in VS Code.
+- Before running each script, make sure the required libraries are installed.
 
-- Submission of abstract to PSCC 2026: **June 1, 2025**
-- Final thesis deadline: **August 29, 2025**
+Python:
+- For Spyder (if installed via Anaconda), install libraries from the Anaconda Prompt:
+
+    pip install <library_name>
+    or
+    conda install <library_name>
+
+- For VS Code, install libraries using the integrated terminal (PowerShell, CMD, or bash depending on your system):
+
+    pip install <library_name>
+
+Julia (in VS Code):
+- You can install Julia packages directly in your script using:
+
+    import Pkg
+
+    Pkg.add("library_name")
 
 ## 🔒 Repo Access
 
-This is a private repository. Collaborators will be manually added.
+This is a public repository. Collaborators will be manually added.
 
 ## 📝 License
 

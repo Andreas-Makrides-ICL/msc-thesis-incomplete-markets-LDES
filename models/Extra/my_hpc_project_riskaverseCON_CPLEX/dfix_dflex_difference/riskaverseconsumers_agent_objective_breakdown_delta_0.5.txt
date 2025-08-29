@@ -1,0 +1,218 @@
+Checking solver status before result extraction...
+Status: OPTIMAL
+Primal status: FEASIBLE_POINT
+
+=== Agent Objective Breakdown ===
+Average price in scenario 1 = 16.1116 [£/MWh]
+Average price in scenario 2 = 14.1883 [£/MWh]
+Total Average price = 15.15 [£/MWh]
+Risk aversion (δ): 0.5, CVaR confidence (Ψ): 0.5
+
+--- Generators ---
+Net revenue for scenario 1: net rev = 1.1089789851868004e6
+(Manual Calculation) For scenario 1: π_g = 1.01259431984e7, TCG = 9.4121844734e6, IGC = 395220.2601, VGC = 9.0169642133e6
+(From model expression) For scenario 1: π_g = 1.01259431984e7, TCG = 9.4121844734e6, IGC = 90.56136299492574 x_g[PV], VGC = 9.01696421325154e6
+Net revenue for scenario 2: net rev = 156346.1051708795
+(Manual Calculation) For scenario 2: π_g = 8.933355343e6, TCG = 9.172229498e6, IGC = 395220.2601, VGC = 8.7770092379e6
+(From model expression) For scenario 2: π_g = 8.933355343e6, TCG = 9.172229498e6, IGC = 90.56136299492574 x_g[PV], VGC = 8.777009237866428e6
+Gen PV: ζ = -10289.4479, ū = 114292.5007, ρ = -716.0822, Expected = 237442.285, CVaR = -238874.4494, CO2 = 3.919837923194163, Expected Term (δ * E[W - C]) = 118721.1425, CVaR Term ((1 - δ) * CVaR) = -119437.2247, CO2 Term (-(δ) * CO2) = -1.9599189615970816
+  Scenario breakdown for Gen PV:
+    Scenario 1: u = 0.1444658035214023, dual = -9.728203776378223e-7 TAIL
+    Scenario 2: u = 228584.85702251462, dual = 0.500000178679891 TAIL
+Net revenue for scenario 1: net rev = -7.204878886917329
+(Manual Calculation) For scenario 1: π_g = 1.977, TCG = 11.6443, IGC = 2.4624, VGC = 9.1819
+(From model expression) For scenario 1: π_g = 1.977, TCG = 11.6443, IGC = 97.43890743779453 x_g[Wind_Onshore], VGC = 9.181927405802423
+Net revenue for scenario 2: net rev = -7.218707731278454
+(Manual Calculation) For scenario 2: π_g = 1.6876, TCG = 11.3687, IGC = 2.4624, VGC = 8.9063
+(From model expression) For scenario 2: π_g = 1.6876, TCG = 11.3687, IGC = 97.43890743779453 x_g[Wind_Onshore], VGC = 8.906326381803625
+Gen Wind_Onshore: ζ = -9.114, ū = 0.2892, ρ = -9.6833, Expected = -9.6742, CVaR = -9.6924, CO2 = 3.919837923194163, Expected Term (δ * E[W - C]) = -4.8371, CVaR Term ((1 - δ) * CVaR) = -4.8462, CO2 Term (-(δ) * CO2) = -1.9599189615970816
+  Scenario breakdown for Gen Wind_Onshore:
+    Scenario 1: u = 0.29024655239937364, dual = 0.25070111366164705 TAIL
+    Scenario 2: u = 0.28819494543745455, dual = 0.24929838728712658 TAIL
+Net revenue for scenario 1: net rev = -7.21391517887316
+(Manual Calculation) For scenario 1: π_g = 2.0862, TCG = 21.6149, IGC = 12.3147, VGC = 9.3002
+(From model expression) For scenario 1: π_g = 2.0862, TCG = 21.6149, IGC = 267.02554111149027 x_g[Wind_Offshore], VGC = 9.300159214999173
+Net revenue for scenario 2: net rev = -7.228239397946608
+(Manual Calculation) For scenario 2: π_g = 1.7778, TCG = 21.3207, IGC = 12.3147, VGC = 9.006
+(From model expression) For scenario 2: π_g = 1.7778, TCG = 21.3207, IGC = 267.02554111149027 x_g[Wind_Offshore], VGC = 9.005991104023671
+Gen Wind_Offshore: ζ = -19.0042, ū = 0.2888, ρ = -19.5587, Expected = -19.5358, CVaR = -19.5817, CO2 = 3.919837923194163, Expected Term (δ * E[W - C]) = -9.7679, CVaR Term ((1 - δ) * CVaR) = -9.7908, CO2 Term (-(δ) * CO2) = -1.9599189615970816
+  Scenario breakdown for Gen Wind_Offshore:
+    Scenario 1: u = 0.2896802448976116, dual = 0.25038685786994097 TAIL
+    Scenario 2: u = 0.2878595076892063, dual = 0.24961225778939244 TAIL
+Net revenue for scenario 1: net rev = -31.776081516914566
+(Manual Calculation) For scenario 1: π_g = 3.66, TCG = 35.4686, IGC = 0.0324, VGC = 35.4361
+(From model expression) For scenario 1: π_g = 3.66, TCG = 35.4686, IGC = 770.3440737827103 x_g[Nuclear], VGC = 35.43611059759172
+Net revenue for scenario 2: net rev = -31.857361764499533
+(Manual Calculation) For scenario 2: π_g = 3.1874, TCG = 35.0772, IGC = 0.0324, VGC = 35.0448
+(From model expression) For scenario 2: π_g = 3.1874, TCG = 35.0772, IGC = 770.3440737827103 x_g[Nuclear], VGC = 35.04479874350766
+Gen Nuclear: ζ = -30.5313, ū = 0.2902, ρ = -31.4804, Expected = -31.8492, CVaR = -31.1116, CO2 = 3.919837923194163, Expected Term (δ * E[W - C]) = -15.9246, CVaR Term ((1 - δ) * CVaR) = -15.5558, CO2 Term (-(δ) * CO2) = -1.9599189615970816
+  Scenario breakdown for Gen Nuclear:
+    Scenario 1: u = 0.2742510922748723, dual = 0.2347738308593165 TAIL
+    Scenario 2: u = 0.306055738940261, dual = 0.26522584106632807 TAIL
+Net revenue for scenario 1: net rev = -1.2303251608158787
+(Manual Calculation) For scenario 1: π_g = 1.5441, TCG = 24.194, IGC = 21.4196, VGC = 2.7744
+(From model expression) For scenario 1: π_g = 1.5441, TCG = 24.194, IGC = 114.12798790348525 x_g[Gas], VGC = 2.7743910161379617
+Net revenue for scenario 2: net rev = -1.3569980679603435
+(Manual Calculation) For scenario 2: π_g = 1.3032, TCG = 24.0799, IGC = 21.4196, VGC = 2.6602
+(From model expression) For scenario 2: π_g = 1.3032, TCG = 24.0799, IGC = 114.12798790348525 x_g[Gas], VGC = 2.6602240450150174
+Gen Gas: ζ = -22.582, ū = 0.292, ρ = -28.8896, Expected = -22.7133, CVaR = -23.166, CO2 = 3.919837923194163, Expected Term (δ * E[W - C]) = -11.3566, CVaR Term ((1 - δ) * CVaR) = -11.583, CO2 Term (-(δ) * CO2) = -1.9599189615970816
+  Scenario breakdown for Gen Gas:
+    Scenario 1: u = 0.26454466006796035, dual = 0.22701547366198815 TAIL
+    Scenario 2: u = 0.31941606561626823, dual = 0.2729844658335135 TAIL
+
+--- Storage ---
+Net revenue for scenario 1: net rev = -13.943317128648538
+(Manual Calculation) For scenario 1: π_s = -13.9433, TCS = 28.0059, VCS = 0.0, ICS = 28.0059
+(From model expression) For scenario 1: π_s = -13.9433, TCS = 28.0059, VCS = 0.0, ICS = 28.0059
+Net revenue for scenario 2: net rev = -13.942951778485513
+(Manual Calculation) For scenario 2: π_s = -13.943, TCS = 28.0059, VCS = 0.0, ICS = 28.0059
+(From model expression) For scenario 2: π_s = -13.943, TCS = 28.0059, VCS = 0.0, ICS = 28.0059
+Storage H2_FC: ζ = -41.947, ū = 0.2895, ρ = -42.2375, Expected = -41.9491, CVaR = -42.526, Expected Term (δ * E[W - C]) = -20.9745, CVaR Term ((1 - δ) * CVaR) = -21.263
+  Scenario breakdown for Storage H2_FC:
+    Scenario 1: u = 0.28981961548464125, dual = 0.2493806744417019 TAIL
+    Scenario 2: u = 0.2891389361852804, dual = 0.250619150970995 TAIL
+Net revenue for scenario 1: net rev = 143773.81116786433
+(Manual Calculation) For scenario 1: π_s = 143773.8112, TCS = 36546.0797, VCS = 0.0, ICS = 36546.0797
+(From model expression) For scenario 1: π_s = 143773.8112, TCS = 36546.0797, VCS = 0.0, ICS = 36546.0797
+Net revenue for scenario 2: net rev = 1274.6994884994929
+(Manual Calculation) For scenario 2: π_s = 1274.6995, TCS = 36546.0797, VCS = 0.0, ICS = 36546.0797
+(From model expression) For scenario 2: π_s = 1274.6995, TCS = 36546.0797, VCS = 0.0, ICS = 36546.0797
+Storage BESS: ζ = 24449.8537, ū = 29860.7683, ρ = 353.2464, Expected = 35978.1757, CVaR = -35271.6828, Expected Term (δ * E[W - C]) = 17989.0878, CVaR Term ((1 - δ) * CVaR) = -17635.8414
+  Scenario breakdown for Storage BESS:
+    Scenario 1: u = 0.15540066353596366, dual = 3.6756660439330447e-7 TAIL
+    Scenario 2: u = 59721.38114820573, dual = 0.499999055180362 TAIL
+
+--- Consumer ---
+For scenario 1: Demand value = 5.5097794851732e9, Energy costs = 1.0273804874e7
+For scenario 2: Demand value = 5.4275230535479e9, Energy costs = 8.9331868525e6
+Consumer: ρ = 5.4388187109688e9,  Expected = 5.4590477734973e9
+=================================
+
+
+===== Unserved demand per scenario =====
+  Scenario 1 → Unserved Demand Fix = 0.6012676412306744, Unserved Demand Flex = 114.98139737048751, Total Unserved Demand = 115.58266501171819
+  Scenario 2 → Unserved Demand Fix = -7.095763976394666e-11, Unserved Demand Flex = 99.60664700405465, Total Unserved Demand = 99.6066470039837
+
+Total Unserved Demand across all scenarios:
+ Total Unserved Demand Fix = 0.3006338205798584, Total Unserved Demand Flex = 107.29402218727108, Total Unserved Demand = 107.59465600785094
+====================================
+
+
+Total MWh of gas = 0.09370025967505134
+====================================
+
+
+--- Residual Summary (per Scenario) ---
+
+--- Residual Comparison (Model vs. Manual) ---
+t=1, o=1 → Model: -0.0449, Manual: -0.0449, Diff: 0.0
+t=1, o=2 → Model: 0.0141, Manual: 0.0141, Diff: 0.0
+t=2, o=1 → Model: -0.0449, Manual: -0.0449, Diff: 0.0
+t=2, o=2 → Model: 0.0149, Manual: 0.0149, Diff: 0.0
+t=3, o=1 → Model: -0.041, Manual: -0.041, Diff: 0.0
+t=3, o=2 → Model: 0.0102, Manual: 0.0102, Diff: 0.0
+t=4, o=1 → Model: -0.0433, Manual: -0.0433, Diff: 0.0
+t=4, o=2 → Model: 0.0105, Manual: 0.0105, Diff: 0.0
+t=5, o=1 → Model: -0.0412, Manual: -0.0412, Diff: 0.0
+t=5, o=2 → Model: 0.018, Manual: 0.018, Diff: 0.0
+t=6, o=1 → Model: -0.0367, Manual: -0.0367, Diff: 0.0
+t=6, o=2 → Model: 0.0112, Manual: 0.0112, Diff: 0.0
+t=7, o=1 → Model: -0.0415, Manual: -0.0415, Diff: 0.0
+t=7, o=2 → Model: 0.018, Manual: 0.018, Diff: 0.0
+t=8, o=1 → Model: -0.0436, Manual: -0.0436, Diff: 0.0
+t=8, o=2 → Model: 0.0115, Manual: 0.0115, Diff: 0.0
+t=9, o=1 → Model: -0.0424, Manual: -0.0424, Diff: 0.0
+t=9, o=2 → Model: 0.0141, Manual: 0.0141, Diff: 0.0
+t=10, o=1 → Model: -0.0412, Manual: -0.0412, Diff: 0.0
+t=10, o=2 → Model: 0.0178, Manual: 0.0178, Diff: 0.0
+t=11, o=1 → Model: -0.0458, Manual: -0.0458, Diff: 0.0
+t=11, o=2 → Model: 0.0044, Manual: 0.0044, Diff: 0.0
+t=12, o=1 → Model: -0.0246, Manual: -0.0246, Diff: 0.0
+t=12, o=2 → Model: 0.0073, Manual: 0.0073, Diff: 0.0
+t=13, o=1 → Model: -0.0239, Manual: -0.0239, Diff: 0.0
+t=13, o=2 → Model: 0.0172, Manual: 0.0172, Diff: 0.0
+t=14, o=1 → Model: -0.0209, Manual: -0.0209, Diff: 0.0
+t=14, o=2 → Model: 0.0047, Manual: 0.0047, Diff: 0.0
+t=15, o=1 → Model: -0.0286, Manual: -0.0286, Diff: 0.0
+t=15, o=2 → Model: 0.0174, Manual: 0.0174, Diff: 0.0
+t=16, o=1 → Model: -0.0294, Manual: -0.0294, Diff: 0.0
+t=16, o=2 → Model: 0.0112, Manual: 0.0112, Diff: 0.0
+t=17, o=1 → Model: -0.0224, Manual: -0.0224, Diff: 0.0
+t=17, o=2 → Model: 0.0111, Manual: 0.0111, Diff: 0.0
+t=18, o=1 → Model: -0.0288, Manual: -0.0288, Diff: 0.0
+t=18, o=2 → Model: 0.005, Manual: 0.005, Diff: 0.0
+t=19, o=1 → Model: -0.0228, Manual: -0.0228, Diff: 0.0
+t=19, o=2 → Model: 0.016, Manual: 0.016, Diff: 0.0
+t=20, o=1 → Model: -0.0296, Manual: -0.0296, Diff: 0.0
+t=20, o=2 → Model: 0.0135, Manual: 0.0135, Diff: 0.0
+t=21, o=1 → Model: -0.0233, Manual: -0.0233, Diff: 0.0
+t=21, o=2 → Model: 0.0049, Manual: 0.0049, Diff: 0.0
+t=22, o=1 → Model: 0.0228, Manual: 0.0228, Diff: 0.0
+t=22, o=2 → Model: 0.0145, Manual: 0.0145, Diff: 0.0
+t=23, o=1 → Model: -0.0236, Manual: -0.0236, Diff: 0.0
+t=23, o=2 → Model: 0.0049, Manual: 0.0049, Diff: 0.0
+t=24, o=1 → Model: -0.03, Manual: -0.03, Diff: 0.0
+t=24, o=2 → Model: 0.017, Manual: 0.017, Diff: 0.0
+t=25, o=1 → Model: -0.0278, Manual: -0.0278, Diff: 0.0
+t=25, o=2 → Model: 0.005, Manual: 0.005, Diff: 0.0
+t=26, o=1 → Model: -0.0304, Manual: -0.0304, Diff: 0.0
+t=26, o=2 → Model: 0.017, Manual: 0.017, Diff: 0.0
+t=27, o=1 → Model: -0.0307, Manual: -0.0307, Diff: 0.0
+t=27, o=2 → Model: 0.0106, Manual: 0.0106, Diff: 0.0
+t=28, o=1 → Model: -0.0241, Manual: -0.0241, Diff: 0.0
+t=28, o=2 → Model: 0.0169, Manual: 0.0169, Diff: 0.0
+t=29, o=1 → Model: -0.03, Manual: -0.03, Diff: 0.0
+t=29, o=2 → Model: 0.0171, Manual: 0.0171, Diff: 0.0
+t=30, o=1 → Model: -0.0242, Manual: -0.0242, Diff: 0.0
+t=30, o=2 → Model: 0.0167, Manual: 0.0167, Diff: 0.0
+t=31, o=1 → Model: -0.0306, Manual: -0.0306, Diff: 0.0
+t=31, o=2 → Model: 0.005, Manual: 0.005, Diff: 0.0
+t=32, o=1 → Model: -0.0244, Manual: -0.0244, Diff: 0.0
+t=32, o=2 → Model: 0.0102, Manual: 0.0102, Diff: 0.0
+t=33, o=1 → Model: -0.0304, Manual: -0.0304, Diff: 0.0
+t=33, o=2 → Model: 0.0164, Manual: 0.0164, Diff: 0.0
+t=34, o=1 → Model: -0.0312, Manual: -0.0312, Diff: 0.0
+t=34, o=2 → Model: 0.005, Manual: 0.005, Diff: 0.0
+t=35, o=1 → Model: -0.0307, Manual: -0.0307, Diff: 0.0
+t=35, o=2 → Model: 0.013, Manual: 0.013, Diff: 0.0
+t=36, o=1 → Model: -0.0249, Manual: -0.0249, Diff: 0.0
+t=36, o=2 → Model: 0.0051, Manual: 0.0051, Diff: 0.0
+t=37, o=1 → Model: -0.0101, Manual: -0.0101, Diff: 0.0
+t=37, o=2 → Model: 0.0159, Manual: 0.0159, Diff: 0.0
+t=38, o=1 → Model: -0.025, Manual: -0.025, Diff: 0.0
+t=38, o=2 → Model: 0.0051, Manual: 0.0051, Diff: 0.0
+t=39, o=1 → Model: -0.0319, Manual: -0.0319, Diff: 0.0
+t=39, o=2 → Model: 0.0149, Manual: 0.0149, Diff: 0.0
+t=40, o=1 → Model: -0.0252, Manual: -0.0252, Diff: 0.0
+t=40, o=2 → Model: 0.0052, Manual: 0.0052, Diff: 0.0
+t=41, o=1 → Model: -0.029, Manual: -0.029, Diff: 0.0
+t=41, o=2 → Model: 0.0156, Manual: 0.0156, Diff: 0.0
+t=42, o=1 → Model: -0.0253, Manual: -0.0253, Diff: 0.0
+t=42, o=2 → Model: 0.0052, Manual: 0.0052, Diff: 0.0
+t=43, o=1 → Model: -0.031, Manual: -0.031, Diff: 0.0
+t=43, o=2 → Model: 0.0155, Manual: 0.0155, Diff: 0.0
+t=44, o=1 → Model: -0.0254, Manual: -0.0254, Diff: 0.0
+t=44, o=2 → Model: 0.0052, Manual: 0.0052, Diff: 0.0
+t=45, o=1 → Model: -0.0315, Manual: -0.0315, Diff: 0.0
+t=45, o=2 → Model: 0.0047, Manual: 0.0047, Diff: 0.0
+t=46, o=1 → Model: -0.0254, Manual: -0.0254, Diff: 0.0
+t=46, o=2 → Model: 0.0115, Manual: 0.0115, Diff: 0.0
+t=47, o=1 → Model: 0.0105, Manual: 0.0105, Diff: 0.0
+t=47, o=2 → Model: 0.0051, Manual: 0.0051, Diff: 0.0
+t=48, o=1 → Model: -0.0318, Manual: -0.0318, Diff: 0.0
+t=48, o=2 → Model: 0.0124, Manual: 0.0124, Diff: 0.0
+t=49, o=1 → Model: -0.029, Manual: -0.029, Diff: 0.0
+t=49, o=2 → Model: 0.0052, Manual: 0.0052, Diff: 0.0
+t=50, o=1 → Model: -0.0219, Manual: -0.0219, Diff: 0.0
+t=50, o=2 → Model: 0.012, Manual: 0.012, Diff: 0.0
+Scenario 1: L2 Norm = 0.2182, Max = 0.0458, Avg = 0.0298
+Scenario 2: L2 Norm = 0.0865, Max = 0.018, Avg = 0.0112
+Full residuals saved to 'residuals_detailed_delta_0.5_psi_0.5_riskaverseconsumers.csv'
+Full dfix, dflex saved to 'riskaverseconsumersdfix_dflex_0.5_psi_0.5_riskaverseconsumers.csv'
+
+--- Demand Value and Total Costs (per Scenario) ---
+Scenario 1: Demand Value = 5.5097794851732e9 [£], Total Cost = 9.448851480754627e6 [£], Net Welfare = 5.5003306336924e9 [£]
+Scenario 2: Demand Value = 5.4275230535479e9 [£], Total Cost = 9.208895430121554e6 [£], Net Welfare = 5.4183141581178e9 [£]
+
+=== CVaR using RiskMeasures.jl ===
+CVaR at Ψ = 0.5: (value = 5.418314158117781e9, pmf = DiscreteNonParametric{Float64, Float64, Vector{Float64}, Vector{Float64}}(support=[5.418314158117781e9, 5.500330633692448e9], p=[1.0, 0.0]))
