@@ -8,11 +8,11 @@ Created on Tue Aug  5 16:41:30 2025
 import pandas as pd
 
 # Load the duals and time weights CSV files
-duals_df = pd.read_csv(r"C:\Users\user\Downloads\trycodes_3_final\scarcity_rent_delta_0.25.csv")  # e.g. duals.csv
-weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_incomplete_markets_ADMM\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
-cvar_dual_df = pd.read_csv(r"C:\Users\user\Downloads\trycodes_3_final\dual_cvar_delta_0.25.csv")
-prices_df = pd.read_csv(r"C:\Users\user\Downloads\trycodes_3_final\prices_delta_0.25_H2_15000_025.csv")
-storage_dispacth_df = pd.read_csv(r"C:\Users\user\Downloads\trycodes_3_final\energy_charge_discharge_delta_0.25.csv")
+duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\scarcity_rent_delta_0.5.csv")  # e.g. duals.csv
+weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
+cvar_dual_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\dual_cvar_delta_0.5.csv")
+prices_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\prices_delta_0.5_H2_15000_05.csv")
+storage_dispacth_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\energy_charge_discharge_delta_0.5.csv")
 
 # Filter the scenarios
 scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
@@ -38,7 +38,7 @@ merged = merged.merge(prices_df, on=["Scenario", "Time"], how="left")
 merged = merged.merge(storage_dispacth_df, on=["Scenario", "Time", "Storage"], how="left")
 
 # Compute scarcity rents
-delta = 0.25
+delta = 0.5
 results = {}
 
         
@@ -66,15 +66,17 @@ for storage in merged["Storage"].unique():
     # per scenario scarcity rents and revenues
     # Define installed capacities
     if storage.lower() == "hydrogen" or storage.lower() == "h2":
-        power_capacity = 1.49441035012585  # MW
-        energy_capacity = 162.143502361599  # MWh
+        power_capacity = 1.618399706  # MW
+        energy_capacity = 174.4634445  # MWh
     elif storage.lower() == "bess":
-        power_capacity = 19.9266573819775 # MW
-        energy_capacity = 195.748400373726  # MWh
+        power_capacity = 19.95915556 # MW
+        energy_capacity = 196.1201128  # MWh
     else:
         raise ValueError(f"Unknown storage type: {storage}")
         
     rev_from_scarcity_per_scenario =  df["value"]*(processed_dual_discharge + processed_dual_charge)*power_capacity +  df["value"]*processed_dual_energy*energy_capacity
+    rev_from_scarcity_per_scenarioP =  df["value"]*(processed_dual_discharge + processed_dual_charge)*power_capacity
+    rev_from_scarcity_per_scenarioE =  df["value"]*processed_dual_energy*energy_capacity
     #average_rev_from_scarcity = rev_from_scarcity_per_scenario.sum()/15
     #print(average_rev_from_scarcity)
     #print(scarcity_rent_power*power_capacity + scarcity_rent_energy*energy_capacity)
@@ -87,11 +89,13 @@ for storage in merged["Storage"].unique():
         "Scenario": df["Scenario"],
         "Storage": storage,
         "Rev_Scarcity": rev_from_scarcity_per_scenario,
+        "Rev_Scarcity_Power": rev_from_scarcity_per_scenarioP,
+        "Rev_Scarcity_Energy": rev_from_scarcity_per_scenarioE,
         "Rev_Price": rev_from_prices
     })
     
     # Group by scenario and sum across time
-    per_scenario_summary = per_scenario_df.groupby(["Scenario", "Storage"])[["Rev_Scarcity", "Rev_Price"]].sum().reset_index()
+    per_scenario_summary = per_scenario_df.groupby(["Scenario", "Storage"])[["Rev_Scarcity", "Rev_Price", "Rev_Scarcity_Power", "Rev_Scarcity_Energy"]].sum().reset_index()
     
     # Print per-scenario values
     print(f"\n=== Per-Scenario Revenues for {storage} ===")

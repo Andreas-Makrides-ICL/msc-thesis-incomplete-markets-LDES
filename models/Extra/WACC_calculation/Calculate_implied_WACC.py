@@ -28,8 +28,8 @@ example_Rm_for_Gas = implied_wacc(Cinv_net=2.34E+05, Cinv_riskfree=426127.988, N
 
 example_Rm_for_LDES_P = implied_wacc(Cinv_net=478271.356625686, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
 example_Rm_for_LDES_E = implied_wacc(Cinv_net=2042.34644695941, Cinv_riskfree=1491.189025, N=18, WACC=0.07)
-example_Rm_for_BESS_P = implied_wacc(Cinv_net=50442.03223225109, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
-example_Rm_for_BESS_E = implied_wacc(Cinv_net=21035.098957088834, Cinv_riskfree=17524.09595, N=20, WACC=0.06)
+example_Rm_for_BESS_P = implied_wacc(Cinv_net=51378.877014601574, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
+example_Rm_for_BESS_E = implied_wacc(Cinv_net=19531.71806678219, Cinv_riskfree=17524.09595, N=20, WACC=0.06)
 
 # this is for risk neutral
 example_Rm_for_LDES_P = implied_wacc(Cinv_net=391384.22369767685, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
