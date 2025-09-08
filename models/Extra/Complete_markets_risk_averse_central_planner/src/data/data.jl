@@ -56,7 +56,8 @@ setup = Dict(
 data = load_data(setup, verbose=true)
 ```
 """
-function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true, pv_capex::Union{Nothing,Real}=nothing,)
+#function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true, pv_capex::Union{Nothing,Real}=nothing,)
+function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
     start_time = now()
     if verbose
         println("-------------------------------")
@@ -80,7 +81,8 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true, pv_c
             println("   $key data loaded successfully")
         end
     end
-"""
+
+    pv_capex = nothing
     # --- NEW: Override PV CAPEX if pv_capex is provided ----------------------
     if pv_capex !== nothing
         gd = dataframes["generation_data"]
@@ -102,7 +104,7 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true, pv_c
         end
     end
     # ------------------------------------------------------------------------
-"""
+
 
     # Compute CRF for generation_data and storage_data DataFrames ### CRF = CAPITAL RECOVERY FACTOR, The Capital Recovery Factor (CRF) turns a lump-sum investment (like £/MW or £/MWh) into an annualized cost over the asset’s lifetime. Then, you can multiply CRF,This gives a multiplier that you apply to capital cost to get annualized cost per MW or MWh per year.
     for key in ["generation_data", "storage_data"]
