@@ -146,10 +146,10 @@ for delta in [1]#[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.
         obj = objective_value(m.model)
         ζ = value(m.model[:ζ_total])
         u = [value(m.model[:u_total][o]) for o in m.data["sets"]["O"]]
-        
+            
         # Extract CVaR tail duals and risk weights
         duals, risk_weights = extract_risk_adjusted_weights(m)
-        
+            
         # Sort tail scenarios by descending weight
         sorted_tail = sort(collect(duals), by = x -> -x[2])
         # Format as (scenario, raw dual) for display
@@ -184,7 +184,8 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
+CSV.write("risk_aversion_results.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
+
 

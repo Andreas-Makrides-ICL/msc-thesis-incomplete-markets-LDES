@@ -56,7 +56,7 @@ setup = Dict(
 data = load_data(setup, verbose=true)
 ```
 """
-function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
+function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true, pv_capex::Union{Nothing,Real}=nothing,)
     start_time = now()
     if verbose
         println("-------------------------------")
@@ -80,6 +80,29 @@ function load_data(setup::Dict; user_sets::Dict=Dict(), verbose::Bool=true)
             println("   $key data loaded successfully")
         end
     end
+"""
+    # --- NEW: Override PV CAPEX if pv_capex is provided ----------------------
+    if pv_capex !== nothing
+        gd = dataframes["generation_data"]
+        # Identify PV technologies (e.g., "PV", "PV_old", "PV_something")
+        is_pv = [occursin(r"(?i)\bpv\b", string(g)) || occursin(r"(?i)\bpv_", string(g)) ||
+                 occursin(r"(?i)_pv\b", string(g)) || occursin(r"(?i)pv", string(g)) for g in gd.G]
+
+        n_before = sum(is_pv)
+        if n_before == 0
+            println("   Warning: No PV rows found in generation_data; pv_capex not applied")
+        else
+            if !("C_inv" in names(gd))
+                error("Column 'C_inv' not found in generation_data; cannot apply pv_capex")
+            end
+            gd[is_pv, "C_inv"] .= pv_capex
+            if verbose
+                println("   Applied pv_capex=$(pv_capex) to $n_before PV row(s) in generation_data")
+            end
+        end
+    end
+    # ------------------------------------------------------------------------
+"""
 
     # Compute CRF for generation_data and storage_data DataFrames ### CRF = CAPITAL RECOVERY FACTOR, The Capital Recovery Factor (CRF) turns a lump-sum investment (like £/MW or £/MWh) into an annualized cost over the asset’s lifetime. Then, you can multiply CRF,This gives a multiplier that you apply to capital cost to get annualized cost per MW or MWh per year.
     for key in ["generation_data", "storage_data"]
