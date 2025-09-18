@@ -26,11 +26,21 @@ example_Rm_for_Windoff = implied_wacc(Cinv_net=308366.399, Cinv_riskfree=339025.
 example_Rm_for_Nuclear = implied_wacc(Cinv_net=1343757.188, Cinv_riskfree=607878.207, N=60, WACC=0.07)
 example_Rm_for_Gas = implied_wacc(Cinv_net=2.34E+05, Cinv_riskfree=426127.988, N=25, WACC=0.07)
 
-example_Rm_for_LDES_P = implied_wacc(Cinv_net=478271.356625686, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
-example_Rm_for_LDES_E = implied_wacc(Cinv_net=2042.34644695941, Cinv_riskfree=1491.189025, N=18, WACC=0.07)
 
-example_Rm_for_BESS_P = implied_wacc(Cinv_net=52719.44431, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
-example_Rm_for_BESS_E = implied_wacc(Cinv_net=18575.68687933992, Cinv_riskfree=17524.09595, N=20, WACC=0.06)
+
+
+example_Rm_for_LDES_P = implied_wacc(Cinv_net=427960.1004941392, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
+example_Rm_for_LDES_E = implied_wacc(Cinv_net=949.4694526712603, Cinv_riskfree=795.3008133, N=18, WACC=0.07)
+
+example_Rm_for_BESS_P = implied_wacc(Cinv_net=50632.70351280588, Cinv_riskfree=46965.26355, N=20, WACC=0.06)
+example_Rm_for_BESS_E = implied_wacc(Cinv_net=14677.675496656673, Cinv_riskfree=13600.79089, N=20, WACC=0.06)
+print("Implied WACC for LDES Power", example_Rm_for_LDES_P)
+print("Implied WACC for LDES Energy", example_Rm_for_LDES_E)
+print("Implied WACC for BESS Power", example_Rm_for_BESS_P)
+print("Implied WACC for BESS Energy", example_Rm_for_BESS_E)
+
+
+
 
 # this is for risk neutral
 example_Rm_for_LDES_P = implied_wacc(Cinv_net=391384.22369767685, Cinv_riskfree=391384.6546, N=18, WACC=0.07)
