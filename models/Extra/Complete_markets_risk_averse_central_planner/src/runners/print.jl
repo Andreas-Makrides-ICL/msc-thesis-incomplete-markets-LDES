@@ -554,6 +554,13 @@ function residual_print(m)
     println("Gas dispatch saved to '$filename'")
 
 
+    filename = "unserved_demand_delta_$(round(δ, digits=2)).csv"
+    rows = [(t, o, value(m.model[:unserved_fixed][t,o])) for t in T for o in O]
+    df = DataFrame(rows, [:Time, :Scenario, :Unserved_demand])
+    CSV.write(filename, df)
+    println("Gas dispatch saved to '$filename'")
+
+
 end
 
 

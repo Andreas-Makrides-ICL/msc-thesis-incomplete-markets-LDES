@@ -100,10 +100,14 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         sum(W[t, o] * (m[:q_dch][s, t, o] - m[:q_ch][s, t, o]) * (price_available ? λ[t, o] : 0) for t in T)
     )
 
-
-    if δ == 1.0
-        @expression(m, ρ_s[s in S], sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O))
-    elseif δ == 0.0
+    if δ==1.0
+        # Define Risk-Adjusted Profit Expression
+        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
+        @expression(m, ρ_s[s in S], sum(P[o] * (m[:π_s][s, o] - m[:stor_total_costs][s, o]) for o in O)
+        )
+    elseif δ==0.0
+        # Define Risk-Adjusted Profit Expression
+        # Storage risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_s[s in S], (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
         )
     else
@@ -114,7 +118,6 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
             (1 - δ) * (m[:ζ_s][s] - (1 / Ψ) * sum(P[o] * m[:u_s][s, o] for o in O))
         )
     end
-
 
     # Energy Cost Expression (using λ values if available)
     if price_available
@@ -182,15 +185,11 @@ function define_storage!(model; remove_first::Bool=false, update_prices::Bool=fa
         )
 
         # === Fixed Duration Constraints for BESS Variants ===
-        #@constraint(m, storage_duration1, m[:x_E]["BESS_4h"] == 4 * m[:x_P]["BESS_4h"])
-        #@constraint(m, storage_duration2, m[:x_P]["BESS_4h"] == 30)
+        #@constraint(m, storage_duration1, m[:x_E]["BESS"] <= 4 * m[:x_P]["BESS"])
         #@constraint(m, storage_duration2, m[:x_E]["BESS"] >= 1 * m[:x_P]["BESS"])
         #@constraint(m, storage_duration_8h, m[:x_E]["BESS_8h"] == 8 * m[:x_P]["BESS_8h"])
         @constraint(m, H2_morethan10h, m[:x_E]["H2"] >= 8 * m[:x_P]["H2"])
         #@constraint(m, H2_lessthan15h, m[:x_E]["H2"] <= (20 - δ*6)* m[:x_P]["H2"])
-        
-
-
     end 
 
     # Define new CVaR tail constraint for storage units

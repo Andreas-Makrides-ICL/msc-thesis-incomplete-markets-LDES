@@ -55,6 +55,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     gen_data = data["data"]["generation_data"]  # Generation data (DenseAxisArray)
     λ = haskey(data["data"], "additional_params") && haskey(data["data"]["additional_params"], "λ") ? 
         data["data"]["additional_params"]["λ"] : nothing  # Lagrange multipliers (Dict or nothing)
+
     gas_price = data["data"]["additional_params"]["gas_price"]
     factor_gas_price = data["data"]["additional_params"]["factor_gas_price"]
 
@@ -69,7 +70,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     end
 
     # Remove existing expressions at the beginning
-    for sym in [:π_g, :ρ_g]
+    for sym in [:π_g, :ρ_g, :co2]
         maybe_remove_expression(m, sym)
     end
 
@@ -89,17 +90,22 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         )
     end
 
+    @expression(m, co2, sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+    )
 
     # Define Revenue Expression (excluding costs)
     # Generation revenue per scenario: Use λ if available, otherwise set to 0
-    @expression(m, π_g[g in G, o in O], sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
+    @expression(m, π_g[g in G, o in O], 
+        sum(W[t, o] * m[:q][g, t, o] * (price_available ? λ[t, o] : 0) for t in T)
     )
 
 
-    if δ == 1.0
+    if δ==1.0
+        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O)
-        )
-    elseif δ == 0.0
+        ) 
+    elseif δ==0.0
+        # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O))
         )
     else
@@ -107,9 +113,11 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
         # Generator risk-adjusted profit: Weighted sum of expected profit (revenue - costs) and CVaR
         @expression(m, ρ_g[g in G], 
             δ * sum(P[o] * (m[:π_g][g, o] - m[:gen_total_costs][g, o]) for o in O) + 
-            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) 
-        )
+            (1 - δ) * (m[:ζ_g][g] - (1 / Ψ) * sum(P[o] * m[:u_g][g, o] for o in O)) #- (δ) * (g == "Gas" ? gas_price * 0.3294 * co2 * factor_gas_price : 0.0)
+        ) 
+        
     end
+
 
     if !update_prices
 """
@@ -193,7 +201,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     end
 
         # --- Nuclear Minimum Stable Output Constraint ---
-    min_output_frac = 0.5 # Minimum output is 50% of installed capacity
+    min_output_frac = 0.5  # Minimum output is 50% of installed capacity
     nuclear_fraction = 0.12
 
     for g in G
@@ -210,20 +218,15 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
     @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.50 * setup["peak_demand"]) #0.62 prin
     #@constraint(m, m[:x_g]["PV"] ≤ 0.80 * setup["peak_demand"])
     #@constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.50 * setup["peak_demand"])
-
-
+"""
     gas_gen = 0.25
 
-    @expression(m, co2_1,
-                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
-            )
-"""
     for g in G
         if g == "Gas"
-            @constraint(m, co2_1 <= 100000)???
+            @constraint(m, m[:x_g][g] == gas_gen * setup["peak_demand"])
         end
     end
-"""    
+"""
 end
 
 export define_generator!

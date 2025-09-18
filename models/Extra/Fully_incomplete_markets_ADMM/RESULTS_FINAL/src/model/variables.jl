@@ -88,13 +88,11 @@ function define_variables!(model)
     @variable(m, 0 <= x_P[s in S] <= get_bound(data, "x_P_up_bounds", s))  # Storage power capacity
     @variable(m, 0 <= x_E[s in S] <= get_bound(data, "x_E_up_bounds", s))  # Storage energy capacity
 
-
     # Risk Variables (always included as per the risk-averse model)
     @variable(m, u_g[g in G, o in O] >= 0)  # Loss relative to Value-at-Risk (VaR) for generators
     @variable(m, ζ_g[g in G])  # VaR variable for generators
     @variable(m, u_s[s in S, o in O] >= 0)  # Loss relative to VaR for storage units
     @variable(m, ζ_s[s in S])  # VaR variable for storage units
-    @variable(m, ζ_d)  # VaR variable for consumers
-    @variable(m, u_d[o in O] >= 0)  # Loss relative to VaR for consumers
-
+    #@variable(m, ζ_d)  # VaR variable for consumers
+    #@variable(m, u_d[o in O] >= 0)  # Loss relative to VaR for consumers
 end
