@@ -8,18 +8,18 @@ Created on Tue Aug  5 16:41:30 2025
 import pandas as pd
 
 # Load the duals and time weights CSV files
-duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\scarcity_rent_delta_0.25.csv")  # e.g. duals.csv
+duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Extra\Fully_incomplete_markets_ADMM\RESULTS_FINAL\scarcity_rent_delta_0.75.csv")  # e.g. duals.csv
 
 #checking about bess
 #duals_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\scarcity_rent_binding_hours.csv")
 
-weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\data_final\f672\concatenated_weights_672_30yr_new.csv")  # e.g. weights.csv
-cvar_dual_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\dual_cvar_delta_0.25.csv")
-prices_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\prices_delta_0.25_H2_15000_025.csv")
-storage_dispacth_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Fully_Incomplete\Results\energy_charge_discharge_delta_0.25.csv")
+weights_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Extra\Fully_incomplete_markets_ADMM\RESULTS_FINAL\data_final\f672\fff672\concatenated_weights_40yr.csv")  # e.g. weights.csv
+cvar_dual_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Extra\Fully_incomplete_markets_ADMM\RESULTS_FINAL\dual_cvar_delta_0.75.csv")
+prices_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Extra\Fully_incomplete_markets_ADMM\RESULTS_FINAL\prices_delta_0.75_H2_15000_075.csv")
+storage_dispacth_df = pd.read_csv(r"C:\Users\user\Desktop\msc-thesis-incomplete-markets-LDES\models\Extra\Fully_incomplete_markets_ADMM\RESULTS_FINAL\energy_charge_discharge_delta_0.75.csv")
 
 # Filter the scenarios
-scenarios = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
+scenarios = [1,2,6,7,9,13,15,16,19,22,24,26,28,29,30]
 duals_df = duals_df[duals_df["Scenario"].isin(scenarios)]
 weights_df = weights_df[weights_df["O"].isin(scenarios)]
 cvar_dual_df = cvar_dual_df[cvar_dual_df["Scenario"].isin(scenarios)]
@@ -42,7 +42,7 @@ merged = merged.merge(prices_df, on=["Scenario", "Time"], how="left")
 merged = merged.merge(storage_dispacth_df, on=["Scenario", "Time", "Storage"], how="left")
 
 # Compute scarcity rents
-delta = 0.25
+delta = 0.75
 results = {}
 
         
@@ -69,14 +69,32 @@ for storage in merged["Storage"].unique():
 
     # per scenario scarcity rents and revenues
     # Define installed capacities
-    if storage.lower() == "hydrogen" or storage.lower() == "h2":
-        power_capacity = 1.49441035  # MW
-        energy_capacity = 162.1435024  # MWh
-    elif storage.lower() == "bess":
-        power_capacity = 19.92665738# MW
-        energy_capacity = 195.7484004  # MWh
-    else:
-        raise ValueError(f"Unknown storage type: {storage}")
+    if (storage.lower() == "hydrogen" or storage.lower() == "h2") and (delta == 0.25):
+        power_capacity = 9.097425245  # MW
+        energy_capacity = 1540.578555  # MWh
+    elif (storage.lower() == "bess") and (delta == 0.25):
+        power_capacity = 9.742623265# MW
+        energy_capacity = 148.2573105  # MWh
+    elif (delta == 0.25):
+        raise ValueError(f"Unknown storage type D025: {storage}")
+    
+    if (storage.lower() == "hydrogen" or storage.lower() == "h2") and (delta == 0.5):
+        power_capacity = 8.898791315  # MW
+        energy_capacity = 1480.119127  # MWh
+    elif (storage.lower() == "bess") and (delta == 0.5):
+        power_capacity = 9.841243549# MW
+        energy_capacity = 149.758054  # MWh
+    elif (delta == 0.5):
+        raise ValueError(f"Unknown storage type D050: {storage}")
+    
+    if (storage.lower() == "hydrogen" or storage.lower() == "h2") and (delta == 0.75):
+        power_capacity = 9.04498805  # MW
+        energy_capacity = 1445.464076  # MWh
+    elif (storage.lower() == "bess") and (delta == 0.75):
+        power_capacity = 9.833486796# MW
+        energy_capacity = 149.6400165  # MWh
+    elif (delta == 0.75):
+        raise ValueError(f"Unknown storage type D075: {storage}")
         
     rev_from_scarcity_per_scenario =  df["value"]*(processed_dual_discharge + processed_dual_charge)*power_capacity +  df["value"]*processed_dual_energy*energy_capacity
     rev_from_scarcity_per_scenarioP =  df["value"]*(processed_dual_discharge + processed_dual_charge)*power_capacity
