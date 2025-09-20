@@ -190,6 +190,14 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
                 m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_g * m[:x_g][g]
             )
         end
+        if g == "Gas_CCS"
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t, o] - m[:q][g, t-1, o] <= ramp_rate_g * m[:x_g][g]
+            )
+            @constraint(m, [t in T[2:end], o in O], 
+                m[:q][g, t-1, o] - m[:q][g, t, o] <= ramp_rate_g * m[:x_g][g]
+            )
+        end
     end
 
         # --- Nuclear Minimum Stable Output Constraint ---
@@ -214,9 +222,26 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     gas_gen = 0.25
 
-    @expression(m, co2_1,
-                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+    #emissions of gas
+    @expression(m23, co2_gas,
+                    0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
             )
+    #emissions of gas_ccs
+    @expression(m24, co2_ccs,
+                    0.05*0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas_CCS", t, o] for t in T)) for o in O)
+            )
+    #annual MWh
+    @expression(m25, annualMWh,
+                    sum(P[o] * (sum(W[t,o] * (m[:d_fix][t, o] + m[:d_flex][t, o]) for t in T)) for o in O)
+            )
+    #constraint for emissions
+    @constraint(emissions, co2_gas + co2_ccs  ≤ 0.008 * annualMWh)
+
+    @constraint(m, m[:x_g]["Gas"] ≤ 0.10 * setup["peak_demand"])
+
+     
+
+
 """
     for g in G
         if g == "Gas"

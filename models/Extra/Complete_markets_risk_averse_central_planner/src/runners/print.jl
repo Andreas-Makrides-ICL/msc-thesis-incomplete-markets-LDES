@@ -134,6 +134,7 @@ function print_central_summary(model, solve_time)
         rpad("Wind Onshore", data_width),
         rpad("Wind Offshore", data_width),
         rpad("Gas", data_width),
+        rpad("Gas_CCS", data_width),
         rpad("Nuclear", data_width),
         rpad("BESS Pwr.", data_width),
         rpad("BESS En.", data_width),

@@ -1,0 +1,13 @@
+Gurobi shell based on Python 3.11.3 can be launched with command `gurobi.sh`
+Gurobi Python Interface can be loaded in Python 3.11.3 with 'import gurobipy'
+┌ Warning: Assignment to `solver` in soft scope is ambiguous because a global variable by the same name exists: `solver` will be treated as a new local. Disambiguate by using `local solver` to suppress this warning or `global solver` to assign to the existing global variable.
+└ @ ~/trycodes_3_final_lower_tolerance/main_15000_075.jl:227
+
+====================================
+CPU Time used: 22:34:14
+CPU Percent: 486%
+Memory usage: 6415536kb
+Approx Power usage: 0.2708
+Walltime usage: 05:02:52
+
+====================================

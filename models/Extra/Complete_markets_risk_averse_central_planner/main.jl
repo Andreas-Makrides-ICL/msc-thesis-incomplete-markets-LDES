@@ -172,6 +172,7 @@ for delta in [1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #
             Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
             Gas = safeget(cap, :x_g, "Gas"),
+            Gas_CCS = safeget(cap, :x_g, "Gas_CCS"),
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_P = safeget(cap, :x_P, "BESS"),
             BESS_E = safeget(cap, :x_E, "BESS"),
