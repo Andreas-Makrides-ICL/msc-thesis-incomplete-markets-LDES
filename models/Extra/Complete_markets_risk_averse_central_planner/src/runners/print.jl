@@ -376,7 +376,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     println("Full duals saved to '$filename'")
 
 
-
+    println("Dual of emissions contraint: $(dual(m[:emissionslimit]))")
 
     prc=Dict((t, o) => dual(m[:demand_balance][t, o]) for t in T, o in O)
     nn= Dict(s => sum(prc[(t,o)] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) for t in T, o in O) for s in S)
