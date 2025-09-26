@@ -120,13 +120,19 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 """
         @constraint(m, gen_limits[g in G, t in T, o in O],
             m[:q][g, t, o] <= (
+                (g == "Gas") ?
+                    0.7 * m[:x_g][g] :
+                (g == "Gas_CCS") ?
+                    0.8 * m[:x_g][g] :
+                (g == "Nuclear") ?
+                    0.9 * m[:x_g][g] :
                 (g in A.axes[3] || g in G_VRE) ?
                     (g == "Wind_Offshore" ?
-                        m[:x_g][g] * min(1.0, 1.45 * A[t, o, g]) :
+                        m[:x_g][g] * min(1.0, 1.47 * A[t, o, g]) :
                     g == "Wind_Onshore" ?
-                        m[:x_g][g] * min(1.0, 1.1*A[t, o, g]) :
+                        m[:x_g][g] * min(1.0, 1.2*A[t, o, g]) :
                     g == "PV" ?
-                        m[:x_g][g] * min(1.0, 0.75*A[t, o, g]) :
+                        m[:x_g][g] * min(1.0, 0.7*A[t, o, g]) :
                         m[:x_g][g] * A[t, o, g]
                     ) :
                     m[:x_g][g]
@@ -202,7 +208,7 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
         # --- Nuclear Minimum Stable Output Constraint ---
     min_output_frac = 0.5 # Minimum output is 50% of installed capacity
-    nuclear_fraction = 0.12
+    nuclear_fraction = 0.06
 
     for g in G
         if g == "Nuclear"
@@ -215,30 +221,39 @@ function define_generator!(model; remove_first::Bool=false, update_prices::Bool=
 
     #@constraint(m, m[:x_g]["Wind_Offshore"] ≤ 2.3 * m[:x_g]["Wind_Onshore"])
     #@constraint(m, m[:x_g]["Wind_Offshore"] ≥ 1.8 * m[:x_g]["Wind_Onshore"])
-    @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.50 * setup["peak_demand"]) #0.62 prin
+    #@constraint(m, m[:x_g]["Wind_Onshore"] == 0.50 * setup["peak_demand"]) #0.62 prin
     #@constraint(m, m[:x_g]["PV"] ≤ 0.80 * setup["peak_demand"])
-    #@constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.50 * setup["peak_demand"])
+    @constraint(m, m[:x_g]["Wind_Onshore"] ≤ 0.45* setup["peak_demand"])
 
 
     gas_gen = 0.25
 
     #emissions of gas
-    @expression(m23, co2_gas,
-                    0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+    @expression(m, co2_gas,
+                    0.135*0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
             )
     #emissions of gas_ccs
-    @expression(m24, co2_ccs,
-                    0.05*0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas_CCS", t, o] for t in T)) for o in O)
+    @expression(m, co2_ccs,
+                    2.4*0.05*0.3294*sum(P[o] * (sum(W[t,o] * m[:q]["Gas_CCS", t, o] for t in T)) for o in O)
             )
     #annual MWh
-    @expression(m25, annualMWh,
+    @expression(m, annualMWh,
                     sum(P[o] * (sum(W[t,o] * (m[:d_fix][t, o] + m[:d_flex][t, o]) for t in T)) for o in O)
             )
     #constraint for emissions
-    @constraint(emissions, co2_gas + co2_ccs  ≤ 0.008 * annualMWh)
+    @constraint(m, emissionslimit, co2_gas + co2_ccs  ≤ 0.004 * annualMWh)
 
-    @constraint(m, m[:x_g]["Gas"] ≤ 0.10 * setup["peak_demand"])
+    @constraint(m, m[:x_g]["Gas"] ≤ 0.08 * setup["peak_demand"])
 
+    @expression(m, gas_utilisation,
+                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas", t, o] for t in T)) for o in O)
+            )
+    @expression(m, gas_ccs_utilisation,
+                    sum(P[o] * (sum(W[t,o] * m[:q]["Gas_CCS", t, o] for t in T)) for o in O)
+            )
+    @constraint(m, gas_utilisation ≤ 0.05 * annualMWh)
+
+    
      
 
 

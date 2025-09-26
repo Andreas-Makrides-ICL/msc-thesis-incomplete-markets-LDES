@@ -33,7 +33,7 @@ const default_setup = Dict(
     "objective" => "central",  # Options: "central" or "individual"
 
     # Data Path Options
-    "input_path" => "data_final/fff672",
+    "input_path" => "data_final/ffff672",
     #"input_path" => "synthetic_data/",
     "availability" => "concatenated_capacity_factors_40yr_lf.csv", #"CF.csv",
     "demand" => "concatenated_load_profiles_40yr.csv", #"load_profile.csv",
@@ -45,7 +45,7 @@ const default_setup = Dict(
     # Demand and Load Shedding Options
     "peak_demand" => 100,
     "flexible_demand" => 1.10,  # Fraction of demand that can be flexible, 10% demand flexibility, This value means that the demand at each time step can vary up to +10% around its nominal (reference) value.
-    "B" => 9000,
+    "B" => 20300,
     "demand_type" => "QP",  # Options: :QP or :linear, QP= Quadratic Programming — demand deviation penalized quadratically (e.g., (Δdemand)²)
 
     # Risk Aversion Options
