@@ -38,10 +38,10 @@ print("Implied WACC for Gas_CCS", example_Rm_for_Gas_CCS)
 
 
 
-example_Rm_for_BESS_P = implied_wacc(Cinv_net=72742.7178, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
-example_Rm_for_BESS_E = implied_wacc(Cinv_net=20589.5888, Cinv_riskfree=13600.79089, N=20, WACC=0.06)
-example_Rm_for_LDES_P = implied_wacc(Cinv_net=381520.2288, Cinv_riskfree=361384.6546, N=18, WACC=0.07)
-example_Rm_for_LDES_E = implied_wacc(Cinv_net=4195.295857, Cinv_riskfree=795.3008133, N=18, WACC=0.07)
+example_Rm_for_BESS_P = implied_wacc(Cinv_net=45104.202746532865, Cinv_riskfree=52719.44431, N=20, WACC=0.06)
+example_Rm_for_BESS_E = implied_wacc(Cinv_net=13456.440246560333, Cinv_riskfree=13600.79089, N=20, WACC=0.06)
+example_Rm_for_LDES_P = implied_wacc(Cinv_net=374262.8773705063, Cinv_riskfree=361384.6546, N=18, WACC=0.07)
+example_Rm_for_LDES_E = implied_wacc(Cinv_net=833.3859854615777, Cinv_riskfree=795.3008133, N=18, WACC=0.07)
 
 
 print("Implied WACC for BESS Power", example_Rm_for_BESS_P)
@@ -49,6 +49,12 @@ print("Implied WACC for BESS Energy", example_Rm_for_BESS_E)
 print("Implied WACC for LDES Power", example_Rm_for_LDES_P)
 print("Implied WACC for LDES Energy", example_Rm_for_LDES_E)
 
+
+
+example_Rm_for_BESS = implied_wacc(Cinv_net=381586.5501, Cinv_riskfree=251566.769, N=20, WACC=0.06)
+example_Rm_for_LDES = implied_wacc(Cinv_net=771816.6157, Cinv_riskfree=453144.5068, N=18, WACC=0.07)
+print("Implied WACC for BESS", example_Rm_for_BESS)
+print("Implied WACC for LDES", example_Rm_for_LDES)
 
 
 
