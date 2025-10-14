@@ -134,6 +134,7 @@ function print_central_summary(model, solve_time)
         rpad("Wind Onshore", data_width),
         rpad("Wind Offshore", data_width),
         rpad("Gas", data_width),
+        rpad("Gas_CCS", data_width),
         rpad("Nuclear", data_width),
         rpad("BESS Pwr.", data_width),
         rpad("BESS En.", data_width),
@@ -375,7 +376,7 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
     println("Full duals saved to '$filename'")
 
 
-
+    println("Dual of emissions contraint: $(dual(m[:emissionslimit]))")
 
     prc=Dict((t, o) => dual(m[:demand_balance][t, o]) for t in T, o in O)
     nn= Dict(s => sum(prc[(t,o)] * (value(m[:q_dch][s, t, o]) - value(m[:q_ch][s, t, o])) for t in T, o in O) for s in S)
@@ -415,6 +416,10 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
         gvc = Dict(o => sum(W[t, o] * gen_data[g, "C_v"] * value(m[:q][g, t, o]) for t in T) for o in O)
         expected = sum(P[o] * (π[o] - gic - gvc[o]) for o in O)
         netrevg=sum(P[o] * (π[o] - gvc[o]) for o in O)
+        for o in O
+            netg=sum(P[o] * (π[o] - gvc[o]))
+            println("Generator $(g), Scenario $(o): net_revenues=$(netg)")
+        end 
         cvar = value(m[:ζ_g][g]) - (1 / Ψ) * sum(P[o] * value(m[:u_g][g, o]) for o in O)
         ex_g[g] = expected
         cvar_g[g] = cvar
@@ -437,6 +442,10 @@ function recalculate_and_print_individual_risks(model::OptimizationModel)
             for o in O)
         sic = (stor_data[s, "C_inv_P"] * stor_data[s, "CRF"] + stor_data[s, "FOMs"])* value(m[:x_P][s]) + stor_data[s, "C_inv_E"] * stor_data[s, "CRF"] * value(m[:x_E][s])
         netrevs = sum(P[o] * (π[o]) for o in O)
+        for o in O
+            nets=sum(P[o] * π[o])
+            println("Storage $(s), Scenario $(o): net_revenues=$(nets)")
+        end 
         expected = sum(P[o] * (π[o] - svc - sic) for o in O)
         cvar = value(m[:ζ_s][s]) - (1 / Ψ) * sum(P[o] * value(m[:u_s][s, o]) for o in O)
         ex_s[s] = expected
@@ -542,6 +551,13 @@ function residual_print(m)
     # Create a DataFrame
     df = DataFrame(rows, [:Time, :Scenario, :Dto, :dfix_to, :dflex_to])
     # Save to CSV
+    CSV.write(filename, df)
+    println("Gas dispatch saved to '$filename'")
+
+
+    filename = "unserved_demand_delta_$(round(δ, digits=2)).csv"
+    rows = [(t, o, value(m.model[:unserved_fixed][t,o])) for t in T for o in O]
+    df = DataFrame(rows, [:Time, :Scenario, :Unserved_demand])
     CSV.write(filename, df)
     println("Gas dispatch saved to '$filename'")
 

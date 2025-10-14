@@ -96,4 +96,5 @@ function define_variables!(model)
     @variable(m, ζ_s[s in S])  # VaR variable for storage units
     @variable(m, ζ_d)  # VaR variable for consumers
     @variable(m, u_d[o in O] >= 0)  # Loss relative to VaR for consumers
+
 end

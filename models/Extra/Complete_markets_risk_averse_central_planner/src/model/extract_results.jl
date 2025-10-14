@@ -226,6 +226,8 @@ function extract_unserved_demand(model)
     O = model.data["sets"]["O"]
     W = model.data["data"]["time_weights"]
     P = model.data["data"]["additional_params"]["P"]
+    D = model.data["data"]["demand"]
+    peak_demand = model.data["data"]["additional_params"]["peak_demand"]
     
     unserved_demand_fix = Dict(o => sum(W[t,o] *  value(m[:unserved_fixed][t,o]) for t in T) for o in O)
     unserved_demand_flex = Dict(o => sum(W[t,o] *  value(m[:unserved_flex][t,o]) for t in T) for o in O)
@@ -233,18 +235,38 @@ function extract_unserved_demand(model)
     total_unserved_demand_fix = sum(P[o]*unserved_demand_fix[o] for o in O)
     total_unserved_demand_flex = sum(P[o]*unserved_demand_flex[o] for o in O) 
     total = total_unserved_demand_fix + total_unserved_demand_flex
-    
+
+    served_demand_fix = Dict(o => sum(W[t,o] *  value(m[:d_fix][t,o]) for t in T) for o in O)
+    served_demand_flex = Dict(o => sum(W[t,o] *  value(m[:d_flex][t,o]) for t in T) for o in O)
+
+    total_served_demand_fix = sum(P[o]*served_demand_fix[o] for o in O)
+    total_served_demand_flex = sum(P[o]*served_demand_flex[o] for o in O) 
+    total1 = total_served_demand_fix + total_served_demand_flex
+
+    demandperscenario = Dict(o => sum(W[t,o] *  D[t, o] * peak_demand for t in T) for o in O)
+    total_demand = sum(P[o]*demandperscenario[o] for o in O)
+
+
+
     # Print summary
-    println("\n===== Unserved demand per scenario =====")
+    println("\n===== Unserved and Served demand per scenario =====")
     for o in O
         d1 = unserved_demand_fix[o]
         d2 = unserved_demand_flex[o]
         d3 = d1 + d2
+        d4= served_demand_fix[o]
+        d5= served_demand_flex[o]
+        d6= d4 + d5
+        d7 = demandperscenario[o]
         println("  Scenario $o → Unserved Demand Fix = $d1, Unserved Demand Flex = $d2, Total Unserved Demand = $d3")
+        println("  Scenario $o → Served Demand Fix = $d4, Served Demand Flex = $d5, Total Served Demand = $d6")
+        println("  Scenario $o → Demand per Scenario = $d7")
     end
 
-    println("\nTotal Unserved Demand across all scenarios:")
+    println("\nTotal Unserved and Served Demand across all scenarios:")
     println(" Total Unserved Demand Fix = $total_unserved_demand_fix, Total Unserved Demand Flex = $total_unserved_demand_flex, Total Unserved Demand = $total")
+    println(" Total Served Demand Fix = $total_served_demand_fix, Total Served Demand Flex = $total_served_demand_flex, Total Served Demand = $total1")
+    println(" Total Demand = $total_demand")
     println("====================================\n")
 
     co2 = value(m[:co2])
