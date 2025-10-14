@@ -502,7 +502,7 @@ for storage in merged["Storage"].unique():
     print(f"  • Energy-only binding:          {avg_energy_only}")
     print(f"  • Both binding power part:                 {avg_both_power_part}")
     print(f"  • Both binding energy part:                 {avg_both_energy_part}")
-    print(f"Average Revenue from Market Prices: {avg_price}")
+    #print(f"Average Revenue from Market Prices: {avg_price}")
 
     # === Keep your aggregate dual-based rents dictionary (optional) ===
     results[storage] = {
