@@ -127,16 +127,22 @@ m = run_central_planner(data, setup, solver);
 """
 
 results = []
-for delta in [1]#[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+for delta in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1] #[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.0] #[0.5] #[1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
     for psi in [0.5] #[0.5, 0.2, 0.1]
         setup["δ"] = delta
         setup["Ψ"] = psi
-        set1_lowest = [21, 6, 10, 9, 14, 17, 15, 3, 18, 28, 2, 25, 20, 5, 19]
+        
         set2_middle = [19, 12, 7, 11, 23, 8, 30, 24, 1, 26, 29, 13, 4, 22, 27]
-        set3_manual = [6, 10, 14, 17, 18, 20, 12, 11, 7, 23, 8, 24, 30, 1, 26, 29, 13, 4]
-        set4_stable_core = [ 24, 25, 26, 27, 28, 29, 30]
+        set1_middle =  [3,5,6,7,11,13,15,16,17,12,20,22,25,27,30]
+        set3_middle = [15, 12, 5, 19, 7, 8, 14, 17, 20, 30, 11, 6, 13, 23, 18]
+        load_set = [6,19,4,3,11,24,29,16,23,27,18,9,21,25,13] 
+        test = [1,2,6,7,9,13,15,16,19,22,24,26,28,29,30]
+        test_1 = [2, 5, 6, 8, 11, 15, 16, 18, 19, 23, 25, 31, 32, 33, 40]
 
-        data = load_data(setup, user_sets = Dict("O" => set2_middle, "T" => 1:672));
+        test_2 = [13, 38, 19, 6, 7, 15, 22, 23, 1, 30, 40, 29, 31, 2, 16]
+        test_3 = [27, 6, 29, 14, 10, 8, 7, 12, 17, 18, 22, 24, 23, 21, 2]
+  
+        data = load_data(setup, user_sets = Dict("O" => test_3, "T" => 1:672));
         #data = load_data(setup, user_sets = Dict("O" => [6, 21, 33, 40, 15, 14, 31, 1, 5, 4, 13, 3, 18], "T" => 1:3600));
         m = run_central_planner(data, setup, solver);
 
@@ -146,10 +152,10 @@ for delta in [1]#[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.
         obj = objective_value(m.model)
         ζ = value(m.model[:ζ_total])
         u = [value(m.model[:u_total][o]) for o in m.data["sets"]["O"]]
-        
+            
         # Extract CVaR tail duals and risk weights
         duals, risk_weights = extract_risk_adjusted_weights(m)
-        
+            
         # Sort tail scenarios by descending weight
         sorted_tail = sort(collect(duals), by = x -> -x[2])
         # Format as (scenario, raw dual) for display
@@ -170,6 +176,7 @@ for delta in [1]#[1.00,0.75,0.50,0.25] #[1, 0.8,0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.
             Wind_Onshore = safeget(cap, :x_g, "Wind_Onshore"),
             Wind_Offshore = safeget(cap, :x_g, "Wind_Offshore"),
             Gas = safeget(cap, :x_g, "Gas"),
+            Gas_CCS = safeget(cap, :x_g, "Gas_CCS"),
             Nuclear = safeget(cap, :x_g, "Nuclear"),
             BESS_P = safeget(cap, :x_P, "BESS"),
             BESS_E = safeget(cap, :x_E, "BESS"),
@@ -184,7 +191,8 @@ end
 df = DataFrame(results)
 display(df)
 #change the name of the file accordingly
-CSV.write("risk_aversion_results_O30_T672_new_final_unserved_fix_flex_gaspricescaled_cinvEldescheap_conwind.csv", df)
+CSV.write("risk_aversion_results.csv", df)
 #Print the model for inspection
 #print_model_structure_symbolic(m.model)
+
 
