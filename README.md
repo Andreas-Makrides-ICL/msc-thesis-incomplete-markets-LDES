@@ -1,6 +1,6 @@
-# MSc Thesis: Incomplete Markets in Risk and Storage Duration in Future Markets
+# Quantifying the Impact of Missing Risk Markets for Decarbonized Power Systems with Long Duration Energy Storage
 
-This repository contains the work for my MSc thesis at Imperial College London. 
+This repository contains the work for a conference paper submitted to PSCC 2026. 
 
 ## 📘 Summary
 
@@ -15,7 +15,6 @@ Inspired by prior research on underinvestment in resilience, this work investiga
 - `data/`: Raw and processed weather and system input data.
 - `analysis/`: Scripts for data selection, cleaning, and preprocessing.
 - `models/`: Julia equilibrium models for both complete and incomplete markets.
-- `plots/`: Scripts for plots, tables and post-processing analysis.
 
 ## 🛠 Tools Used
 
@@ -51,3 +50,4 @@ This is a public repository. Collaborators will be manually added.
 ## 📝 License
 
 MIT License – see the `LICENSE` file for details.
+
